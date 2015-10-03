@@ -22,19 +22,16 @@ def getUpdates():
 					if('text' in data['result'][0]['message']):
 						return data['result'][0]['message']
 
-def sendMessage(content, to, tastiera=""):
+def sendMessage(content, to):
 	"""Manda un messaggio a una chat."""
 	#Parametri del messaggio
 	parametri = {
 		'chat_id': to, #L'ID della chat a cui mandare il messaggio, Royal Games: -2141322
 		'text': content, #Il messaggio da mandare
-		'reply_markup': tastiera,
 		'parse_mode': 'Markdown', #Formattare il messaggio?
-		'disable_web_page_preview': True,
-		
 	}
 	#Manda il messaggio
-	r = requests.get("https://api.telegram.org/bot" + telegramtoken + "/sendMessage", params=parametri)
+	requests.get("https://api.telegram.org/bot" + telegramtoken + "/sendMessage", params=parametri)
 	
 def forwardMessage(msg, sentby, to):
 	"""Inoltra un messaggio mandato in un'altra chat."""
