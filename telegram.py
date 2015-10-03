@@ -13,6 +13,7 @@ def sendMessage(content, to=chat, tastiera=""):
 		'chat_id': to, #L'ID della chat a cui mandare il messaggio, Royal Games: -2141322
 		'text': content, #Il messaggio da mandare
 		'reply_markup': tastiera
+		'parse_mode': 'Markdown' #Formattare il messaggio?
 	}
 	#Manda il messaggio
 	r = requests.get("https://api.telegram.org/bot" + telegramtoken + "/sendMessage", params=parametri)
@@ -38,7 +39,7 @@ def getUpdates():
 	parametri = {
 		'offset': readFile("lastid.txt"), #Update ID del messaggio da leggere
 		'limit': 1, #Numero di messaggi da ricevere alla volta, lasciare 1
-		'timeout': 300, #Secondi da mantenere attiva la richiesta se non c'e' nessun messaggio
+		'timeout': 1800, #Secondi da mantenere attiva la richiesta se non c'e' nessun messaggio
 	}
 	while(True):	
 		data = requests.get("https://api.telegram.org/bot" + token + "/getUpdates", params=parametri).json()
@@ -49,3 +50,13 @@ def getUpdates():
 				if(data['result'][0]['message'] != None):
 					if(data['result'][0]['message']['text'] != ""):
 						return data['result'][0]['message']
+						
+def setTyping(type, to):
+	"""Visualizza lo stato "sta scrivendo" del bot."""
+	#Parametri del messaggio
+	parametri = {
+		'chat_id': to,
+		'action': type,
+	}
+	#Manda la richiesta ai server di Telegram.
+	requests.get("https://api.telegram.org/bot" + telegramtoken + "/sendChatAction", params=parametri)
