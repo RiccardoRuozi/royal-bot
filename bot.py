@@ -6,5 +6,6 @@ while(True):
 	#Guarda il comando ricevuto.
 	msg = telegram.getUpdates()
 	cmd = msg['text'].split(' ')
+	sby = msg['from']['id']
 	if(cmd[0].startswith('/ahnonlosoio')):
-		telegram.sendMessage("Ah, non lo so nemmeno io!\n¯\_(ツ)_/¯")
+		telegram.sendMessage("Ah, non lo so nemmeno io!\n¯\_(ツ)_/¯", sby)

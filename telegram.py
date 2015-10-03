@@ -5,9 +5,6 @@ import filemanager
 ##Per far funzionare questa libreria serve un file "lastid.txt" contenente l'update ID dell'ultimo messaggio non letto e un file "telegramapi.txt" contenente il token di accesso del bot assegnato da @BotFather.
 telegramtoken = filemanager.readFile('telegramapi.txt')
 
-#definiamo la variabile globale chat se no si blocca tutto? forse?
-chat = 0
-
 def getUpdates():
 	"""Ricevi gli ultimi aggiornamenti dal server di Telegram e restituisci l'ultimo messaggio non letto."""
 	parametri = {
@@ -25,7 +22,7 @@ def getUpdates():
 					if('text' in data['result'][0]['message']):
 						return data['result'][0]['message']
 
-def sendMessage(content, to=chat, tastiera=""):
+def sendMessage(content, to, tastiera=""):
 	"""Manda un messaggio a una chat."""
 	#Parametri del messaggio
 	parametri = {
@@ -39,7 +36,7 @@ def sendMessage(content, to=chat, tastiera=""):
 	#Manda il messaggio
 	r = requests.get("https://api.telegram.org/bot" + telegramtoken + "/sendMessage", params=parametri)
 	
-def forwardMessage(msg, sentby, to=chat):
+def forwardMessage(msg, sentby, to):
 	"""Inoltra un messaggio mandato in un'altra chat."""
 	#Parametri del messaggio
 	parametri = {
@@ -50,7 +47,7 @@ def forwardMessage(msg, sentby, to=chat):
 	#Manda la richiesta ai server di Telegram.
 	requests.get("https://api.telegram.org/bot" + telegramtoken + "/forwardMessage", params=parametri)
 
-def sendLocation(lat, long, to=chat):
+def sendLocation(lat, long, to):
 	"""Manda una posizione sulla mappa."""
 	#Parametri del messaggio
 	parametri = {
@@ -61,7 +58,7 @@ def sendLocation(lat, long, to=chat):
 	#Manda la richiesta ai server di Telegram.
 	requests.get("https://api.telegram.org/bot" + telegramtoken + "/sendLocation", params=parametri)
 
-def sendChatAction(type='typing', to=chat):
+def sendChatAction(to, type='typing'):
 	"""Visualizza lo stato "sta scrivendo" del bot."""
 	#Parametri del messaggio
 	parametri = {
