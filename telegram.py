@@ -19,10 +19,10 @@ def getUpdates():
 		data = requests.get("https://api.telegram.org/bot" + telegramtoken + "/getUpdates", params=parametri).json()
 		if(data['ok'] == True):
 			if(data['result'] != []):
-				writeFile("lastid.txt", str(data['result'][0]['update_id'] + 1))
+				filemanager.writeFile("lastid.txt", str(data['result'][0]['update_id'] + 1))
 				#sporco hack per non far crashare il bot ogni 10 secondi; prima o poi capirò il senso di certe risposte nell'api di telegram
-				if(data['result'][0]['message'] != None):
-					if(data['result'][0]['message']['text'] != ""):
+				if('message' in data['result'][0]):
+					if('text' in data['result'][0]['message']):
 						return data['result'][0]['message']
 
 def sendMessage(content, to=chat, tastiera=""):
