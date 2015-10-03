@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+﻿# -*- coding: utf-8 -*-
 
 def readFile(name):
 	"""Leggi i contenuti di un file."""

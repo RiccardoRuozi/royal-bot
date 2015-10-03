@@ -3,3 +3,4 @@ lastid.txt
 osuapi.txt
 steamapi.txt
 telegramapi.txt
+*.pyc

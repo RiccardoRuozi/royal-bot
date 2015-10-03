@@ -3,7 +3,7 @@ import requests
 import filemanager
 
 ##Per far funzionare questa libreria serve un file "lastid.txt" contenente l'update ID dell'ultimo messaggio non letto e un file "telegramapi.txt" contenente il token di accesso del bot assegnato da @BotFather.
-telegramtoken = readFile('telegramapi.txt')
+telegramtoken = filemanager.readFile('telegramapi.txt')
 
 #definiamo la variabile globale chat se no si blocca tutto? forse?
 chat = 0
@@ -11,12 +11,12 @@ chat = 0
 def getUpdates():
 	"""Ricevi gli ultimi aggiornamenti dal server di Telegram e restituisci l'ultimo messaggio non letto."""
 	parametri = {
-		'offset': readFile("lastid.txt"), #Update ID del messaggio da leggere
+		'offset': filemanager.readFile("lastid.txt"), #Update ID del messaggio da leggere
 		'limit': 1, #Numero di messaggi da ricevere alla volta, lasciare 1
 		'timeout': 1800, #Secondi da mantenere attiva la richiesta se non c'e' nessun messaggio
 	}
 	while(True):	
-		data = requests.get("https://api.telegram.org/bot" + token + "/getUpdates", params=parametri).json()
+		data = requests.get("https://api.telegram.org/bot" + telegramtoken + "/getUpdates", params=parametri).json()
 		if(data['ok'] == True):
 			if(data['result'] != []):
 				writeFile("lastid.txt", str(data['result'][0]['update_id'] + 1))

@@ -1,12 +1,12 @@
-# -*- coding: utf-8 -*-
+ï»¿# -*- coding: utf-8 -*-
 import requests
 import filemanager
 
 ##Per far funzionare questa libreria serve un file "steamapi.txt" contenente la Steam Api Key ottenibile a http://steamcommunity.com/dev/apikey
-steamtoken = readFile('steamapi.txt')
+steamtoken = filemanager.readFile('steamapi.txt')
 
 def getPlayerSummaries(steamid):
-	"""Ottieni i dati del profilo steam del giocatore di cui è stato specificato lo SteamID 32."""
+	"""Ottieni i dati del profilo steam del giocatore di cui Ã¨ stato specificato lo SteamID 32."""
 	#Parametri della richiesta
 	parametri = {
 		'key': steamtoken,
@@ -51,7 +51,7 @@ def getSteamLevel(steamid):
 	return r['response']['player_level']
 
 def isPlayingSharedGame(appid, steamid):
-	"""Guarda se il gioco a cui sta giocando qualcuno è condiviso.\nAh, Steam vuole sapere l'ID del gioco a cui sta giocando, quindi mettetecelo."""
+	"""Guarda se il gioco a cui sta giocando qualcuno Ã¨ condiviso.\nAh, Steam vuole sapere l'ID del gioco a cui sta giocando, quindi mettetecelo."""
 	parametri = {
 		'key': steamtoken,
 		'steamid': steamid,
