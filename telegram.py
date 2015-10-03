@@ -1,27 +1,12 @@
 ﻿# -*- coding: utf-8 -*-
 import requests
+import filemanager
 
 ##Per far funzionare questa libreria serve un file "lastid.txt" contenente l'update ID dell'ultimo messaggio non letto e un file "telegramapi.txt" contenente il token di accesso del bot assegnato da @BotFather.
+telegramtoken = readFile('telegramapi.txt')
 
 #definiamo la variabile globale chat se no si blocca tutto? forse?
 chat = 0
-
-
-def readFile(name):
-	"""Leggi i contenuti di un file."""
-	file = open(name, 'r')
-	content = file.read()
-	file.close()
-	return content
-	
-def writeFile(name, content):
-	"""Scrivi qualcosa su un file, sovrascrivendo qualsiasi cosa ci sia al suo interno."""
-	file = open(name, 'w')
-	file.write(content)
-	file.close()
-	
-#Caricamento delle API Keys...
-telegramtoken = readFile('telegramapi.txt')
 
 def getUpdates():
 	"""Ricevi gli ultimi aggiornamenti dal server di Telegram e restituisci l'ultimo messaggio non letto."""
