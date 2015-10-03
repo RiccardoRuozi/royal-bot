@@ -6,17 +6,6 @@ import requests
 #definiamo la variabile globale chat se no si blocca tutto? forse?
 chat = 0
 
-def sendMessage(content, to=chat, tastiera=""):
-	"""Manda un messaggio a una chat."""
-	#Parametri del messaggio
-	parametri = {
-		'chat_id': to, #L'ID della chat a cui mandare il messaggio, Royal Games: -2141322
-		'text': content, #Il messaggio da mandare
-		'reply_markup': tastiera
-		'parse_mode': 'Markdown' #Formattare il messaggio?
-	}
-	#Manda il messaggio
-	r = requests.get("https://api.telegram.org/bot" + telegramtoken + "/sendMessage", params=parametri)
 
 def readFile(name):
 	"""Leggi i contenuti di un file."""
@@ -50,8 +39,44 @@ def getUpdates():
 				if(data['result'][0]['message'] != None):
 					if(data['result'][0]['message']['text'] != ""):
 						return data['result'][0]['message']
-						
-def setTyping(type, to):
+
+def sendMessage(content, to=chat, tastiera=""):
+	"""Manda un messaggio a una chat."""
+	#Parametri del messaggio
+	parametri = {
+		'chat_id': to, #L'ID della chat a cui mandare il messaggio, Royal Games: -2141322
+		'text': content, #Il messaggio da mandare
+		'reply_markup': tastiera,
+		'parse_mode': 'Markdown', #Formattare il messaggio?
+		'disable_web_page_preview': True,
+		
+	}
+	#Manda il messaggio
+	r = requests.get("https://api.telegram.org/bot" + telegramtoken + "/sendMessage", params=parametri)
+	
+def forwardMessage(msg, sentby, to=chat):
+	"""Inoltra un messaggio mandato in un'altra chat."""
+	#Parametri del messaggio
+	parametri = {
+		'chat_id': to,
+		'from_chat_id': sentby,
+		'message_id': msg,
+	}
+	#Manda la richiesta ai server di Telegram.
+	requests.get("https://api.telegram.org/bot" + telegramtoken + "/forwardMessage", params=parametri)
+
+def sendLocation(lat, long, to=chat):
+	"""Manda una posizione sulla mappa."""
+	#Parametri del messaggio
+	parametri = {
+		'chat_id': to,
+		'latitude': lat,
+		'longitude': long,
+	}
+	#Manda la richiesta ai server di Telegram.
+	requests.get("https://api.telegram.org/bot" + telegramtoken + "/sendLocation", params=parametri)
+
+def sendChatAction(type='typing', to=chat):
 	"""Visualizza lo stato "sta scrivendo" del bot."""
 	#Parametri del messaggio
 	parametri = {
