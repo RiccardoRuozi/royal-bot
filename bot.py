@@ -2,6 +2,7 @@
 import telegram
 import steam
 
+print("Bot avviato!")
 while(True):
 	#Guarda il comando ricevuto.
 	msg = telegram.getUpdates()
@@ -27,4 +28,4 @@ while(True):
 		if(len(cmd) >= 2):
 			telegram.sendMessage("Ricerca di offerte di [" + cmd[1] + "](https://isthereanydeal.com/#/search:" + cmd[1].replace(' ', '%20') + ";/scroll:%23gamelist) completata.", sby)
 		else:
-			telegram.sendMessage(chr(9888) + " Non hai specificato un gioco!\nLa sintassi corretta è /saldistim <NomeGioco>.", sby)
+			telegram.sendMessage(chr(9888) + " Non hai specificato un gioco! [Visualizza tutte le offerte](https://isthereanydeal.com/#/search:.;/scroll:%23gamelist).", sby)
