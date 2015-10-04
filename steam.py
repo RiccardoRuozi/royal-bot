@@ -25,7 +25,10 @@ def getNumberOfCurrentPlayers(appid):
 	}
 	#Manda la richiesta ai server di Steam.
 	r = requests.get("http://api.steampowered.com/ISteamUserStats/GetNumberOfCurrentPlayers/v0001/", params=parametri).json()
-	return r['response']['player_count']
+	if('player_count' in r['response']):
+		return r['response']['player_count']
+	else:
+		return None
 	
 def getPlayerAchievements(appid, steamid):
 	"""Ottieni gli achievement del giocatore e del gioco specificato."""

@@ -5,7 +5,7 @@ import steam
 while(True):
 	#Guarda il comando ricevuto.
 	msg = telegram.getUpdates()
-	print(msg)
+	print(msg['text'])
 	cmd = msg['text'].split(' ')
 	sby = msg['chat']['id']
 	if(cmd[0].startswith('/ahnonlosoio')):
@@ -17,6 +17,9 @@ while(True):
 	elif(cmd[0].startswith('/playing')):
 		if(cmd[1] is not None):
 			n = steam.getNumberOfCurrentPlayers(cmd[1])
-			telegram.sendMessage("In questo momento, " + str(n) + " persone stanno giocando a <" + cmd[1] + ">", sby)
+			if(n == None):
+				telegram.sendMessage(chr(9888) + " L'app specificata non esiste!", sby)
+			else:
+				telegram.sendMessage("In questo momento, " + str(n) + " persone stanno giocando a *ID: " + cmd[1] + "*", sby)
 		else:
-			telegram.sendMessage("Non hai specificato un AppID!", sby)
+			telegram.sendMessage(chr(9888) + " Non hai specificato un AppID!\nLa sintassi corretta è /playing <AppID>.", sby)
