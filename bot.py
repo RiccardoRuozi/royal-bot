@@ -15,7 +15,7 @@ while(True):
 	elif(cmd[0].startswith('/start')):
 		telegram.sendMessage("Ascolta, io mi starto quando mi pare. Anzi, quando @Steffo ha voglia di aprirmi.", sby)
 	elif(cmd[0].startswith('/playing')):
-		if(cmd[1] is not None):
+		if(len(cmd) >= 1):
 			n = steam.getNumberOfCurrentPlayers(cmd[1])
 			if(n == None):
 				telegram.sendMessage(chr(9888) + " L'app specificata non esiste!", sby)
