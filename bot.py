@@ -16,7 +16,7 @@ while(True):
 		telegram.sendMessage("Eh, oh. Sono cose che capitano.", sby)
 	elif(cmd[0].startswith('/start')):
 		print('/start')
-		telegram.sendMessage("Ascolta, io mi starto quando mi pare. Anzi, quando @Steffo ha voglia di aprirmi.", sby)
+		telegram.sendMessage("Ascolta, io mi starto quando mi pare. Anzi, quando Steffo ha voglia di aprirmi.", sby)
 	elif(cmd[0].startswith('/playing')):
 		print('/playing ...')
 		if(len(cmd) >= 2):
@@ -24,6 +24,7 @@ while(True):
 			if(n == None):
 				telegram.sendMessage(chr(9888) + " L'app specificata non esiste!", sby)
 			else:
+				if(cmd[1]
 				telegram.sendMessage("In questo momento, " + str(n) + " persone stanno giocando a [" + cmd[1] + "](https://steamdb.info/app/" + cmd[1] + "/graphs/)", sby)
 		else:
 			telegram.sendMessage(chr(9888) + " Non hai specificato un AppID!\nLa sintassi corretta è /playing <AppID>.", sby)
