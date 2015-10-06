@@ -35,4 +35,4 @@ while(True):
 			telegram.sendMessage(chr(9888) + " Non hai specificato un gioco! [Visualizza tutte le offerte](https://isthereanydeal.com/#/search:.;/scroll:%23gamelist).", sby)
 	elif(cmd[0].startswith('/rage')):
 		print('/rage')
-		telegram.sendAudio("BQADAgAD3wEAAh8GgAE6ZnLP5_gFMwI", sby)
+		telegram.sendDocument("BQADAgAD3wEAAh8GgAE6ZnLP5_gFMwI", sby)

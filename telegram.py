@@ -44,14 +44,14 @@ def forwardMessage(msg, sentby, to):
 	#Manda la richiesta ai server di Telegram.
 	requests.get("https://api.telegram.org/bot" + telegramtoken + "/forwardMessage", params=parametri)
 
-def sendAudio(audio, to):
+def sendDocument(doc, to):
 	"""Manda un audio a una chat."""
 	parametri = {
 		'chat_id': to,
-		'audio': audio,
+		'document': doc,
 	}
 	#Manda la richiesta ai server di Telegram.
-	requests.get("https://api.telegram.org/bot" + telegramtoken + "/sendAudio", params=parametri)
+	requests.get("https://api.telegram.org/bot" + telegramtoken + "/sendDocument", params=parametri)
 
 def sendLocation(lat, long, to):
 	"""Manda una posizione sulla mappa."""
