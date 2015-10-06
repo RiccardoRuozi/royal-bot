@@ -51,8 +51,7 @@ def sendAudio(audio, to):
 		'audio': audio,
 	}
 	#Manda la richiesta ai server di Telegram.
-	r = requests.get("https://api.telegram.org/bot" + telegramtoken + "/sendAudio", params=parametri)
-	print(r)
+	requests.get("https://api.telegram.org/bot" + telegramtoken + "/sendAudio", params=parametri)
 
 def sendLocation(lat, long, to):
 	"""Manda una posizione sulla mappa."""
