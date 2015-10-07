@@ -22,6 +22,7 @@ def getUpdates():
 					if('text' in data['result'][0]['message']):
 						return data['result'][0]['message']
 		else:
+			print(data);
 			except Exception("Telegram non ha risposto con OK alla richiesta dei nuovi messaggi")
 
 def sendMessage(content, to):
