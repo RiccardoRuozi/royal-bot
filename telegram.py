@@ -1,4 +1,4 @@
-﻿# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 import requests
 import filemanager
 
@@ -44,14 +44,51 @@ def forwardMessage(msg, sentby, to):
 	#Manda la richiesta ai server di Telegram.
 	requests.get("https://api.telegram.org/bot" + telegramtoken + "/forwardMessage", params=parametri)
 
+def sendAudio(aud, to):
+	"""Manda un file audio .mp3 a una chat."""
+	parametri = {
+		'chat_id': to,
+		'audio': aud,
+	}
+	#Manda la richiesta ai server di Telegram.
+	requests.get("https://api.telegram.org/bot" + telegramtoken + "/sendAudio", params=parametri)
+	
 def sendDocument(doc, to):
-	"""Manda un audio a una chat."""
+	"""Manda un file a una chat."""
 	parametri = {
 		'chat_id': to,
 		'document': doc,
 	}
 	#Manda la richiesta ai server di Telegram.
 	requests.get("https://api.telegram.org/bot" + telegramtoken + "/sendDocument", params=parametri)
+
+def sendSticker(stk, to):
+	"""Manda uno sticker a una chat."""
+	parametri = {
+		'chat_id': to,
+		'sticker': stk,
+	}
+	#Manda la richiesta ai server di Telegram.
+	requests.get("https://api.telegram.org/bot" + telegramtoken + "/sendSticker", params=parametri)
+	
+def sendVideo(vid, to):
+	"""Manda un video .mp4 a una chat."""
+	parametri = {
+		'chat_id': to,
+		'video': vid,
+	}
+	#Manda la richiesta ai server di Telegram.
+	requests.get("https://api.telegram.org/bot" + telegramtoken + "/sendVideo", params=parametri)
+
+def sendVoice(aud, to):
+	"""Manda un file audio .ogg con OPUS a una chat."""
+	parametri = {
+		'chat_id': to,
+		'voice': aud,
+	}
+	#Manda la richiesta ai server di Telegram.
+	requests.get("https://api.telegram.org/bot" + telegramtoken + "/sendVoice", params=parametri)
+
 
 def sendLocation(lat, long, to):
 	"""Manda una posizione sulla mappa."""
