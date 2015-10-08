@@ -8,7 +8,6 @@ while(True):
 	msg = telegram.getUpdates()
 	cmd = msg['text'].split(' ', 1)
 	sby = msg['chat']['id']
-	print(sby + ": " + repr(msg))
 	if(cmd[0].startswith('/ahnonlosoio')):
 		telegram.sendMessage("Ah, non lo so nemmeno io!", sby)
 	elif(cmd[0].startswith('/ehoh')):
