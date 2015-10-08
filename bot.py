@@ -1,6 +1,10 @@
 # -*- coding: utf-8 -*-
 import telegram
 import steam
+import random
+
+#Playlist di /rage, si riempie quando è vuota
+rage = []
 
 print("Bot avviato!")
 while(True):
@@ -29,4 +33,9 @@ while(True):
 		else:
 			telegram.sendMessage(chr(9888) + " Non hai specificato un gioco! [Visualizza tutte le offerte](https://isthereanydeal.com/#/search:.;/scroll:%23gamelist).", sby)
 	elif(cmd[0].startswith('/rage')):
-		telegram.sendDocument("BQADAgAD3wEAAh8GgAE6ZnLP5_gFMwI", sby)
+		if(len(rage) <= 0):
+			#Elenco degli audio disponibili
+			rage = ['BQADAgAD3wEAAh8GgAE6ZnLP5_gFMwI', 'BQADAgAD5AEAAh8GgAGu0FpK_X2DuQI', 'BQADAgAD5gEAAh8GgAGvUTJ9meZixwI', 'BQADAgAD5wEAAh8GgAHJSoUnCr9WxwI']
+			random.shuffle(rage)
+		ragesend = rage.pop()
+		telegram.sendDocument(ragesend, sby)
