@@ -12,17 +12,15 @@ def getUpdates():
 		parametri = {
 			'offset': filemanager.readFile("lastid.txt"), #Update ID del messaggio da leggere
 			'limit': 1, #Numero di messaggi da ricevere alla volta, lasciare 1
-			'timeout': 120, #Secondi da mantenere attiva la richiesta se non c'e' nessun messaggio
+			'timeout': 1500, #Secondi da mantenere attiva la richiesta se non c'e' nessun messaggio
 		}
 		data = requests.get("https://api.telegram.org/bot" + telegramtoken + "/getUpdates", params=parametri).json()
 		if(data['ok'] == True):
-			if(data['result'] != []):
+			if (data['result'] != []):
 				filemanager.writeFile("lastid.txt", str(data['result'][0]['update_id'] + 1))
-				#sporco hack per non far crashare il bot ogni 10 secondi; prima o poi capirò il senso di certe risposte nell'api di telegram
+				#Controlla che la risposta sia effettivamente un messaggio e non una notifica di servizio (tiziocaio si è unito alla chat)
 				if('message' in data['result'][0]):
-					if('text' in data['result'][0]['message']):
-						return data['result'][0]['message']
-		print(data)
+					return data['result'][0]['message']
 		time.sleep(5)
 
 def sendMessage(content, to):
