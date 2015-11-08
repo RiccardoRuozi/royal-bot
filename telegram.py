@@ -6,6 +6,13 @@ import time
 ##Per far funzionare questa libreria serve un file "lastid.txt" contenente l'update ID dell'ultimo messaggio non letto e un file "telegramapi.txt" contenente il token di accesso del bot assegnato da @BotFather.
 telegramtoken = filemanager.readFile('telegramapi.txt')
 
+def getMe():
+	"""Visualizza dati sul bot."""
+	#Manda la richiesta
+	data = requests.get("https://api.telegram.org/bot" + telegramtoken + "/getMe")
+	return data
+
+
 def getUpdates():
 	"""Ricevi gli ultimi aggiornamenti dal server di Telegram e restituisci l'ultimo messaggio non letto."""
 	while(True):	
