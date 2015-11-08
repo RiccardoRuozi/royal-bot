@@ -1,3 +1,4 @@
 @echo off
+:start
 bot.py
-pause
+goto :start
