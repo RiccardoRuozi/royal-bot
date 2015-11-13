@@ -43,6 +43,7 @@ def sendMessage(content, to):
 	
 def forwardMessage(msg, sentby, to):
 	"""Inoltra un messaggio mandato in un'altra chat."""
+	#Parametri del messaggio
 	parametri = {
 		'chat_id': to,
 		'from_chat_id': sentby,
@@ -50,16 +51,6 @@ def forwardMessage(msg, sentby, to):
 	}
 	#Manda la richiesta ai server di Telegram.
 	requests.get("https://api.telegram.org/bot" + telegramtoken + "/forwardMessage", params=parametri)
-
-def sendPhoto(pic, text, to):
-	"""Manda una foto compressa a una chat."""
-	parametri = {
-		'chat_id': to,
-		'photo': pic,
-		'caption': text,
-	}
-	#Manda la richiesta ai server di Telegram.
-	requests.get("https://api.telegram.org/bot" + telegramtoken + "/sendPhoto", params=parametri)
 
 def sendAudio(aud, to):
 	"""Manda un file audio .mp3 a una chat."""
