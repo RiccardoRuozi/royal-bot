@@ -55,6 +55,7 @@ def getuserbest(user, mode=0):
     :param mode: Modalità (0 = osu!, 1 = Taiko, 2 = CtB, 3 = osu!mania)
     """
     parametri = {
+        'k': apikey,
         'u': user,
         'm': mode,
     }
@@ -68,6 +69,7 @@ def getuserrecent(user, mode=0):
     :param mode: Modalità (0 = osu!, 1 = Taiko, 2 = CtB, 3 = osu!mania)
     """
     parametri = {
+        'k': apikey,
         'u': user,
         'm': mode,
     }
