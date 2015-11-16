@@ -7,7 +7,7 @@ import filemanager
 steamtoken = filemanager.readfile('steamapi.txt')
 
 
-def getPlayerSummaries(steamid):
+def getplayersummaries(steamid):
     """Ottieni i dati del profilo steam del giocatore di cui è stato specificato lo SteamID 32.
     :param steamid: SteamID 32 del giocatore
     """
@@ -21,7 +21,7 @@ def getPlayerSummaries(steamid):
     return r['response']['players'][0]
 
 
-def getNumberOfCurrentPlayers(appid):
+def getnumberofcurrentplayers(appid):
     """Ottieni il numero di giocatori che stanno giocando a un certo gioco.
     :param appid: ID Steam dell'applicazione
     """
@@ -39,7 +39,7 @@ def getNumberOfCurrentPlayers(appid):
         return None
 
 
-def getPlayerAchievements(appid, steamid):
+def getplayerachievements(appid, steamid):
     """Ottieni gli achievement del giocatore e del gioco specificato.
     :param appid: ID dell'applicazione
     :param steamid: SteamID 32 del giocatore
@@ -57,7 +57,7 @@ def getPlayerAchievements(appid, steamid):
     return r['playerstats']
 
 
-def getSteamLevel(steamid):
+def getsteamlevel(steamid):
     """Ottieni il livello del profilo di Steam.
     :param steamid: SteamID 32 del giocatore
     """
@@ -70,7 +70,7 @@ def getSteamLevel(steamid):
     return r['response']['player_level']
 
 
-def isPlayingSharedGame(appid, steamid):
+def isplayingsharedgame(appid, steamid):
     """Guarda se il gioco a cui sta giocando qualcuno è condiviso.
     Ah, Steam vuole sapere l'ID del gioco a cui sta giocando, quindi mettetecelo.
     :param appid: ID dell'applicazione

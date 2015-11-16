@@ -24,7 +24,7 @@ while True:
     elif cmd[0].startswith('/playing'):
         print(str(sby) + ": /playing")
         if len(cmd) >= 2:
-            n = steam.getNumberOfCurrentPlayers(cmd[1])
+            n = steam.getnumberofcurrentplayers(cmd[1])
             if n is None:
                 telegram.sendmessage(chr(9888) + " L'app specificata non esiste!", sby)
             else:
