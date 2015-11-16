@@ -61,7 +61,7 @@ while True:
         telegram.senddocument(ragesend, sby)
     elif cmd[0].startswith('/sbam'):
         print(str(sby) + ": /sbam ")
-        telegram.sendaudio('BQADAgADTQIAAh8GgAGj0jKIrpTgvQI', sby)
+        telegram.senddocument('BQADAgADTQIAAh8GgAGj0jKIrpTgvQI', sby)
     elif cmd[0].startswith('/osunow'):
         print(str(sby) + ": /osunow ")
         if cmd[1] is not None:
