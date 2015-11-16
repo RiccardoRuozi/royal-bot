@@ -2,6 +2,7 @@
 import telegram
 import steam
 import random
+import osu
 
 # Playlist di /rage, si riempie quando è vuota
 rage = []
@@ -61,3 +62,21 @@ while True:
     elif cmd[0].startswith('/sbam'):
         print(str(sby) + ": /sbam ")
         telegram.sendaudio('BQADAgADTQIAAh8GgAGj0jKIrpTgvQI', sby)
+    elif cmd[0].startswith('/osunow'):
+        print(str(sby) + ": /osunow ")
+        if cmd[1] is not None:
+            if cmd[2] is not None:
+                r = osu.getuserrecent(cmd[1], cmd[2])
+            else:
+                r = osu.getuserrecent(cmd[1])
+            link = "https://osu.ppy.sh/s/" + r['beatmap_id']
+            telegram.sendmessage("[Beatmap](" + link + ")\n*" +
+                                 r['rank'] + "*: " + r['score'] + "\n" +
+                                 "Combo x" + r['max_combo'] + "\n" +
+                                 "300: " + r['count300'] + "\n" +
+                                 "100: " + r['count100'] + "\n" +
+                                 "50: " + r['count50'] + "\n" +
+                                 "Miss: " + r['countmiss'], sby)
+        else:
+            # In futuro, il nome utente deve trovarlo da solo in base all'username di provenienza.
+            telegram.sendmessage(chr(9888) + " Non hai specificato un nome utente!", sby)
