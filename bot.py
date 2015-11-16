@@ -64,8 +64,8 @@ while True:
         telegram.senddocument('BQADAgADTQIAAh8GgAGj0jKIrpTgvQI', sby)
     elif cmd[0].startswith('/osunow'):
         print(str(sby) + ": /osunow ")
-        if cmd[1] is not None:
-            if cmd[2] is not None:
+        if len(cmd) >= 2:
+            if len(cmd) >= 3:
                 r = osu.getuserrecent(cmd[1], cmd[2])
             else:
                 r = osu.getuserrecent(cmd[1])

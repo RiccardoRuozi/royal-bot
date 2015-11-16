@@ -72,4 +72,4 @@ def getuserrecent(user, mode=0):
         'm': mode,
     }
     r = requests.get("https://osu.ppy.sh/api/get_user_recent", params=parametri).json()
-    return r[0]
+    return r
