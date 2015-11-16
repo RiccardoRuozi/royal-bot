@@ -69,14 +69,14 @@ while True:
                 r = osu.getuserrecent(cmd[1], cmd[2])
             else:
                 r = osu.getuserrecent(cmd[1])
-            link = "https://osu.ppy.sh/s/" + r['beatmap_id']
-            telegram.sendmessage("[Beatmap](" + link + ")\n*" +
+            link = "https://osu.ppy.sh/b/" + r['beatmap_id']
+            telegram.sendmessage("[Beatmap " + r['beatmap_id'] + "](" + link + ")\n*" +
                                  r['rank'] + "*: " + r['score'] + "\n" +
-                                 "Combo x" + r['max_combo'] + "\n" +
-                                 "300: " + r['count300'] + "\n" +
-                                 "100: " + r['count100'] + "\n" +
-                                 "50: " + r['count50'] + "\n" +
-                                 "Miss: " + r['countmiss'], sby)
+                                 "*Combo* x" + r['maxcombo'] + "\n" +
+                                 "*300*: " + r['count300'] + "\n" +
+                                 "*100*: " + r['count100'] + "\n" +
+                                 "*50*: " + r['count50'] + "\n" +
+                                 "*Miss*: " + r['countmiss'], sby)
         else:
             # In futuro, il nome utente deve trovarlo da solo in base all'username di provenienza.
             telegram.sendmessage(chr(9888) + " Non hai specificato un nome utente!", sby)
