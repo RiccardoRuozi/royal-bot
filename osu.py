@@ -17,7 +17,7 @@ def getbeatmap(num):
     return r[0]
 
 
-def getuser(user, mode):
+def getuser(user, mode=0):
     """Ottieni informazioni su un utente.
     :param user: Username o ID dell'utente
     :param mode: Modalità (0 = osu!, 1 = Taiko, 2 = CtB, 3 = osu!mania)
@@ -31,7 +31,7 @@ def getuser(user, mode):
     return r[0]
 
 
-def getscores(beatmap, mode, limit=100, user=None):
+def getscores(beatmap, mode=0, limit=100, user=None):
     """Ottieni i migliori 100 punteggi di una beatmap O il punteggio dell'utente specificato
     :param beatmap: ID della beatmap
     :param mode: Modalità (0 = osu!, 1 = Taiko, 2 = CtB, 3 = osu!mania)
@@ -49,7 +49,7 @@ def getscores(beatmap, mode, limit=100, user=None):
     return r
 
 
-def getuserbest(user, mode):
+def getuserbest(user, mode=0):
     """Ottieni i record di un utente. Immagino siano i punteggi con più pp?
     :param user: Username o ID dell'utente
     :param mode: Modalità (0 = osu!, 1 = Taiko, 2 = CtB, 3 = osu!mania)
@@ -62,7 +62,7 @@ def getuserbest(user, mode):
     return r
 
 
-def getuserrecent(user, mode):
+def getuserrecent(user, mode=0):
     """Ottieni il punteggio dell'ultima canzone giocata da un utente.
     :param user: Username o ID dell'utente
     :param mode: Modalità (0 = osu!, 1 = Taiko, 2 = CtB, 3 = osu!mania)
