@@ -72,7 +72,7 @@ def getuserrecent(user, mode=0):
         'k': apikey,
         'u': user,
         'm': mode,
+        'limit': 1,
     }
     r = requests.get("https://osu.ppy.sh/api/get_user_recent", params=parametri).json()
-    if len(r) >= 1:
-        return r[0]
+    return r[0]

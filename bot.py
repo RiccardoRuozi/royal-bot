@@ -62,16 +62,20 @@ while True:
     elif cmd[0].startswith('/sbam'):
         print(str(sby) + ": /sbam ")
         telegram.senddocument('BQADAgADTQIAAh8GgAGj0jKIrpTgvQI', sby)
+    elif cmd[0].startswith('/wololo'):
+        print(str(sby) + ": /wololo ")
+        telegram.senddocument('BQADAgADVAIAAh8GgAHqeZAqbBuFAwI', sby)
     elif cmd[0].startswith('/osunow'):
         print(str(sby) + ": /osunow ")
         if len(cmd) >= 2:
+            # Stavolta ci sono 3 argomenti... forse
+            cmd = msg['text'].split(' ', 2)
             if len(cmd) >= 3:
                 r = osu.getuserrecent(cmd[1], cmd[2])
             else:
                 r = osu.getuserrecent(cmd[1])
-            link = "https://osu.ppy.sh/b/" + r['beatmap_id']
-            telegram.sendmessage("[Beatmap " + r['beatmap_id'] + "](" + link + ")\n*" +
-                                 r['rank'] + "*: " + r['score'] + "\n" +
+            telegram.sendmessage("[Beatmap " + r['beatmap_id'] + "](" + 'https://osu.ppy.sh/b/' + r['beatmap_id'] +
+                                 ")\n*" + r['rank'] + "*\n*Punti*: " + r['score'] + "\n" +
                                  "*Combo* x" + r['maxcombo'] + "\n" +
                                  "*300*: " + r['count300'] + "\n" +
                                  "*100*: " + r['count100'] + "\n" +
