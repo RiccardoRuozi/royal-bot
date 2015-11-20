@@ -7,6 +7,19 @@ import osu
 # Playlist di /rage, si riempie quando è vuota
 rage = []
 
+# Elenco degli audio di /wololo
+wololo = ['BQADAgADWAIAAh8GgAGP53EPnRyiYwI', 'BQADAgADWQIAAh8GgAHIF861pVS1aAI', 'BQADAgADWgIAAh8GgAHdq5n4ZJwVBQI',
+          'BQADAgADWwIAAh8GgAFBI_HmkOU-PgI', 'BQADAgADXAIAAh8GgAFjAmhg3-IOIQI', 'BQADAgADXQIAAh8GgAFf8P21MBzx3gI',
+          'BQADAgADXgIAAh8GgAE5LOgedb-1RQI', 'BQADAgADYAIAAh8GgAFiAcVphkyzRQI', 'BQADAgADYQIAAh8GgAFnZa5sWEQv6QI',
+          'BQADAgADYgIAAh8GgAHdnlwB6ATJogI', 'BQADAgADYwIAAh8GgAGMuHLrY94CXwI', 'BQADAgADZAIAAh8GgAE7SxHEvU6pLAI',
+          'BQADAgADZQIAAh8GgAFfUK7GPQHLhgI', 'BQADAgADZgIAAh8GgAGDx56hsKHh0wI', 'BQADAgADZwIAAh8GgAF3etjqkzFDxAI',
+          'BQADAgADaAIAAh8GgAHCsHs0NNMnAwI', 'BQADAgADaQIAAh8GgAGEQP7WW-gVhAI', 'BQADAgADagIAAh8GgAHrOerh1qI1jgI',
+          'BQADAgADawIAAh8GgAFR8ckrXWOw6gI', 'BQADAgADbAIAAh8GgAFaQm4cTda94AI', 'BQADAgADbQIAAh8GgAG2X-qRdGpmewI',
+          'BQADAgADbgIAAh8GgAHzrM2auYrj-AI', 'BQADAgADbwIAAh8GgAFq5jafCpl8PAI', 'BQADAgADcAIAAh8GgAGY69r5eir53QI',
+          'BQADAgADcQIAAh8GgAH2Uj-JSM-4BwI', 'BQADAgADcgIAAh8GgAFGt6FRsV9kmAI', 'BQADAgADcwIAAh8GgAHSw9dKaqbZjgI',
+          'BQADAgADdAIAAh8GgAF0IeDeuxaQ-AI', 'BQADAgADdQIAAh8GgAHJRO6c5-bodwI', 'BQADAgADdgIAAh8GgAEyyCSLdV_dMgI',
+          'BQADAgADdwIAAh8GgAHrLJKjv16lWwI', 'BQADAgADeAIAAh8GgAFkaz8qZREelQI', 'BQADAgADeQIAAh8GgAG1rPQHEIjf6AI']
+
 print("Bot avviato!")
 while True:
     # Guarda il comando ricevuto.
@@ -63,8 +76,11 @@ while True:
         print(str(sby) + ": /sbam ")
         telegram.senddocument('BQADAgADTQIAAh8GgAGj0jKIrpTgvQI', sby)
     elif cmd[0].startswith('/wololo'):
-        print(str(sby) + ": /wololo ")
-        telegram.senddocument('BQADAgADVAIAAh8GgAHqeZAqbBuFAwI', sby)
+        print(str(sby) + ": /wololo")
+        if len(cmd) >= 2:
+            telegram.senddocument(wololo[int(cmd[1]) - 1], sby)
+        else:
+            telegram.senddocument('BQADAgADZwIAAh8GgAF3etjqkzFDxAI', sby)
     elif cmd[0].startswith('/osunow'):
         print(str(sby) + ": /osunow ")
         if len(cmd) >= 2:
