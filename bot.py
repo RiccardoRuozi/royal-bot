@@ -108,4 +108,4 @@ while True:
             else:
                 m = 100
             n = random.randrange(m)
-            telegram.sendmessage("Roll da 1 a" + str(m) + ": " + str(n), sby)
+            telegram.sendmessage("Roll da 1 a " + str(m) + ": " + str(n), sby)
