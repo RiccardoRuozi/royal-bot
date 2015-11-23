@@ -20,6 +20,8 @@ wololo = ['BQADAgADWAIAAh8GgAGP53EPnRyiYwI', 'BQADAgADWQIAAh8GgAHIF861pVS1aAI', 
           'BQADAgADdAIAAh8GgAF0IeDeuxaQ-AI', 'BQADAgADdQIAAh8GgAHJRO6c5-bodwI', 'BQADAgADdgIAAh8GgAEyyCSLdV_dMgI',
           'BQADAgADdwIAAh8GgAHrLJKjv16lWwI', 'BQADAgADeAIAAh8GgAFkaz8qZREelQI', 'BQADAgADeQIAAh8GgAG1rPQHEIjf6AI']
 
+random.seed()
+
 print("Bot avviato!")
 while True:
     # Guarda il comando ricevuto.
@@ -46,8 +48,8 @@ while True:
                     telegram.sendmessage('In questo momento, ' + str(n) + ' persone stanno giocando a [' + cmd[1] +
                                          '](https://steamdb.info/app/' + cmd[1] + '/graphs/)', sby)
             else:
-                telegram.sendmessage(chr(9888) + ' Non hai specificato un AppID!\nLa sintassi corretta è /playing <AppID>.',
-                                     sby)
+                telegram.sendmessage(chr(9888) + ' Non hai specificato un AppID!\n' +
+                                     'La sintassi corretta è /playing <AppID>.', sby)
         elif cmd[0].startswith('/saldistim'):
             print(str(sby) + ": /saldistim")
             if len(cmd) >= 2:
@@ -85,7 +87,6 @@ while True:
         elif cmd[0].startswith('/osunow'):
             print(str(sby) + ": /osunow ")
             if len(cmd) >= 2:
-                # Stavolta ci sono 3 argomenti... forse
                 cmd = msg['text'].split(' ', 2)
                 if len(cmd) >= 3:
                     r = osu.getuserrecent(cmd[1], cmd[2])
@@ -101,3 +102,10 @@ while True:
             else:
                 # In futuro, il nome utente deve trovarlo da solo in base all'username di provenienza.
                 telegram.sendmessage(chr(9888) + " Non hai specificato un nome utente!", sby)
+        elif cmd[0].startswith('/roll'):
+            if len(cmd) >= 2:
+                m = int(cmd[1])
+            else:
+                m = 100
+            n = random.randrange(m)
+            telegram.sendmessage("Roll da 1 a" + str(m) + ": " + n)
