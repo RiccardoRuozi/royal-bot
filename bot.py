@@ -59,7 +59,7 @@ while True:
                     ";/scroll:%23gamelist) completata.", sby)
             else:
                 telegram.sendmessage(chr(9888) +
-                                     ' Non hai specificato un gioco!' +
+                                     ' Non hai specificato un gioco! ' +
                                      '[Visualizza tutto](https://isthereanydeal.com/#/search:.;/scroll:%23gamelist).',
                                      sby)
         elif cmd[0].startswith('/rage'):
