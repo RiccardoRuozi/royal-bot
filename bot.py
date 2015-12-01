@@ -145,3 +145,6 @@ while True:
                 m = 100
             n = random.randrange(m)
             telegram.sendmessage("Roll da 1 a " + str(m) + ": *" + str(n) + "*", sby)
+        elif cmd[0].startswith('/automa'):
+            print(str(sby) + ": /automa ")
+            telegram.sendmessage("Automaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa funzionaaaaaaaaaa cavolo", sby)
