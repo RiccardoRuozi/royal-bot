@@ -20,26 +20,60 @@ wololo = ['BQADAgADWAIAAh8GgAGP53EPnRyiYwI', 'BQADAgADWQIAAh8GgAHIF861pVS1aAI', 
           'BQADAgADdAIAAh8GgAF0IeDeuxaQ-AI', 'BQADAgADdQIAAh8GgAHJRO6c5-bodwI', 'BQADAgADdgIAAh8GgAEyyCSLdV_dMgI',
           'BQADAgADdwIAAh8GgAHrLJKjv16lWwI', 'BQADAgADeAIAAh8GgAFkaz8qZREelQI', 'BQADAgADeQIAAh8GgAG1rPQHEIjf6AI']
 
+# Dizionario con i nomi utenti di osu!
+# Se qualcuno cambia nome utente di Telegram, lo cambi anche QUI.
+osunames = {
+    'steffo': 'SteffoRYG',
+    'evilbalu': 'NemesisRYG',
+    'fultz': 'ftz99',
+    'ilgattopardo': 'gattopardo',
+    'frankfrankfrank': 'FrankezRYG',
+    'fedyal': 'fedececco',
+    'acterryg': 'Acter1',
+    'maxsensei': 'MaxSensei',
+    'heisendoc': 'ImHeisenberg',
+    'thevagginadestroyer': 'barboll',
+    'cosimo03': 'Cosimo03',
+    'albertino04': 'Alby1',
+    'voltaggio': 'voltaggio',
+    'tauei': 'tauei',
+    'boni3099': 'boni3099',
+    'mrdima98': 'MRdima98',
+}
+
 random.seed()
 
+# Ciclo principale del bot! Mettete qui la roba che deve fare.
 print("Bot avviato!")
 while True:
     # Guarda il comando ricevuto.
     msg = telegram.getupdates()
+    # Se il messaggio è un comando...
     if 'text' in msg:
+        # Dividilo con degli spazi e metti il comando in cmd[0] e gli argomenti in cmd[1]
         cmd = msg['text'].split(' ', 1)
+        # Guarda l'ID della chat in cui è stato inviato
         sby = msg['chat']['id']
+        # Nome da visualizzare nella console per capire chi accidenti è che invia messaggi strani
+        if 'username' in msg['from']:
+            # Visualizza l'username se esiste
+            unm = '@' + msg['from']['username']
+        else:
+            # Altrimenti, visualizza l'userID
+            unm = str(msg['from']['id'])
+        # Riconosci il comando.
+        # Viene usato startswith perchè il comando potrebbe anche essere inviato in forma /ciao@RoyalBot.
         if cmd[0].startswith('/ahnonlosoio'):
-            print(str(sby) + ": /ahnonlosoio")
+            print(unm + ": /ahnonlosoio")
             telegram.sendmessage("Ah, non lo so nemmeno io!", sby)
         elif cmd[0].startswith('/ehoh'):
-            print(str(sby) + ": /ehoh")
+            print(unm + ": /ehoh")
             telegram.sendmessage("Eh, oh. Sono cose che capitano.", sby)
         elif cmd[0].startswith('/start'):
-            print(str(sby) + ": /start")
+            print(unm + ": /start")
             telegram.sendmessage('Ascolta, io mi starto quando mi pare. Anzi, quando Steffo ha voglia di aprirmi.', sby)
         elif cmd[0].startswith('/playing'):
-            print(str(sby) + ": /playing")
+            print(unm + ": /playing")
             if len(cmd) >= 2:
                 n = steam.getnumberofcurrentplayers(cmd[1])
                 if n is None:
@@ -51,18 +85,21 @@ while True:
                 telegram.sendmessage(chr(9888) + ' Non hai specificato un AppID!\n' +
                                      'La sintassi corretta è /playing <AppID>.', sby)
         elif cmd[0].startswith('/saldistim'):
-            print(str(sby) + ": /saldistim")
+            print(unm + ": /saldistim")
             if len(cmd) >= 2:
                 telegram.sendmessage(
-                    'Ricerca di offerte di ' +
+                    'Visualizza le offerte di ' +
                     '[' + cmd[1] + '](https://isthereanydeal.com/#/search:' + cmd[1].replace(' ', '%20') +
-                    ";/scroll:%23gamelist) completata.", sby)
+                    ";/scroll:%23gamelist).", sby)
             else:
                 telegram.sendmessage(chr(9888) +
                                      ' Non hai specificato un gioco! ' +
                                      '[Visualizza tutto](https://isthereanydeal.com/#/search:.;/scroll:%23gamelist).',
                                      sby)
         elif cmd[0].startswith('/rage'):
+            # Se qualcuno ne ha voglia, qui si potrebbe aggiungere la selezione degli audio come argomento,
+            # invece che fare una playlist casuale...
+            # Se non ci sono rage nella playlist, riempila e mescolala!
             if len(rage) <= 0:
                 # Elenco degli audio disponibili
                 rage = ['BQADAgADEgIAAh8GgAGyLs6mbzxpVAI', 'BQADAgADEwIAAh8GgAGrT-MlTymm5gI',
@@ -73,20 +110,21 @@ while True:
                         'BQADAgAD9AEAAh8GgAE427GcA8FCqQI', 'BQADAgADMgIAAh8GgAEpusE7OCOXYgI',
                         'BQADAgADMwIAAh8GgAFffavzkvOkKAI', 'BQADAgADTAIAAh8GgAEgantYpHT5IwI']
                 random.shuffle(rage)
+            # Estrai un audio a caso tra quelli nella playlist e rimuovilo.
             ragesend = rage.pop()
-            print(str(sby) + ": /rage " + ragesend)
+            print(unm + ": /rage")
             telegram.senddocument(ragesend, sby)
         elif cmd[0].startswith('/sbam'):
-            print(str(sby) + ": /sbam ")
+            print(unm + ": /sbam")
             telegram.senddocument('BQADAgADTQIAAh8GgAGj0jKIrpTgvQI', sby)
         elif cmd[0].startswith('/wololo'):
-            print(str(sby) + ": /wololo")
+            print(unm + ": /wololo")
             if len(cmd) >= 2:
                 telegram.senddocument(wololo[int(cmd[1]) - 1], sby)
             else:
                 telegram.senddocument('BQADAgADZwIAAh8GgAF3etjqkzFDxAI', sby)
         elif cmd[0].startswith('/osunow'):
-            print(str(sby) + ": /osunow ")
+            print(unm + ": /osunow")
             if len(cmd) >= 2:
                 cmd = msg['text'].split(' ', 2)
                 if len(cmd) >= 3:
@@ -96,7 +134,8 @@ while True:
                 r = osu.getuserrecent(cmd[1], mode)
                 if mode == 0:
                     telegram.sendmessage("*Osu!*\n" +
-                                         "[Beatmap " + r['beatmap_id'] + "](" + 'https://osu.ppy.sh/b/' + r['beatmap_id'] +
+                                         "[Beatmap " + r['beatmap_id'] + "](" + 'https://osu.ppy.sh/b/' + r[
+                                             'beatmap_id'] +
                                          ")\n*" + r['rank'] + "*\n*Punti*: " + r['score'] + "\n" +
                                          "*Combo* x" + r['maxcombo'] + "\n" +
                                          "*300*: " + r['count300'] + "\n" +
@@ -107,7 +146,8 @@ while True:
                                          "*Miss*: " + r['countmiss'], sby)
                 elif mode == 1:
                     telegram.sendmessage("*Taiko*\n" +
-                                         "[Beatmap " + r['beatmap_id'] + "](" + 'https://osu.ppy.sh/b/' + r['beatmap_id'] +
+                                         "[Beatmap " + r['beatmap_id'] + "](" + 'https://osu.ppy.sh/b/' + r[
+                                             'beatmap_id'] +
                                          ")\n*" + r['rank'] + "*\n*Punti*: " + r['score'] + "\n" +
                                          "*Combo* x" + r['maxcombo'] + "\n" +
                                          "*Great*: " + r['count300'] + "\n" +
@@ -117,7 +157,8 @@ while True:
                                          "*Bad*: " + r['countmiss'], sby)
                 elif mode == 2:
                     telegram.sendmessage("*Catch the Beat*\n" +
-                                         "[Beatmap " + r['beatmap_id'] + "](" + 'https://osu.ppy.sh/b/' + r['beatmap_id'] +
+                                         "[Beatmap " + r['beatmap_id'] + "](" + 'https://osu.ppy.sh/b/' + r[
+                                             'beatmap_id'] +
                                          ")\n*" + r['rank'] + "*\n*Punti*: " + r['score'] + "\n" +
                                          "*Combo* x" + r['maxcombo'] + "\n" +
                                          "*Fruit*: " + r['count300'] + "\n" +
@@ -126,7 +167,8 @@ while True:
                                          "*Miss*: " + r['countmiss'], sby)
                 elif mode == 3:
                     telegram.sendmessage("*Osu!mania*\n" +
-                                         "[Beatmap " + r['beatmap_id'] + "](" + 'https://osu.ppy.sh/b/' + r['beatmap_id'] +
+                                         "[Beatmap " + r['beatmap_id'] + "](" + 'https://osu.ppy.sh/b/' + r[
+                                             'beatmap_id'] +
                                          ")\n*" + r['rank'] + "*\n*Punti*: " + r['score'] + "\n" +
                                          "*Combo* x" + r['maxcombo'] + "\n" +
                                          "_Rainbow_ *300*: " + r['countgeki'] + "\n" +
@@ -136,8 +178,20 @@ while True:
                                          "*50*: " + r['count50'] + "\n" +
                                          "*Miss*: " + r['countmiss'], sby)
             else:
-                # In futuro, il nome utente deve trovarlo da solo in base all'username di provenienza.
-                telegram.sendmessage(chr(9888) + " Non hai specificato un nome utente!", sby)
+                # E' un po' una scorciatoia eh, peeerò...
+                if str(unm).lower() in osunames:
+                    r = osu.getuserrecent(osunames[str(unm).lower()])
+                    telegram.sendmessage("*Osu!*\n" +
+                                         "[Beatmap " + r['beatmap_id'] + "](" + 'https://osu.ppy.sh/b/' + r[
+                                             'beatmap_id'] +
+                                         ")\n*" + r['rank'] + "*\n*Punti*: " + r['score'] + "\n" +
+                                         "*Combo* x" + r['maxcombo'] + "\n" +
+                                         "*300*: " + r['count300'] + "\n" +
+                                         "*100*: " + r['count100'] + "\n" +
+                                         "*50*: " + r['count50'] + "\n" +
+                                         "*Awesome*: " + r['countkatu'] + "\n" +
+                                         "*Good*: " + r['countgeki'] + "\n" +
+                                         "*Miss*: " + r['countmiss'], sby)
         elif cmd[0].startswith('/roll'):
             if len(cmd) >= 2:
                 m = int(cmd[1])
@@ -146,5 +200,5 @@ while True:
             n = random.randrange(m)
             telegram.sendmessage("Roll da 1 a " + str(m) + ": *" + str(n) + "*", sby)
         elif cmd[0].startswith('/automah'):
-            print(str(sby) + ": /automah ")
+            print(unm + ": /automah")
             telegram.sendmessage("Automaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", sby)
