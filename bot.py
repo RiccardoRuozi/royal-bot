@@ -3,6 +3,8 @@ import telegram
 import steam
 import random
 import osu
+import hearthstone
+import sys
 
 # Playlist di /rage, si riempie quando è vuota
 rage = []
@@ -204,3 +206,45 @@ while True:
         elif cmd[0].startswith('/automah'):
             print(unm + ": /automah")
             telegram.sendmessage("Automaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", sby)
+        elif cmd[0].startswith('/hs'):
+            print(unm + ": /hs")
+            try:
+                r = hearthstone.card(cmd[1])[0]
+            except ValueError:
+                telegram.sendmessage(chr(9888) + "La carta specificata non esiste!", sby)
+            else:
+                # Si trova nelle bustine
+                if 'howToGet' not in r:
+                    if 'cardSet' in r:
+                        r['howToGet'] = "Trovala nelle bustine " + r['cardSet'] + "."
+                    else:
+                        r['howToGet'] = "Inottenibile."
+                # Nessuna classe
+                if 'playerClass' not in r:
+                    r['playerClass'] = "Neutral"
+                # Testo principale
+                if r['type'] == "Spell":
+                    text = str("[" + r['name'] + "](" + r['img'] + ") "
+                               "(" + r['rarity'] + ")\n" +
+                               r['playerClass'] + "\n" +
+                               str(r['cost']) + " mana\n" +
+                               r['text'] + "\n" +
+                               r['howToGet'] + "\n\n_" +
+                               r['flavor'] + "_\n")
+                elif r['type'] == "Minion":
+                    text = str("[" + r['name'] + "](" + r['img'] + ") "
+                               "(" + r['rarity'] + ")\n" +
+                               r['playerClass'] + "\n" +
+                               str(r['cost']) + " mana\n" +
+                               str(r['attack']) + " attacco\n" +
+                               str(r['health']) + " salute\n" +
+                               r['text'] + "\n" +
+                               r['howToGet'] + "\n\n_" +
+                               r['flavor'] + "_\n")
+                telegram.sendmessage(text, sby)
+        elif cmd[0].startswith('/restart'):
+            if unm == "@Steffo":
+                telegram.sendmessage("Riavvio confermato.", sby)
+                sys.exit(0)
+
+
