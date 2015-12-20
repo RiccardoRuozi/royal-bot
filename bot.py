@@ -208,6 +208,7 @@ while True:
             telegram.sendmessage("Automaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", sby)
         elif cmd[0].startswith('/hs'):
             print(unm + ": /hs")
+            r = None
             try:
                 r = hearthstone.card(cmd[1])[0]
             except ValueError:
@@ -222,6 +223,15 @@ while True:
                 # Nessuna classe
                 if 'playerClass' not in r:
                     r['playerClass'] = "Neutral"
+                # Nessun effetto
+                if 'text' not in r:
+                    r['text'] = "_Nessun effetto._"
+                # Nessuna rarità
+                if 'rarity' not in r:
+                    r['rarity'] = "None"
+                # Nessuna descrizione
+                if 'flavor' not in r:
+                    r['flavor'] = "Nessuna descrizione."
                 # Testo principale
                 if r['type'] == "Spell":
                     text = str("[" + r['name'] + "](" + r['img'] + ") "
@@ -241,6 +251,24 @@ while True:
                                r['text'] + "\n" +
                                r['howToGet'] + "\n\n_" +
                                r['flavor'] + "_\n")
+                elif r['type'] == "Weapon":
+                    text = str("[" + r['name'] + "](" + r['img'] + ") "
+                               "(" + r['rarity'] + ")\n" +
+                               r['playerClass'] + "\n" +
+                               str(r['cost']) + " mana\n" +
+                               str(r['attack']) + " attacco\n" +
+                               str(r['durability']) + " integrita'\n" +
+                               r['text'] + "\n" +
+                               r['howToGet'] + "\n\n_" +
+                               r['flavor'] + "_\n")
+                elif r['type'] == "Hero Power":
+                    text = str("[" + r['name'] + "](" + r['img'] + ")\n" +
+                               r['playerClass'] + "\n" +
+                               str(r['cost']) + " mana\n" +
+                               r['text'] + "\n")
+                elif r['type'] == "Hero":
+                    text = str("[" + r['name'] + "](" + r['img'] + ")\n" +
+                               str(r['health']) + " salute\n")
                 telegram.sendmessage(text, sby)
         elif cmd[0].startswith('/restart'):
             if unm == "@Steffo":
