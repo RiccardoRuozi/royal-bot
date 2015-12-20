@@ -179,8 +179,8 @@ while True:
                                          "*Miss*: " + r['countmiss'], sby)
             else:
                 # E' un po' una scorciatoia eh, peeerò...
-                if str(unm).lower() in osunames:
-                    r = osu.getuserrecent(osunames[str(unm).lower()])
+                if unm[1:].lower() in osunames:
+                    r = osu.getuserrecent(osunames[unm[1:].lower()], 0)
                     telegram.sendmessage("*Osu!*\n" +
                                          "[Beatmap " + r['beatmap_id'] + "](" + 'https://osu.ppy.sh/b/' + r[
                                              'beatmap_id'] +
@@ -192,6 +192,8 @@ while True:
                                          "*Awesome*: " + r['countkatu'] + "\n" +
                                          "*Good*: " + r['countgeki'] + "\n" +
                                          "*Miss*: " + r['countmiss'], sby)
+                else:
+                    print("nope")
         elif cmd[0].startswith('/roll'):
             if len(cmd) >= 2:
                 m = int(cmd[1])
