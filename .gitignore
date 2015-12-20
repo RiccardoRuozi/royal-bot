@@ -3,4 +3,5 @@ lastid.txt
 osuapi.txt
 steamapi.txt
 telegramapi.txt
+hearthstoneapi.txt
 *.pyc
