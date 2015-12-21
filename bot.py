@@ -202,10 +202,11 @@ while True:
             else:
                 m = 100
             n = random.randrange(m)
-            telegram.sendmessage("Roll da 1 a " + str(m) + ": *" + str(n) + "*", sby)
+            telegram.sendmessage("Numero casuale da 1 a " + str(m) + ":\n*" + str(n) + "*", sby)
         elif cmd[0].startswith('/automah'):
             print(unm + ": /automah")
-            telegram.sendmessage("Automaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", sby)
+            # Quando mi manda l'audio GoToB?
+            telegram.sendmessage("Automaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa! Devi funzionare, cavolo!", sby)
         elif cmd[0].startswith('/hs'):
             print(unm + ": /hs")
             r = None
