@@ -127,8 +127,8 @@ while True:
                 telegram.senddocument(wololo[int(cmd[1]) - 1], sby)
             else:
                 telegram.senddocument('BQADAgADZwIAAh8GgAF3etjqkzFDxAI', sby)
-        elif cmd[0].startswith('/osunow'):
-            print(unm + ": /osunow")
+        elif cmd[0].startswith('/osu'):
+            print(unm + ": /osu")
             if len(cmd) >= 2:
                 cmd = msg['text'].split(' ', 2)
                 if len(cmd) >= 3:
@@ -196,8 +196,6 @@ while True:
                                          "*Awesome*: " + r['countkatu'] + "\n" +
                                          "*Good*: " + r['countgeki'] + "\n" +
                                          "*Miss*: " + r['countmiss'], sby)
-                else:
-                    print("nope")
         elif cmd[0].startswith('/roll'):
             if len(cmd) >= 2:
                 m = int(cmd[1])
