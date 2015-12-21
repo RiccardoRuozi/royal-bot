@@ -233,6 +233,7 @@ while True:
                 if 'flavor' not in r:
                     r['flavor'] = "Nessuna descrizione."
                 # Testo principale
+                text = None
                 if r['type'] == "Spell":
                     text = str("[" + r['name'] + "](" + r['img'] + ") "
                                "(" + r['rarity'] + ")\n" +
