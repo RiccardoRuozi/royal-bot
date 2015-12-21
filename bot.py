@@ -71,9 +71,6 @@ while True:
         elif cmd[0].startswith('/ehoh'):
             print(unm + ": /ehoh")
             telegram.sendmessage("Eh, oh. Sono cose che capitano.", sby)
-        elif cmd[0].startswith('/start'):
-            print(unm + ": /start")
-            telegram.sendmessage('Ascolta, io mi starto quando mi pare. Anzi, quando Steffo ha voglia di aprirmi.', sby)
         elif cmd[0].startswith('/playing'):
             print(unm + ": /playing")
             if len(cmd) >= 2:
