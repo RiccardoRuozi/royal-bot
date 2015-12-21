@@ -83,8 +83,8 @@ while True:
             else:
                 telegram.sendmessage(chr(9888) + ' Non hai specificato un AppID!\n' +
                                      'La sintassi corretta è /playing <AppID>.', sby)
-        elif cmd[0].startswith('/saldistim'):
-            print(unm + ": /saldistim")
+        elif cmd[0].startswith('/saldi'):
+            print(unm + ": /saldi")
             if len(cmd) >= 2:
                 telegram.sendmessage(
                     'Visualizza le offerte di ' +
