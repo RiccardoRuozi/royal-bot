@@ -110,7 +110,12 @@ while True:
                         'BQADAgAD5gEAAh8GgAGvUTJ9meZixwI', 'BQADAgAD5wEAAh8GgAHJSoUnCr9WxwI',
                         'BQADAgAD6QEAAh8GgAExL8N1AWkDjgI', 'BQADAgAD6wEAAh8GgAFtkzazUqUEtwI',
                         'BQADAgAD9AEAAh8GgAE427GcA8FCqQI', 'BQADAgADMgIAAh8GgAEpusE7OCOXYgI',
-                        'BQADAgADMwIAAh8GgAFffavzkvOkKAI', 'BQADAgADTAIAAh8GgAEgantYpHT5IwI']
+                        'BQADAgADMwIAAh8GgAFffavzkvOkKAI', 'BQADAgADTAIAAh8GgAEgantYpHT5IwI',
+                        'BQADAgADpgIAAh8GgAFu0RmpD3Mw7wI', 'BQADAgADpwIAAh8GgAGUgGD5t1omDwI',
+                        'BQADAgADqAIAAh8GgAFNZ_rptavtKAI', 'BQADAgADqQIAAh8GgAGtd74-VO-J1AI',
+                        'BQADAgADqgIAAh8GgAGa5MDYCi7viwI', 'BQADAgADqwIAAh8GgAGM3vOELWDm3AI',
+                        'BQADAgADrAIAAh8GgAHF15LlwjLMbwI', 'BQADAgADrQIAAh8GgAHjd6Fdc0s0PwI',
+                        'BQADAgADrgIAAh8GgAE2T5cM_TCQVQI', 'BQADAgADrwIAAh8GgAGYcc3JtCsZ1AI']
                 random.shuffle(rage)
             # Estrai un audio a caso tra quelli nella playlist e rimuovilo.
             ragesend = rage.pop()
