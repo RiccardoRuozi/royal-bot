@@ -95,7 +95,7 @@ while True:
                                      ' Non hai specificato un gioco! ' +
                                      '[Visualizza tutto](https://isthereanydeal.com/#/search:.;/scroll:%23gamelist).',
                                      sby)
-        elif cmd[0].startswith('/rage'):
+        elif cmd[0].startswith('/audio'):
             # Se qualcuno ne ha voglia, qui si potrebbe aggiungere la selezione degli audio come argomento,
             # invece che fare una playlist casuale...
             # Se non ci sono rage nella playlist, riempila e mescolala!
@@ -116,7 +116,7 @@ while True:
                 random.shuffle(rage)
             # Estrai un audio a caso tra quelli nella playlist e rimuovilo.
             ragesend = rage.pop()
-            print(unm + ": /rage")
+            print(unm + ": /audio")
             telegram.senddocument(ragesend, sby)
         elif cmd[0].startswith('/sbam'):
             print(unm + ": /sbam")
