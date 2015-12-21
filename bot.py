@@ -111,8 +111,8 @@ while True:
                         'BQADAgADpgIAAh8GgAFu0RmpD3Mw7wI', 'BQADAgADpwIAAh8GgAGUgGD5t1omDwI',
                         'BQADAgADqAIAAh8GgAFNZ_rptavtKAI', 'BQADAgADqQIAAh8GgAGtd74-VO-J1AI',
                         'BQADAgADqgIAAh8GgAGa5MDYCi7viwI', 'BQADAgADqwIAAh8GgAGM3vOELWDm3AI',
-                        'BQADAgADrAIAAh8GgAHF15LlwjLMbwI', 'BQADAgADrQIAAh8GgAHjd6Fdc0s0PwI',
-                        'BQADAgADrgIAAh8GgAE2T5cM_TCQVQI', 'BQADAgADrwIAAh8GgAGYcc3JtCsZ1AI']
+                        'BQADAgADrAIAAh8GgAHF15LlwjLMbwI', 'BQADAgADrgIAAh8GgAE2T5cM_TCQVQI',
+                        'BQADAgADrwIAAh8GgAGYcc3JtCsZ1AI']
                 random.shuffle(rage)
             # Estrai un audio a caso tra quelli nella playlist e rimuovilo.
             ragesend = rage.pop()
