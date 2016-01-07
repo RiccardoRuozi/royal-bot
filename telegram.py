@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 import requests
 import filemanager
-import time
 
 # Per far funzionare questa libreria serve un file "lastid.txt" contenente l'update ID dell'ultimo messaggio non letto e
 # un file "telegramapi.txt" contenente il token di accesso del bot assegnato da @BotFather.
@@ -30,7 +29,6 @@ def getupdates():
                 # Controlla che la risposta sia effettivamente un messaggio e non una notifica di servizio
                 if 'message' in data['result'][0]:
                     return data['result'][0]['message']
-        time.sleep(5)
 
 
 def sendmessage(content, to):
@@ -159,15 +157,15 @@ def sendlocation(lat, long, to):
     requests.get("https://api.telegram.org/bot" + telegramtoken + "/sendLocation", params=parametri)
 
 
-def sendchataction(to, type='typing'):
+def sendchataction(to, action='typing'):
     """Visualizza lo stato "sta scrivendo" del bot.
     :param to: Chat in cui visualizzare lo stato
-    :param type: Tipo di stato da visualizzare
+    :param action: Tipo di stato da visualizzare
     """
     # Parametri del messaggio
     parametri = {
         'chat_id': to,
-        'action': type,
+        'action': action,
     }
     # Manda la richiesta ai server di Telegram.
     requests.get("https://api.telegram.org/bot" + telegramtoken + "/sendChatAction", params=parametri)
