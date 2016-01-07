@@ -272,12 +272,7 @@ while True:
                     text = str("[" + r['name'] + "](" + r['img'] + ")\n" +
                                str(r['health']) + " salute\n")
                 telegram.sendmessage(text, sby)
-        elif(cmd[0].startswith('/everyonegetinhere')):
-            print(unm + ": /everyonegetinhere")
-            telegram.sendMessage("@ActerRYG \n@Adry99 \n@Alleanderl \n@Boni3099 \n@Cosimo03 \n@EnriBenassati \n@EvilBalu \n@FrankRekt \n@Fultz \n@GoToB \n@HeisenDoc \n@iEmax \n@IlGattopardo \n@MaxSensei \n@MRdima98 \n@Peramela99 \n@RuoziR \n@SuperSmurf \n@Steffo \n@Tauei \n@thevagginadestroyer \n@Vivalafigliadellortolano \n@Voltaggio", -2141322)
         elif cmd[0].startswith('/restart'):
             if unm == "@Steffo":
                 telegram.sendmessage("Riavvio confermato.", sby)
                 sys.exit(0)
-
-
