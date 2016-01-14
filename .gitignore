@@ -5,3 +5,4 @@ steamapi.txt
 telegramapi.txt
 hearthstoneapi.txt
 *.pyc
+.idea/*
