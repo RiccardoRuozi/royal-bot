@@ -102,10 +102,9 @@ while True:
         #     ragesend = rage.pop()
         #     print("@" + username + ": /audio")
         #     telegram.senddocument(ragesend, sentin)
-        # elif text.startswith('/sbam'):
-        #     # TODO: Rimettere a posto /sbam
-        #     print("@" + username + ": /sbam")
-        #     telegram.senddocument('BQADAgADTQIAAh8GgAGj0jKIrpTgvQI', sentin)
+        elif text.startswith('/sbam'):
+            print("@" + username + ": /sbam")
+            telegram.senddocument('BQADAgADBwMAAh8GgAGSsR4rwmk_LwI', sentin)
         # elif text.startswith('/wololo'):
         #     print("@" + username + ": /wololo")
         #     if len(cmd) >= 2:
