@@ -135,8 +135,8 @@ while True:
                                          "*300*: " + r['count300'] + "\n"
                                          "*100*: " + r['count100'] + "\n"
                                          "*50*: " + r['count50'] + "\n"
-                                         "*Awesome*: " + r['countkatu'] + "\n"
-                                         "*Good*: " + r['countgeki'] + "\n"
+                                         "*Awesome*: " + r['countgeki'] + "\n"
+                                         "*Good*: " + r['countkatu'] + "\n"
                                          "*Miss*: " + r['countmiss'], sentin)
                 elif mode == 1:
                     telegram.sendmessage("*Taiko*\n"
