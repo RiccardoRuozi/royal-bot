@@ -18,7 +18,10 @@ def getplayersummaries(steamid):
     }
     # Manda la richiesta ai server di Steam.
     r = requests.get("http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/", params=parametri).json()
-    return r['response']['players'][0]
+    if len(r['response']['players']) > 0:
+        return r['response']['players'][0]
+    else:
+        raise NameError
 
 
 def getnumberofcurrentplayers(appid):
