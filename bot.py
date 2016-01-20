@@ -220,7 +220,7 @@ while True:
                     r['playerClass'] = "Neutral"
                 # Nessun effetto
                 if 'text' not in r:
-                    r['text'] = "_Nessun effetto._"
+                    r['text'] = ""
                 # HTML nella descrizione
                 r['text'].replace("<b>", "*")
                 r['text'].replace("</b>", "*")
@@ -232,7 +232,7 @@ while True:
                     r['rarity'] = "None"
                 # Nessuna descrizione
                 if 'flavor' not in r:
-                    r['flavor'] = "Nessuna descrizione."
+                    r['flavor'] = ""
                 # Testo principale
                 text = None
                 # Magie
