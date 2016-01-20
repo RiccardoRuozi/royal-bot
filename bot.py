@@ -199,7 +199,7 @@ while True:
             # TODO: Mettere l'audio di Tobia
             telegram.sendmessage("Automaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa! Devi funzionare, cavolo!", sentin)
         elif text.startswith('/hs'):
-            print(username + ": /hs")
+            print("@" + username + ": /hs")
             cmd = text.split(" ", 1)
             r = None
             try:
