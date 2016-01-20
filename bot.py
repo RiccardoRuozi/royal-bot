@@ -20,7 +20,7 @@ osunames = {
     'fultz': 'ftz99',
     'ilgattopardo': 'gattopardo',
     'frankfrankfrank': 'FrankezRYG',
-    'fedyal': 'fedececco',
+    'tiztiztiz': 'fedececco',
     'acterryg': 'Acter1',
     'maxsensei': 'MaxSensei',
     'heisendoc': 'ImHeisenberg',
