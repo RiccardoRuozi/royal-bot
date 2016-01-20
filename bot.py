@@ -222,11 +222,11 @@ while True:
                 if 'text' not in r:
                     r['text'] = ""
                 # HTML nella descrizione
-                r['text'].replace("<b>", "*")
-                r['text'].replace("</b>", "*")
-                r['text'].replace("<i>", "_")
-                r['text'].replace("</i>", "_")
-                r['text'].replace("$", "")
+                r['text'] = r['text'].replace("<b>", "*")
+                r['text'] = r['text'].replace("</b>", "*")
+                r['text'] = r['text'].replace("<i>", "_")
+                r['text'] = r['text'].replace("</i>", "_")
+                r['text'] = r['text'].replace("$", "")
                 # Nessuna rarità
                 if 'rarity' not in r:
                     r['rarity'] = "None"
