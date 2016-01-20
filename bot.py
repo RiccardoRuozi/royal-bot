@@ -221,6 +221,12 @@ while True:
                 # Nessun effetto
                 if 'text' not in r:
                     r['text'] = "_Nessun effetto._"
+                # HTML nella descrizione
+                r['text'].replace("<b>", "*")
+                r['text'].replace("</b>", "*")
+                r['text'].replace("<i>", "_")
+                r['text'].replace("</i>", "_")
+                r['text'].replace("$", "")
                 # Nessuna rarità
                 if 'rarity' not in r:
                     r['rarity'] = "None"
