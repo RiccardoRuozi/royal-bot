@@ -19,7 +19,7 @@ osunames = {
     'evilbalu': 'NemesisRYG',
     'fultz': 'ftz99',
     'ilgattopardo': 'gattopardo',
-    'frankfrankfrank': 'FrankezRYG',
+    'frankrekt': 'FrankezRYG',
     'tiztiztiz': 'fedececco',
     'acterryg': 'Acter1',
     'maxsensei': 'MaxSensei',
