@@ -88,3 +88,18 @@ def isplayingsharedgame(appid, steamid):
     # Manda la richiesta ai server di Steam.
     r = requests.get("http://api.steampowered.com/IPlayerService/IsPlayingSharedGame/v0001/", params=parametri).json()
     return r  # Non posso provare il comando; cambiare quando possibile?
+
+
+def getschemaforgame(appid):
+    """Trova il nome, gli achievement e le statistiche corrispondenti al numero di applicazione specificato.
+    :param appid: ID dell'applicazione
+    """
+    parametri = {
+        'key': steamtoken,
+        'appid': appid,
+    }
+    # Manda la richiesta ai server di Steam.
+    r = requests.get("http://api.steampowered.com/ISteamUserStats/GetSchemaForGame/v2/", params=parametri).json()
+    return r
+
+
