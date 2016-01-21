@@ -6,11 +6,85 @@ import osu
 import hearthstone
 import sys
 
+
+# Check per la modalità votazione del bot, corrisponde al numero della chat in cui è attiva la votazione
+# 0 per disattivare la votazione
+class Votazione:
+    chat = int()
+    domanda = str()
+    # 0: non votato
+    # 1: sì
+    # 2: no
+    # 3: astenuto
+    voto = {
+        'steffo': int(0),
+        'alby1': int(0),
+        'boni3099': int(0),
+        'maxsensei': int(0),
+        'cosimo03': int(0),
+        'frankrekt': int(0),
+        'heisendoc': int(0),
+        'acterryg': int(0),
+        'adry99': int(0),
+        'alleanderl': int(0),
+        'thevagginadestroyer': int(0),
+        'tiztiztiz': int(0),
+        'fultz': int(0),
+        'gotob': int(0),
+        'enribenassati': int(0),
+        'iemax': int(0),
+        'peraemela99': int(0),
+        'ilgattopardo': int(0),
+        'mrdima98': int(0),
+        'ruozir': int(0),
+        'supersmurf': int(0),
+        'tauei': int(0),
+        'voltaggio': int(0),
+    }
+
+    def __init__(self, question, askin):
+        self.domanda = question
+        self.chat = askin
+
+    def ask(self):
+        telegram.sendmessage(self.domanda, self.chat)
+
+    def register(self, utente, voto):
+        self.voto[utente] = voto
+        telegram.sendmessage("Votazione registrata!", self.chat)
+
+    def showresults(self):
+        lista = str()
+        si = 0
+        no = 0
+        astenuti = 0
+        for membro in self.voto:
+            if self.voto[membro] == 0:
+                lista += chr(9898)
+            elif self.voto[membro] == 1:
+                si += 1
+                lista += chr(128309)
+            elif self.voto[membro] == 2:
+                no += 1
+                lista += chr(128308)
+            elif self.voto[membro] == 3:
+                astenuti += 1
+                lista += chr(9899)
+            lista += " @" + membro + "\n"
+        telegram.sendmessage(self.domanda + "\n"
+                             "*Risultati:*\n"
+                             "Sì: " + str(si) + " (" + str(round(si / (si + no + astenuti) * 100, 2)) + "%)\n"
+                             "No: " + str(no) + " (" + str(round(no / (si + no + astenuti) * 100, 2)) + "%)\n"
+                             "Astenuti: " + str(astenuti) + "\n\n" + lista, self.chat)
+
+# Votazione in corso
+incorso = None
+
 # Playlist di /rage, si riempie quando è vuota
 rage = []
 
 # TODO: Rimettere gli audio di Wololo
-wololo = []
+# wololo = []
 
 # Dizionario con i nomi utenti di osu!
 # Se qualcuno cambia nome utente di Telegram, lo cambi anche QUI.
@@ -342,8 +416,28 @@ while True:
             else:
                 telegram.sendmessage(tosend, sentin)
         elif text.startswith('/shrekt'):
+            print("@" + username + ": /shrekt ")
             telegram.senddocument("BQADBAADsQADiBjiAqYN-EBXASyhAg", sentin)
-        elif text.startswith('/restart'):
-            if username == "Steffo":
-                telegram.sendmessage("Riavvio accettato.", sentin)
-                sys.exit(0)
+        elif text.startswith('/restart') and username == "Steffo":
+            print("@" + username + ": /restart ")
+            telegram.sendmessage("Riavvio accettato.", sentin)
+            sys.exit(0)
+        elif text.startswith('/nuovavotazione') and username == "Steffo":
+            print("@" + username + ": /nuovavotazione ")
+            cmd = text.split(" ", 1)
+            incorso = Votazione(cmd[1], sentin)
+        elif text.startswith('/si') and incorso is not None:
+            print("@" + username + ": /si ")
+            incorso.register(username.lower(), 1)
+        elif text.startswith('/no') and incorso is not None:
+            print("@" + username + ": /no ")
+            incorso.register(username.lower(), 2)
+        elif text.startswith('/astieniti') and incorso is not None:
+            print("@" + username + ": /astieniti ")
+            incorso.register(username.lower(), 3)
+        elif text.startswith('/domanda') and incorso is not None:
+            print("@" + username + ": /domanda ")
+            incorso.ask()
+        elif text.startswith('/risultati') and incorso is not None:
+            print("@" + username + ": /risultati ")
+            incorso.showresults()
