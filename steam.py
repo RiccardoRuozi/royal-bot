@@ -8,8 +8,8 @@ steamtoken = filemanager.readfile('steamapi.txt')
 
 
 def getplayersummaries(steamid):
-    """Ottieni i dati del profilo steam del giocatore di cui è stato specificato lo SteamID 32.
-    :param steamid: SteamID 32 del giocatore
+    """Ottieni i dati dei profili steam dei giocatori di cui è stato specificato lo SteamID 32.
+    :param steamid: SteamID 32 dei giocatori, separato da virgola
     """
     # Parametri della richiesta
     parametri = {
@@ -18,8 +18,10 @@ def getplayersummaries(steamid):
     }
     # Manda la richiesta ai server di Steam.
     r = requests.get("http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/", params=parametri).json()
-    if len(r['response']['players']) > 0:
+    if len(r['response']['players']) == 1:
         return r['response']['players'][0]
+    elif len(r['response']['players']) > 1:
+        return r['response']['players']
     else:
         raise NameError
 
