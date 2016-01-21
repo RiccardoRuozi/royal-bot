@@ -33,6 +33,35 @@ osunames = {
     'mrdima98': 'MRdima98',
 }
 
+# Dizionario con gli steamID
+# Vedi sopra
+steamids = {
+    'steffo': 76561198034314260,
+    'alby1': 76561198071383448,
+    'boni3099': 76561198131868211,
+    'maxsensei': 76561198121094516,
+    'cosimo03': 76561198062778224,
+    'frankrekt': 76561198071099951,
+    'heisendoc': 76561198080377213,
+    'acterryg': 76561198146704979,
+    'adry99': 76561198230034568,
+    'alleanderl': 76561198154175301,
+    'thevagginadestroyer': 76561198128738388,
+    'tiztiztiz': 76561198109189938,
+    'fultz': 76561198035547490,
+    'gattino02': 76561198071069550,
+    'gotob': 76561198096658890,
+    'enribenassati': 76561198123018368,
+    'iemax': 76561198149695151,
+    'peraemela99': 76561198161867082,
+    'ilgattopardo': 76561198111021344,
+    'mrdima98': 76561198140863530,
+    'ruozir': 76561198117708290,
+    'supersmurf': 76561198115852550,
+    'tauei': 76561198104305298,
+    'voltaggio': 76561198147601821,
+}
+
 random.seed()
 
 # Ciclo principale del bot
@@ -277,6 +306,43 @@ while True:
                     text = str("[" + r['name'] + "](" + r['img'] + ")\n" +
                                str(r['health']) + " salute\n")
                 telegram.sendmessage(text, sentin)
+        elif text.startswith('/online'):
+            # Elenco di tutte le persone online su Steam
+            print("@" + username + ": /online ")
+            # Stringa utilizzata per ottenere informazioni su tutti gli utenti in una sola richiesta a steam
+            userids = str()
+            for nome in steamids:
+                userids += str(steamids[nome]) + ','
+            tosend = "*Online ora:*\n"
+            telegram.sendchataction(sentin)
+            r = steam.getplayersummaries(userids)
+            for player in r:
+                # In gioco
+                if 'gameextrainfo' in player:
+                    tosend += chr(128308) + " _" + player['gameextrainfo'] + "_ |"
+                elif 'gameid' in player:
+                    tosend += chr(128308) + " _" + player['gameid'] + "_ |"
+                # Online
+                elif player['personastate'] == 1:
+                    tosend += chr(128309)
+                # Occupato
+                elif player['personastate'] == 2:
+                    tosend += chr(128308)
+                # Assente o Inattivo
+                elif player['personastate'] == 3 or player['personastate'] == 4:
+                    tosend += chr(9898)
+                # Disponibile per scambiare
+                elif player['personastate'] == 5:
+                    tosend += chr(128310)
+                # Disponibile per giocare
+                elif player['personastate'] == 6:
+                    tosend += chr(128311)
+                if player['personastate'] != 0:
+                    tosend += " " + player['personaname'] + "\n"
+            else:
+                telegram.sendmessage(tosend, sentin)
+        elif text.startswith('/shrekt'):
+            telegram.senddocument("BQADBAADsQADiBjiAqYN-EBXASyhAg", sentin)
         elif text.startswith('/restart'):
             if username == "Steffo":
                 telegram.sendmessage("Riavvio accettato.", sentin)
