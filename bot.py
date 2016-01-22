@@ -51,7 +51,6 @@ class Votazione:
 
     def register(self, utente, voto):
         self.voto[utente] = voto
-        telegram.sendmessage("Votazione registrata!", self.chat)
 
     def showresults(self):
         lista = str()
@@ -404,7 +403,7 @@ while True:
                     tosend += chr(128308)
                 # Assente o Inattivo
                 elif player['personastate'] == 3 or player['personastate'] == 4:
-                    tosend += chr(9898)
+                    tosend += chr(9899)
                 # Disponibile per scambiare
                 elif player['personastate'] == 5:
                     tosend += chr(128310)
@@ -426,18 +425,21 @@ while True:
             print("@" + username + ": /nuovavotazione ")
             cmd = text.split(" ", 1)
             incorso = Votazione(cmd[1], sentin)
-        elif text.startswith('/si') and incorso is not None:
+        elif text.startswith('/si') and incorso.chat == sentin:
             print("@" + username + ": /si ")
             incorso.register(username.lower(), 1)
-        elif text.startswith('/no') and incorso is not None:
+            telegram.sendmessage("Votazione registrata!", sentin)
+        elif text.startswith('/no') and incorso.chat == sentin:
             print("@" + username + ": /no ")
             incorso.register(username.lower(), 2)
-        elif text.startswith('/astieniti') and incorso is not None:
+            telegram.sendmessage("Votazione registrata!", sentin)
+        elif text.startswith('/astieniti') and incorso.chat == sentin:
             print("@" + username + ": /astieniti ")
             incorso.register(username.lower(), 3)
-        elif text.startswith('/domanda') and incorso is not None:
+            telegram.sendmessage("Votazione registrata!", sentin)
+        elif text.startswith('/domanda') and incorso.chat == sentin:
             print("@" + username + ": /domanda ")
             incorso.ask()
-        elif text.startswith('/risultati') and incorso is not None:
+        elif text.startswith('/risultati') and incorso.chat == sentin:
             print("@" + username + ": /risultati ")
             incorso.showresults()
