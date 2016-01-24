@@ -425,21 +425,26 @@ while True:
             print("@" + username + ": /nuovavotazione ")
             cmd = text.split(" ", 1)
             incorso = Votazione(cmd[1], sentin)
-        elif text.startswith('/si') and incorso.chat == sentin:
-            print("@" + username + ": /si ")
-            incorso.register(username.lower(), 1)
-            telegram.sendmessage("Votazione registrata!", sentin)
-        elif text.startswith('/no') and incorso.chat == sentin:
-            print("@" + username + ": /no ")
-            incorso.register(username.lower(), 2)
-            telegram.sendmessage("Votazione registrata!", sentin)
-        elif text.startswith('/astieniti') and incorso.chat == sentin:
-            print("@" + username + ": /astieniti ")
-            incorso.register(username.lower(), 3)
-            telegram.sendmessage("Votazione registrata!", sentin)
-        elif text.startswith('/domanda') and incorso.chat == sentin:
-            print("@" + username + ": /domanda ")
-            incorso.ask()
-        elif text.startswith('/risultati') and incorso.chat == sentin:
-            print("@" + username + ": /risultati ")
-            incorso.showresults()
+        elif text.startswith('/si') and incorso is not None:
+            if incorso.chat == sentin:
+                print("@" + username + ": /si ")
+                incorso.register(username.lower(), 1)
+                telegram.sendmessage("Votazione registrata!", sentin)
+        elif text.startswith('/no') and incorso is not None:
+            if incorso.chat == sentin:
+                print("@" + username + ": /no ")
+                incorso.register(username.lower(), 2)
+                telegram.sendmessage("Votazione registrata!", sentin)
+        elif text.startswith('/astieniti') and incorso is not None:
+            if incorso.chat == sentin:
+                print("@" + username + ": /astieniti ")
+                incorso.register(username.lower(), 3)
+                telegram.sendmessage("Votazione registrata!", sentin)
+        elif text.startswith('/domanda') and incorso is not None:
+            if incorso.chat == sentin:
+                print("@" + username + ": /domanda ")
+                incorso.ask()
+            elif text.startswith('/risultati') and incorso is not None:
+            if incorso.chat == sentin:
+                print("@" + username + ": /risultati ")
+                incorso.showresults()
