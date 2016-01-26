@@ -315,7 +315,7 @@ while True:
                 # Se ci sono più carte, prendine una a caso!
                 r = r[random.randrange(len(r))]
             except ValueError:
-                telegram.sendmessage(chr(9888) + "La carta specificata non esiste!", sentin)
+                telegram.sendmessage(chr(9888) + " La carta specificata non esiste!", sentin)
             else:
                 # Si trova nelle bustine
                 if 'howToGet' not in r:
@@ -383,6 +383,7 @@ while True:
                 # Eroe
                 elif r['type'] == "Hero":
                     text = str("[" + r['name'] + "](" + r['img'] + ")\n" +
+                               "*Eroe*\n" +
                                str(r['health']) + " salute\n")
                 telegram.sendmessage(text, sentin)
         elif text.startswith('/online'):
