@@ -14,7 +14,10 @@ def getbeatmap(num):
         'b': num,
     }
     r = requests.get("https://osu.ppy.sh/api/get_beatmaps", params=parametri).json()
-    return r[0]
+    if len(r) >= 1:
+        return r[0]
+    else:
+        raise NameError
 
 
 def getuser(user, mode=0):
@@ -28,7 +31,10 @@ def getuser(user, mode=0):
         'm': mode
     }
     r = requests.get("https://osu.ppy.sh/api/get_user", params=parametri).json()
-    return r[0]
+    if len(r) >= 1:
+        return r[0]
+    else:
+        raise NameError
 
 
 def getscores(beatmap, mode=0, limit=100, user=None):
@@ -75,4 +81,7 @@ def getuserrecent(user, mode=0):
         'limit': 1,
     }
     r = requests.get("https://osu.ppy.sh/api/get_user_recent", params=parametri).json()
-    return r[0]
+    if len(r) >= 1:
+        return r[0]
+    else:
+        raise NameError
