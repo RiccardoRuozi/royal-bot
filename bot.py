@@ -40,6 +40,7 @@ class Votazione:
         'supersmurf': int(0),
         'tauei': int(0),
         'voltaggio': int(0),
+        'gibait': int(0),
     }
 
     def __init__(self, question, askin):
@@ -133,6 +134,7 @@ steamids = {
     'supersmurf': 76561198115852550,
     'tauei': 76561198104305298,
     'voltaggio': 76561198147601821,
+    'gibait': 76561198157721704,
 }
 
 random.seed()
@@ -444,7 +446,7 @@ while True:
             if incorso.chat == sentin:
                 print("@" + username + ": /domanda ")
                 incorso.ask()
-            elif text.startswith('/risultati') and incorso is not None:
+        elif text.startswith('/risultati') and incorso is not None:
             if incorso.chat == sentin:
                 print("@" + username + ": /risultati ")
                 incorso.showresults()
