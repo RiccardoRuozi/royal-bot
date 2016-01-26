@@ -190,7 +190,7 @@ while True:
                     ";/scroll:%23gamelist).", sentin)
             else:
                 telegram.sendmessage(chr(9888) +
-                                     "Non hai specificato un gioco!"
+                                     " Non hai specificato un gioco!"
                                      "[Visualizza tutte le offerte]"
                                      "(https://isthereanydeal.com/#/search:.;/scroll:%23gamelist).",
                                      sentin)
@@ -228,67 +228,71 @@ while True:
                 else:
                     # Osu! normale
                     mode = 0
-                r = osu.getuserrecent(cmd[1], mode)
-                if mode == 0:
-                    telegram.sendmessage("*Osu!*\n"
-                                         "[Beatmap " + r['beatmap_id'] + "](" + 'https://osu.ppy.sh/b/' + r[
-                                             'beatmap_id'] +
-                                         ")\n*" + r['rank'] + "*\n*Punti*: " + r['score'] + "\n"
-                                         "*Combo* x" + r['maxcombo'] + "\n"
-                                         "*300*: " + r['count300'] + "\n"
-                                         "*100*: " + r['count100'] + "\n"
-                                         "*50*: " + r['count50'] + "\n"
-                                         "*Awesome*: " + r['countkatu'] + "\n"
-                                         "*Good*: " + r['countgeki'] + "\n"
-                                         "*Miss*: " + r['countmiss'], sentin)
-                elif mode == 1:
-                    telegram.sendmessage("*Taiko*\n"
-                                         "[Beatmap " + r['beatmap_id'] + "](" + 'https://osu.ppy.sh/b/' + r[
-                                             'beatmap_id'] +
-                                         ")\n*" + r['rank'] + "*\n*Punti*: " + r['score'] + "\n"
-                                         "*Combo* x" + r['maxcombo'] + "\n"
-                                         "*Great*: " + r['count300'] + "\n"
-                                         "*Good*: " + r['count100'] + "\n"
-                                         "_Large_ *Great*: " + r['countkatu'] + "\n"
-                                         "_Large_ *Good*: " + r['countgeki'] + "\n"
-                                         "*Bad*: " + r['countmiss'], sentin)
-                elif mode == 2:
-                    telegram.sendmessage("*Catch the Beat*\n"
-                                         "[Beatmap " + r['beatmap_id'] + "](" + 'https://osu.ppy.sh/b/' + r[
-                                             'beatmap_id'] +
-                                         ")\n*" + r['rank'] + "*\n*Punti*: " + r['score'] + "\n"
-                                         "*Combo* x" + r['maxcombo'] + "\n"
-                                         "*Fruit*: " + r['count300'] + "\n"
-                                         "*Droplet* _tick_: " + r['count100'] + "\n"
-                                         "*Droplet* _trail_: " + r['count50'] + "\n"
-                                         "*Miss*: " + r['countmiss'], sentin)
-                elif mode == 3:
-                    telegram.sendmessage("*Osu!mania*\n" +
-                                         "[Beatmap " + r['beatmap_id'] + "](" + 'https://osu.ppy.sh/b/' + r[
-                                             'beatmap_id'] + ")\n*" + r['rank'] +
-                                         "*\n*Punti*: " + r['score'] + "\n"
-                                         "*Combo* x" + r['maxcombo'] + "\n"
-                                         "_Rainbow_ *300*: " + r['countgeki'] + "\n"
-                                         "*300*: " + r['count300'] + "\n"
-                                         "*100*: " + r['count100'] + "\n"
-                                         "*200*: " + r['countkatu'] + "\n"
-                                         "*50*: " + r['count50'] + "\n"
-                                         "*Miss*: " + r['countmiss'], sentin)
-            else:
-                # E' un po' una scorciatoia eh, peeerò...
-                if username.lower() in osunames:
-                    r = osu.getuserrecent(osunames[username.lower()], 0)
-                    telegram.sendmessage("*Osu!*\n"
-                                         "[Beatmap " + r['beatmap_id'] + "](" + 'https://osu.ppy.sh/b/' + r[
-                                             'beatmap_id'] +
-                                         ")\n*" + r['rank'] + "*\n*Punti*: " + r['score'] + "\n"
-                                         "*Combo* x" + r['maxcombo'] + "\n"
-                                         "*300*: " + r['count300'] + "\n"
-                                         "*100*: " + r['count100'] + "\n"
-                                         "*50*: " + r['count50'] + "\n"
-                                         "*Awesome*: " + r['countgeki'] + "\n"
-                                         "*Good*: " + r['countkatu'] + "\n"
-                                         "*Miss*: " + r['countmiss'], sentin)
+                try:
+                    r = osu.getuserrecent(cmd[1], mode)
+                except NameError:
+                    telegram.sendmessage(chr(9888) + " Errore nella richiesta ai server di Osu!", sentin)
+                else:
+                    if mode == 0:
+                        telegram.sendmessage("*Osu!*\n"
+                                             "[Beatmap " + r['beatmap_id'] + "](" + 'https://osu.ppy.sh/b/' + r[
+                                                 'beatmap_id'] +
+                                             ")\n*" + r['rank'] + "*\n*Punti*: " + r['score'] + "\n"
+                                             "*Combo* x" + r['maxcombo'] + "\n"
+                                             "*300*: " + r['count300'] + "\n"
+                                             "*100*: " + r['count100'] + "\n"
+                                             "*50*: " + r['count50'] + "\n"
+                                             "*Awesome*: " + r['countkatu'] + "\n"
+                                             "*Good*: " + r['countgeki'] + "\n"
+                                             "*Miss*: " + r['countmiss'], sentin)
+                    elif mode == 1:
+                        telegram.sendmessage("*Taiko*\n"
+                                             "[Beatmap " + r['beatmap_id'] + "](" + 'https://osu.ppy.sh/b/' + r[
+                                                 'beatmap_id'] +
+                                             ")\n*" + r['rank'] + "*\n*Punti*: " + r['score'] + "\n"
+                                             "*Combo* x" + r['maxcombo'] + "\n"
+                                             "*Great*: " + r['count300'] + "\n"
+                                             "*Good*: " + r['count100'] + "\n"
+                                             "_Large_ *Great*: " + r['countkatu'] + "\n"
+                                             "_Large_ *Good*: " + r['countgeki'] + "\n"
+                                             "*Bad*: " + r['countmiss'], sentin)
+                    elif mode == 2:
+                        telegram.sendmessage("*Catch the Beat*\n"
+                                             "[Beatmap " + r['beatmap_id'] + "](" + 'https://osu.ppy.sh/b/' + r[
+                                                 'beatmap_id'] +
+                                             ")\n*" + r['rank'] + "*\n*Punti*: " + r['score'] + "\n"
+                                             "*Combo* x" + r['maxcombo'] + "\n"
+                                             "*Fruit*: " + r['count300'] + "\n"
+                                             "*Droplet* _tick_: " + r['count100'] + "\n"
+                                             "*Droplet* _trail_: " + r['count50'] + "\n"
+                                             "*Miss*: " + r['countmiss'], sentin)
+                    elif mode == 3:
+                        telegram.sendmessage("*Osu!mania*\n" +
+                                             "[Beatmap " + r['beatmap_id'] + "](" + 'https://osu.ppy.sh/b/' + r[
+                                                 'beatmap_id'] + ")\n*" + r['rank'] +
+                                             "*\n*Punti*: " + r['score'] + "\n"
+                                             "*Combo* x" + r['maxcombo'] + "\n"
+                                             "_Rainbow_ *300*: " + r['countgeki'] + "\n"
+                                             "*300*: " + r['count300'] + "\n"
+                                             "*100*: " + r['count100'] + "\n"
+                                             "*200*: " + r['countkatu'] + "\n"
+                                             "*50*: " + r['count50'] + "\n"
+                                             "*Miss*: " + r['countmiss'], sentin)
+                    else:
+                        # E' un po' una scorciatoia eh, peeerò...
+                        if username.lower() in osunames:
+                            r = osu.getuserrecent(osunames[username.lower()], 0)
+                            telegram.sendmessage("*Osu!*\n"
+                                                 "[Beatmap " + r['beatmap_id'] + "](" + 'https://osu.ppy.sh/b/' + r[
+                                                     'beatmap_id'] +
+                                                 ")\n*" + r['rank'] + "*\n*Punti*: " + r['score'] + "\n"
+                                                 "*Combo* x" + r['maxcombo'] + "\n"
+                                                 "*300*: " + r['count300'] + "\n"
+                                                 "*100*: " + r['count100'] + "\n"
+                                                 "*50*: " + r['count50'] + "\n"
+                                                 "*Awesome*: " + r['countgeki'] + "\n"
+                                                 "*Good*: " + r['countkatu'] + "\n"
+                                                 "*Miss*: " + r['countmiss'], sentin)
         elif text.startswith('/roll'):
             print("@" + username + ": /roll")
             cmd = text.split(' ', 1)
