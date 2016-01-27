@@ -310,82 +310,86 @@ while True:
             print("@" + username + ": /hs")
             cmd = text.split(" ", 1)
             r = None
-            try:
-                r = hearthstone.card(cmd[1])
-                # Se ci sono più carte, prendine una a caso!
-                r = r[random.randrange(len(r))]
-            except ValueError:
-                telegram.sendmessage(chr(9888) + " La carta specificata non esiste!", sentin)
+            if len(cmd) >= 2:
+                try:
+                    r = hearthstone.card(cmd[1])
+                    # Se ci sono più carte, prendine una a caso!
+                    r = r[random.randrange(len(r))]
+                except ValueError:
+                    telegram.sendmessage(chr(9888) + " La carta specificata non esiste!", sentin)
+                else:
+                    # Si trova nelle bustine
+                    if 'howToGet' not in r:
+                        if 'cardSet' in r:
+                            r['howToGet'] = "Trovala in " + r['cardSet'] + "."
+                        else:
+                            r['howToGet'] = "Inottenibile."
+                    # Nessuna classe
+                    if 'playerClass' not in r:
+                        r['playerClass'] = "Neutral"
+                    # Nessun effetto
+                    if 'text' not in r:
+                        r['text'] = ""
+                    # HTML nella descrizione
+                    r['text'] = r['text'].replace("<b>", "*")
+                    r['text'] = r['text'].replace("</b>", "*")
+                    r['text'] = r['text'].replace("<i>", "_")
+                    r['text'] = r['text'].replace("</i>", "_")
+                    r['text'] = r['text'].replace("$", "")
+                    # Nessuna rarità
+                    if 'rarity' not in r:
+                        r['rarity'] = "None"
+                    # Nessuna descrizione
+                    if 'flavor' not in r:
+                        r['flavor'] = ""
+                    # Testo principale
+                    text = None
+                    # Magie
+                    if r['type'] == "Spell":
+                        text = str("[" + r['name'] + "](" + r['img'] + ") "
+                                   "(" + r['rarity'] + ")\n" +
+                                   r['playerClass'] + "\n" +
+                                   str(r['cost']) + " mana\n" +
+                                   r['text'] + "\n" +
+                                   r['howToGet'] + "\n\n_" +
+                                   r['flavor'] + "_\n")
+                    # Servitori
+                    elif r['type'] == "Minion":
+                        text = str("[" + r['name'] + "](" + r['img'] + ") "
+                                   "(" + r['rarity'] + ")\n" +
+                                   r['playerClass'] + "\n" +
+                                   str(r['cost']) + " mana\n" +
+                                   str(r['attack']) + " attacco\n" +
+                                   str(r['health']) + " salute\n" +
+                                   r['text'] + "\n" +
+                                   r['howToGet'] + "\n\n_" +
+                                   r['flavor'] + "_\n")
+                    # Armi
+                    elif r['type'] == "Weapon":
+                        text = str("[" + r['name'] + "](" + r['img'] + ") "
+                                   "(" + r['rarity'] + ")\n" +
+                                   r['playerClass'] + "\n" +
+                                   str(r['cost']) + " mana\n" +
+                                   str(r['attack']) + " attacco\n" +
+                                   str(r['durability']) + " integrita'\n" +
+                                   r['text'] + "\n" +
+                                   r['howToGet'] + "\n\n_" +
+                                   r['flavor'] + "_\n")
+                    # Potere Eroe
+                    elif r['type'] == "Hero Power":
+                        text = str("[" + r['name'] + "](" + r['img'] + ")\n" +
+                                   r['playerClass'] + "\n" +
+                                   str(r['cost']) + " mana\n" +
+                                   r['text'] + "\n")
+                    # Eroe
+                    elif r['type'] == "Hero":
+                        text = str("[" + r['name'] + "](" + r['img'] + ")\n" +
+                                   "*Eroe*\n" +
+                                   str(r['health']) + " salute\n")
+                    telegram.sendmessage(text, sentin)
             else:
-                # Si trova nelle bustine
-                if 'howToGet' not in r:
-                    if 'cardSet' in r:
-                        r['howToGet'] = "Trovala in " + r['cardSet'] + "."
-                    else:
-                        r['howToGet'] = "Inottenibile."
-                # Nessuna classe
-                if 'playerClass' not in r:
-                    r['playerClass'] = "Neutral"
-                # Nessun effetto
-                if 'text' not in r:
-                    r['text'] = ""
-                # HTML nella descrizione
-                r['text'] = r['text'].replace("<b>", "*")
-                r['text'] = r['text'].replace("</b>", "*")
-                r['text'] = r['text'].replace("<i>", "_")
-                r['text'] = r['text'].replace("</i>", "_")
-                r['text'] = r['text'].replace("$", "")
-                # Nessuna rarità
-                if 'rarity' not in r:
-                    r['rarity'] = "None"
-                # Nessuna descrizione
-                if 'flavor' not in r:
-                    r['flavor'] = ""
-                # Testo principale
-                text = None
-                # Magie
-                if r['type'] == "Spell":
-                    text = str("[" + r['name'] + "](" + r['img'] + ") "
-                               "(" + r['rarity'] + ")\n" +
-                               r['playerClass'] + "\n" +
-                               str(r['cost']) + " mana\n" +
-                               r['text'] + "\n" +
-                               r['howToGet'] + "\n\n_" +
-                               r['flavor'] + "_\n")
-                # Servitori
-                elif r['type'] == "Minion":
-                    text = str("[" + r['name'] + "](" + r['img'] + ") "
-                               "(" + r['rarity'] + ")\n" +
-                               r['playerClass'] + "\n" +
-                               str(r['cost']) + " mana\n" +
-                               str(r['attack']) + " attacco\n" +
-                               str(r['health']) + " salute\n" +
-                               r['text'] + "\n" +
-                               r['howToGet'] + "\n\n_" +
-                               r['flavor'] + "_\n")
-                # Armi
-                elif r['type'] == "Weapon":
-                    text = str("[" + r['name'] + "](" + r['img'] + ") "
-                               "(" + r['rarity'] + ")\n" +
-                               r['playerClass'] + "\n" +
-                               str(r['cost']) + " mana\n" +
-                               str(r['attack']) + " attacco\n" +
-                               str(r['durability']) + " integrita'\n" +
-                               r['text'] + "\n" +
-                               r['howToGet'] + "\n\n_" +
-                               r['flavor'] + "_\n")
-                # Potere Eroe
-                elif r['type'] == "Hero Power":
-                    text = str("[" + r['name'] + "](" + r['img'] + ")\n" +
-                               r['playerClass'] + "\n" +
-                               str(r['cost']) + " mana\n" +
-                               r['text'] + "\n")
-                # Eroe
-                elif r['type'] == "Hero":
-                    text = str("[" + r['name'] + "](" + r['img'] + ")\n" +
-                               "*Eroe*\n" +
-                               str(r['health']) + " salute\n")
-                telegram.sendmessage(text, sentin)
+                telegram.sendmessage(chr(9888) + " Non hai specificato nessuna carta!\n"
+                                     "La sintassi corretta è _/hs nomecarta_ .", sentin)
         elif text.startswith('/online'):
             # Elenco di tutte le persone online su Steam
             print("@" + username + ": /online ")
