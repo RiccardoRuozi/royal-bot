@@ -300,7 +300,7 @@ while True:
                 try:
                     m = int(cmd[1])
                 except ValueError:
-                    telegram.sendmessage(chr(9888) + " Il numero specificato non è un intero.")
+                    telegram.sendmessage(chr(9888) + " Il numero specificato non è un intero.", sentin)
             else:
                 m = 100
             n = random.randrange(m) + 1
