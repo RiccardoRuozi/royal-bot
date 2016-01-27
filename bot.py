@@ -297,7 +297,10 @@ while True:
             print("@" + username + ": /roll")
             cmd = text.split(' ', 1)
             if len(cmd) >= 2:
-                m = int(cmd[1])
+                try:
+                    m = int(cmd[1])
+                except ValueError:
+                    telegram.sendmessage(chr(9888) + " Il numero specificato non è un intero.")
             else:
                 m = 100
             n = random.randrange(m) + 1
