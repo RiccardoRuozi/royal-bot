@@ -303,8 +303,12 @@ while True:
                     telegram.sendmessage(chr(9888) + " Il numero specificato non è un intero.", sentin)
             else:
                 m = 100
-            n = random.randrange(m) + 1
-            telegram.sendmessage("Numero casuale da 1 a " + str(m) + ":\n*" + str(n) + "*", sentin)
+            try:
+                n = random.randrange(m) + 1
+            except ValueError:
+                telegram.sendmessage(chr(9888) + " Il numero specificato non è maggiore o uguale a 0.", sentin)
+            else:
+                telegram.sendmessage("Numero casuale da 1 a " + str(m) + ":\n*" + str(n) + "*", sentin)
         elif text.startswith('/automah'):
             print("@" + username + ": /automah")
             # TODO: Mettere l'audio di Tobia
