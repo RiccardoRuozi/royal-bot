@@ -170,6 +170,8 @@ while True:
             telegram.sendmessage("Eh, oh. Sono cose che capitano.", sentin, source)
         elif text.startswith('/playing'):
             print("@" + username + ": /playing")
+            # Informa Telegram che il messaggio è stato ricevuto.
+            telegram.sendchataction(sentin)
             cmd = text.split(" ")
             # Se è stato specificato un AppID...
             if len(cmd) >= 2:
@@ -185,6 +187,8 @@ while True:
                                      'La sintassi corretta è /playing <AppID>.', sentin, source)
         elif text.startswith('/saldi'):
             print("@" + username + ": /saldi")
+            # Informa Telegram che il messaggio è stato ricevuto.
+            telegram.sendchataction(sentin)
             cmd = text.split(" ", 1)
             if len(cmd) == 2:
                 telegram.sendmessage(
@@ -220,6 +224,8 @@ while True:
         #         telegram.senddocument('BQADAgADZwIAAh8GgAF3etjqkzFDxAI', sentin, source)
         elif text.startswith('/osu'):
             print("@" + username + ": /osu")
+            # Informa Telegram che il messaggio è stato ricevuto.
+            telegram.sendchataction(sentin)
             # Trova il nome utente
             cmd = text.split(' ', 1)
             if len(cmd) >= 2:
@@ -327,9 +333,12 @@ while True:
         elif text.startswith('/automah'):
             print("@" + username + ": /automah")
             # TODO: Mettere l'audio di Tobia
-            telegram.sendmessage("Automaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa! Devi funzionare, cavolo!", sentin, source)
+            telegram.sendmessage("Automaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa! Devi funzionare, cavolo!", sentin,
+                                 source)
         elif text.startswith('/hs'):
             print("@" + username + ": /hs")
+            # Informa Telegram che il messaggio è stato ricevuto.
+            telegram.sendchataction(sentin)
             cmd = text.split(" ", 1)
             r = None
             if len(cmd) >= 2:
@@ -415,6 +424,8 @@ while True:
         elif text.startswith('/online'):
             # Elenco di tutte le persone online su Steam
             print("@" + username + ": /online ")
+            # Informa Telegram che il messaggio è stato ricevuto.
+            telegram.sendchataction(sentin)
             cmd = text.split(" ")
             if len(cmd) >= 2:
                 if cmd[1].lower() == "help":
@@ -429,7 +440,6 @@ while True:
                 for nome in steamids:
                     userids += str(steamids[nome]) + ','
                 tosend = "*Online ora:*\n"
-                telegram.sendchataction(sentin)
                 r = steam.getplayersummaries(userids)
                 for player in r:
                     # In gioco
@@ -492,6 +502,8 @@ while True:
                 incorso.showresults()
         elif text.startswith('/cv'):
             print("@" + username + ": /cv ")
+            # Informa Telegram che il messaggio è stato ricevuto.
+            telegram.sendchataction(sentin)
             r = mumbleboxes.getserverstatus("https://www.mumbleboxes.com/servers/5454/cvp.json").json()
             tosend = "Utenti online: " + str(len(r['root']['users'])) + " / 15\n"
             for u in r['root']['users']:
