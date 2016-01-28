@@ -31,16 +31,18 @@ def getupdates():
                     return data['result'][0]['message']
 
 
-def sendmessage(content, to):
+def sendmessage(content, to, reply=None):
     """Manda un messaggio a una chat.
     :param content: Testo del messaggio
     :param to: Destinatario del messaggio
+    :param reply: Messaggio a cui rispondere
     """
     # Parametri del messaggio
     parametri = {
         'chat_id': to,
         'text': content,
         'parse_mode': 'Markdown',  # Formattare il messaggio?
+        'reply_to_message_id': reply
     }
     # Manda il messaggio
     requests.get("https://api.telegram.org/bot" + telegramtoken + "/sendMessage", params=parametri)
