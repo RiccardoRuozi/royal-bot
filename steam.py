@@ -23,7 +23,7 @@ def getplayersummaries(steamid):
     elif len(r['response']['players']) > 1:
         return r['response']['players']
     else:
-        raise NameError
+        raise NameError("Lo steamid specificato non esiste.")
 
 
 def getnumberofcurrentplayers(appid):
