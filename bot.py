@@ -5,6 +5,7 @@ import random
 import osu
 import hearthstone
 import sys
+import mumbleboxes
 
 
 # Check per la modalità votazione del bot, corrisponde al numero della chat in cui è attiva la votazione
@@ -233,11 +234,23 @@ while True:
                 except NameError:
                     telegram.sendmessage(chr(9888) + " Errore nella richiesta ai server di Osu!", sentin)
                 else:
+                    if "enabled_mods" in r:
+                        mods = "*Mod selezionate:"
+                        # Adoro SE
+                        # Dividi in bit l'ID delle mod selezionate
+                        if r['enabled_mods'] & 0x1:
+                            mods += " NoFail"
+                        if r['enabled_mods'] & 0x2:
+                            mods += " Easy"
+                        mods += '\n'
+                    else:
+                        mods = '\n'
                     if mode == 0:
                         telegram.sendmessage("*Osu!*\n"
                                              "[Beatmap " + r['beatmap_id'] + "](" + 'https://osu.ppy.sh/b/' + r[
                                                  'beatmap_id'] +
-                                             ")\n*" + r['rank'] + "*\n*Punti*: " + r['score'] + "\n"
+                                             ")\n*" + r['rank'] + "*\n" + mods +
+                                             "*Punti*: " + r['score'] + "\n"
                                              "*Combo* x" + r['maxcombo'] + "\n"
                                              "*300*: " + r['count300'] + "\n"
                                              "*100*: " + r['count100'] + "\n"
@@ -400,38 +413,47 @@ while True:
         elif text.startswith('/online'):
             # Elenco di tutte le persone online su Steam
             print("@" + username + ": /online ")
-            # Stringa utilizzata per ottenere informazioni su tutti gli utenti in una sola richiesta a steam
-            userids = str()
-            for nome in steamids:
-                userids += str(steamids[nome]) + ','
-            tosend = "*Online ora:*\n"
-            telegram.sendchataction(sentin)
-            r = steam.getplayersummaries(userids)
-            for player in r:
-                # In gioco
-                if 'gameextrainfo' in player:
-                    tosend += chr(128308) + " _" + player['gameextrainfo'] + "_ |"
-                elif 'gameid' in player:
-                    tosend += chr(128308) + " _" + player['gameid'] + "_ |"
-                # Online
-                elif player['personastate'] == 1:
-                    tosend += chr(128309)
-                # Occupato
-                elif player['personastate'] == 2:
-                    tosend += chr(128308)
-                # Assente o Inattivo
-                elif player['personastate'] == 3 or player['personastate'] == 4:
-                    tosend += chr(9899)
-                # Disponibile per scambiare
-                elif player['personastate'] == 5:
-                    tosend += chr(128310)
-                # Disponibile per giocare
-                elif player['personastate'] == 6:
-                    tosend += chr(128311)
-                if player['personastate'] != 0:
-                    tosend += " " + player['personaname'] + "\n"
+            cmd = text.split(" ")
+            if len(cmd) >= 2:
+                if cmd[1].lower() == "help":
+                    telegram.sendmessage(chr(128309) + " Online\n" +
+                                         chr(128308) + " In gioco | Occupato\n" +
+                                         chr(9899) + " Assente | Inattivo\n" +
+                                         chr(128310) + " Disponibile per scambiare\n" +
+                                         chr(128311) + " Disponibile per giocare", sentin)
             else:
-                telegram.sendmessage(tosend, sentin)
+                # Stringa utilizzata per ottenere informazioni su tutti gli utenti in una sola richiesta a steam
+                userids = str()
+                for nome in steamids:
+                    userids += str(steamids[nome]) + ','
+                tosend = "*Online ora:*\n"
+                telegram.sendchataction(sentin)
+                r = steam.getplayersummaries(userids)
+                for player in r:
+                    # In gioco
+                    if 'gameextrainfo' in player:
+                        tosend += chr(128308) + " _" + player['gameextrainfo'] + "_ |"
+                    elif 'gameid' in player:
+                        tosend += chr(128308) + " _" + player['gameid'] + "_ |"
+                    # Online
+                    elif player['personastate'] == 1:
+                        tosend += chr(128309)
+                    # Occupato
+                    elif player['personastate'] == 2:
+                        tosend += chr(128308)
+                    # Assente o Inattivo
+                    elif player['personastate'] == 3 or player['personastate'] == 4:
+                        tosend += chr(9899)
+                    # Disponibile per scambiare
+                    elif player['personastate'] == 5:
+                        tosend += chr(128310)
+                    # Disponibile per giocare
+                    elif player['personastate'] == 6:
+                        tosend += chr(128311)
+                    if player['personastate'] != 0:
+                        tosend += " " + player['personaname'] + "\n"
+                else:
+                    telegram.sendmessage(tosend, sentin)
         elif text.startswith('/shrekt'):
             print("@" + username + ": /shrekt ")
             telegram.senddocument("BQADBAADsQADiBjiAqYN-EBXASyhAg", sentin)
@@ -466,3 +488,17 @@ while True:
             if incorso.chat == sentin:
                 print("@" + username + ": /risultati ")
                 incorso.showresults()
+        elif text.startswith('/cv'):
+            print("@" + username + ": /cv ")
+            r = mumbleboxes.getserverstatus("https://www.mumbleboxes.com/servers/5454/cvp.json").json()
+            tosend = "Utenti online: " + str(len(r['root']['users'])) + " / 15\n"
+            for u in r['root']['users']:
+                if not u['mute']:
+                    if u['selfDeaf']:
+                        tosend += chr(128263) + " "
+                    elif u['selfMute']:
+                        tosend += chr(128264) + " "
+                    else:
+                        tosend += chr(128266) + " "
+                    tosend += u['name'] + "\n"
+            telegram.sendmessage(tosend, sentin)
