@@ -243,13 +243,63 @@ while True:
                     telegram.sendmessage(chr(9888) + " Errore nella richiesta ai server di Osu!", sentin, source)
                 else:
                     if "enabled_mods" in r:
-                        mods = "*Mod selezionate:"
+                        mods = "*Mod:*"
                         # Adoro SE
                         # Dividi in bit l'ID delle mod selezionate
-                        if r['enabled_mods'] & 0x1:
+                        if int(r['enabled_mods']) & 0b1:
                             mods += " NoFail"
-                        if r['enabled_mods'] & 0x2:
+                        if int(r['enabled_mods']) & 0b10:
                             mods += " Easy"
+                        if int(r['enabled_mods']) & 0b100:
+                            mods += " NoVideo (?)"
+                        if int(r['enabled_mods']) & 0b1000:
+                            mods += " Hidden"
+                        if int(r['enabled_mods']) & 0b10000:
+                            mods += " HardRock"
+                        if int(r['enabled_mods']) & 0b100000:
+                            mods += " SuddenDeath"
+                        if int(r['enabled_mods']) & 0b1000000:
+                            mods += " DoubleTime"
+                        if int(r['enabled_mods']) & 0b10000000:
+                            mods += " Relax"
+                        if int(r['enabled_mods']) & 0b100000000:
+                            mods += " HalfTime"
+                        if int(r['enabled_mods']) & 0b1000000000:
+                            mods += " Nightcore"
+                        if int(r['enabled_mods']) & 0b10000000000:
+                            mods += " Flashlight"
+                        if int(r['enabled_mods']) & 0b100000000000:
+                            mods += " Autoplay"
+                        if int(r['enabled_mods']) & 0b1000000000000:
+                            mods += " SpunOut"
+                        if int(r['enabled_mods']) & 0b10000000000000:
+                            mods += " Autopilot"
+                        if int(r['enabled_mods']) & 0b100000000000000:
+                            mods += " Perfect"
+                        if int(r['enabled_mods']) & 0b1000000000000000:
+                            mods += " 4K"
+                        if int(r['enabled_mods']) & 0b10000000000000000:
+                            mods += " 5K"
+                        if int(r['enabled_mods']) & 0b100000000000000000:
+                            mods += " 6K"
+                        if int(r['enabled_mods']) & 0b1000000000000000000:
+                            mods += " 7K"
+                        if int(r['enabled_mods']) & 0b10000000000000000000:
+                            mods += " 8K"
+                        if int(r['enabled_mods']) & 0b100000000000000000000:
+                            mods += " FadeIn"
+                        if int(r['enabled_mods']) & 0b1000000000000000000000:
+                            mods += " Random"
+                        if int(r['enabled_mods']) & 0b1000000000000000000000000:
+                            mods += " 9K"
+                        if int(r['enabled_mods']) & 0b10000000000000000000000000:
+                            mods += " 10K"
+                        if int(r['enabled_mods']) & 0b100000000000000000000000000:
+                            mods += " 1K"
+                        if int(r['enabled_mods']) & 0b1000000000000000000000000000:
+                            mods += " 3K"
+                        if int(r['enabled_mods']) & 0b10000000000000000000000000000:
+                            mods += " 2K"
                         mods += '\n'
                     else:
                         mods = '\n'
@@ -299,21 +349,21 @@ while True:
                                              "*200*: " + r['countkatu'] + "\n"
                                              "*50*: " + r['count50'] + "\n"
                                              "*Miss*: " + r['countmiss'], sentin, source)
-                    else:
-                        # E' un po' una scorciatoia eh, peeerò...
-                        if username.lower() in osunames:
-                            r = osu.getuserrecent(osunames[username.lower()], 0)
-                            telegram.sendmessage("*Osu!*\n"
-                                                 "[Beatmap " + r['beatmap_id'] + "](" + 'https://osu.ppy.sh/b/' + r[
-                                                     'beatmap_id'] +
-                                                 ")\n*" + r['rank'] + "*\n*Punti*: " + r['score'] + "\n"
-                                                 "*Combo* x" + r['maxcombo'] + "\n"
-                                                 "*300*: " + r['count300'] + "\n"
-                                                 "*100*: " + r['count100'] + "\n"
-                                                 "*50*: " + r['count50'] + "\n"
-                                                 "*Awesome*: " + r['countgeki'] + "\n"
-                                                 "*Good*: " + r['countkatu'] + "\n"
-                                                 "*Miss*: " + r['countmiss'], sentin, source)
+            else:
+                # E' un po' una scorciatoia eh, peeerò...
+                if username.lower() in osunames:
+                    r = osu.getuserrecent(osunames[username.lower()], 0)
+                    telegram.sendmessage("*Osu!*\n"
+                                         "[Beatmap " + r['beatmap_id'] + "](" + 'https://osu.ppy.sh/b/' + r[
+                                             'beatmap_id'] +
+                                         ")\n*" + r['rank'] + "*\n*Punti*: " + r['score'] + "\n"
+                                         "*Combo* x" + r['maxcombo'] + "\n"
+                                         "*300*: " + r['count300'] + "\n"
+                                         "*100*: " + r['count100'] + "\n"
+                                         "*50*: " + r['count50'] + "\n"
+                                         "*Awesome*: " + r['countkatu'] + "\n"
+                                         "*Good*: " + r['countgeki'] + "\n"
+                                         "*Miss*: " + r['countmiss'], sentin, source)
         elif text.startswith('/roll'):
             print("@" + username + ": /roll")
             cmd = text.split(' ', 1)
