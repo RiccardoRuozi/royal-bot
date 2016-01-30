@@ -320,7 +320,8 @@ while True:
                         telegram.sendmessage("*Taiko*\n"
                                              "[Beatmap " + r['beatmap_id'] + "](" + 'https://osu.ppy.sh/b/' + r[
                                                  'beatmap_id'] +
-                                             ")\n*" + r['rank'] + "*\n*Punti*: " + r['score'] + "\n"
+                                             ")\n*" + r['rank'] + "*\n" + mods +
+                                             "\n*Punti*: " + r['score'] + "\n"
                                              "*Combo* x" + r['maxcombo'] + "\n"
                                              "*Great*: " + r['count300'] + "\n"
                                              "*Good*: " + r['count100'] + "\n"
@@ -331,7 +332,8 @@ while True:
                         telegram.sendmessage("*Catch the Beat*\n"
                                              "[Beatmap " + r['beatmap_id'] + "](" + 'https://osu.ppy.sh/b/' + r[
                                                  'beatmap_id'] +
-                                             ")\n*" + r['rank'] + "*\n*Punti*: " + r['score'] + "\n"
+                                             ")\n*" + r['rank'] + "*\n" + mods +
+                                             "\n*Punti*: " + r['score'] + "\n"
                                              "*Combo* x" + r['maxcombo'] + "\n"
                                              "*Fruit*: " + r['count300'] + "\n"
                                              "*Droplet* _tick_: " + r['count100'] + "\n"
@@ -340,8 +342,8 @@ while True:
                     elif mode == 3:
                         telegram.sendmessage("*Osu!mania*\n" +
                                              "[Beatmap " + r['beatmap_id'] + "](" + 'https://osu.ppy.sh/b/' + r[
-                                                 'beatmap_id'] + ")\n*" + r['rank'] +
-                                             "*\n*Punti*: " + r['score'] + "\n"
+                                                 'beatmap_id'] + ")\n*" + r['rank'] + "*\n" + mods +
+                                             "\n*Punti*: " + r['score'] + "\n"
                                              "*Combo* x" + r['maxcombo'] + "\n"
                                              "_Rainbow_ *300*: " + r['countgeki'] + "\n"
                                              "*300*: " + r['count300'] + "\n"
@@ -356,7 +358,8 @@ while True:
                     telegram.sendmessage("*Osu!*\n"
                                          "[Beatmap " + r['beatmap_id'] + "](" + 'https://osu.ppy.sh/b/' + r[
                                              'beatmap_id'] +
-                                         ")\n*" + r['rank'] + "*\n*Punti*: " + r['score'] + "\n"
+                                         ")\n*" + r['rank'] + "*\n" + mods +
+                                         "\n*Punti*: " + r['score'] + "\n"
                                          "*Combo* x" + r['maxcombo'] + "\n"
                                          "*300*: " + r['count300'] + "\n"
                                          "*100*: " + r['count100'] + "\n"
