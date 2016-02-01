@@ -173,13 +173,15 @@ while True:
             # Viene usato startswith perchè il comando potrebbe anche essere inviato in forma /ciao@RoyalBot.
             if text.startswith('/ahnonlosoio'):
                 print("@" + username + ": /ahnonlosoio")
+                # Rispondi con Ah, non lo so nemmeno io.
                 telegram.sendmessage("Ah, non lo so nemmeno io!", sentin, source)
             elif text.startswith('/ehoh'):
                 print("@" + username + ": /ehoh")
+                # Rispondi con Eh, oh. Sono cose che capitano.
                 telegram.sendmessage("Eh, oh. Sono cose che capitano.", sentin, source)
             elif text.startswith('/playing'):
                 print("@" + username + ": /playing")
-                # Informa Telegram che il messaggio è stato ricevuto.
+                # Informa Telegram che il messaggio è stato ricevuto e visualizza Royal Bot sta scrivendo.
                 telegram.sendchataction(sentin)
                 cmd = text.split(" ")
                 # Se è stato specificato un AppID...
@@ -196,7 +198,8 @@ while True:
                                          'La sintassi corretta è /playing <AppID>.', sentin, source)
             elif text.startswith('/saldi'):
                 print("@" + username + ": /saldi")
-                # Informa Telegram che il messaggio è stato ricevuto.
+                # Visualizza il link di isthereanydeal con i saldi di un gioco.
+                # Informa Telegram che il messaggio è stato ricevuto e visualizza Royal Bot sta scrivendo.
                 telegram.sendchataction(sentin)
                 cmd = text.split(" ", 1)
                 if len(cmd) == 2:
@@ -210,51 +213,45 @@ while True:
                                          "[Visualizza tutte le offerte]"
                                          "(https://isthereanydeal.com/#/search:.;/scroll:%23gamelist).",
                                          sentin, source)
-            # elif text.startswith('/audio'):
-            #     # Se qualcuno ne ha voglia, qui si potrebbe aggiungere la selezione degli audio come argomento,
-            #     # invece che fare una playlist casuale...
-            #     # Se non ci sono rage nella playlist, riempila e mescolala!
-            #     if len(rage) <= 0:
-            #         # TODO: Rimettere gli audio di /audio
-            #         rage = []
-            #         random.shuffle(rage)
-            #     # Estrai un audio a caso tra quelli nella playlist e rimuovilo.
-            #     ragesend = rage.pop()
-            #     print("@" + username + ": /audio")
-            #     telegram.senddocument(ragesend, sentin, source)
             elif text.startswith('/sbam'):
                 print("@" + username + ": /sbam")
+                # Manda l'audio contenente gli sbam di tutti i membri Royal Games.
                 telegram.senddocument('BQADAgADBwMAAh8GgAGSsR4rwmk_LwI', sentin)
-            # elif text.startswith('/wololo'):
-            #     print("@" + username + ": /wololo")
-            #     if len(cmd) >= 2:
-            #         telegram.senddocument(wololo[int(cmd[1]) - 1], sentin, source)
-            #     else:
-            #         telegram.senddocument('BQADAgADZwIAAh8GgAF3etjqkzFDxAI', sentin, source)
             elif text.startswith('/osu'):
                 print("@" + username + ": /osu")
+                # Visualizza il punteggio più recente di osu!
                 # Informa Telegram che il messaggio è stato ricevuto.
                 telegram.sendchataction(sentin)
-                # Trova il nome utente
+                # Trova il nome utente specificato
                 cmd = text.split(' ', 1)
+                # Se è stato specificato un nome utente
                 if len(cmd) >= 2:
                     # Trova la modalità
+                    # 0 = osu!
+                    # 1 = osu!taiko
+                    # 2 = osu!catch
+                    # 3 = osu!mania
                     cmd = text.split(' ', 2)
+                    # Se è stata specificata una modalità
                     if len(cmd) >= 3:
                         # Modalità specificata
                         mode = int(cmd[2])
                     else:
-                        # Osu! normale
+                        # Imposta la modalità a osu!
                         mode = 0
+                    # Prova a mandare una richiesta ai server di osu per l'ultima canzone giocata
                     try:
                         r = osu.getuserrecent(cmd[1], mode)
+                    # Se la funzione restituisce un errore, riferisci su Telegram l'errore e previeni il crash.
                     except NameError:
                         telegram.sendmessage(chr(9888) + " Errore nella richiesta ai server di Osu!", sentin, source)
+                    # Se tutto va bene, continua!
                     else:
+                        # Se ci sono delle mod attive...
                         if "enabled_mods" in r:
                             mods = "*Mod:*"
-                            # Adoro SE
-                            # Dividi in bit l'ID delle mod selezionate
+                            # Dividi in bit l'ID delle mod selezionate usando un bitwise and
+                            # Forse si potrebbe rifare usando la forma esadecimale...?
                             if int(r['enabled_mods']) & 0b1:
                                 mods += " NoFail"
                             if int(r['enabled_mods']) & 0b10:
@@ -311,9 +308,11 @@ while True:
                                 mods += " 2K"
                             mods += '\n'
                         else:
+                            # Lascia la riga delle mod vuota.
                             mods = '\n'
                         if mode == 0:
-                            telegram.sendmessage("*Osu!*\n"
+                            # Visualizza le informazioni relative alla modalità osu!
+                            telegram.sendmessage("*osu!*\n"
                                                  "[Beatmap " + r['beatmap_id'] + "](" + 'https://osu.ppy.sh/b/' + r[
                                                      'beatmap_id'] +
                                                  ")\n*" + r['rank'] + "*\n" + mods +
@@ -326,7 +325,8 @@ while True:
                                                  "*Good*: " + r['countgeki'] + "\n"
                                                  "*Miss*: " + r['countmiss'], sentin, source)
                         elif mode == 1:
-                            telegram.sendmessage("*Taiko*\n"
+                            # Visualizza le informazioni relative alla modalità osu!taiko
+                            telegram.sendmessage("*osu!taiko*\n"
                                                  "[Beatmap " + r['beatmap_id'] + "](" + 'https://osu.ppy.sh/b/' + r[
                                                      'beatmap_id'] +
                                                  ")\n*" + r['rank'] + "*\n" + mods +
@@ -338,7 +338,8 @@ while True:
                                                  "_Large_ *Good*: " + r['countgeki'] + "\n"
                                                  "*Bad*: " + r['countmiss'], sentin, source)
                         elif mode == 2:
-                            telegram.sendmessage("*Catch the Beat*\n"
+                            # Visualizza le informazioni relative alla modalità osu!catch
+                            telegram.sendmessage("*osu!catch*\n"
                                                  "[Beatmap " + r['beatmap_id'] + "](" + 'https://osu.ppy.sh/b/' + r[
                                                      'beatmap_id'] +
                                                  ")\n*" + r['rank'] + "*\n" + mods +
@@ -349,7 +350,8 @@ while True:
                                                  "*Droplet* _trail_: " + r['count50'] + "\n"
                                                  "*Miss*: " + r['countmiss'], sentin, source)
                         elif mode == 3:
-                            telegram.sendmessage("*Osu!mania*\n" +
+                            # Visualizza le informazioni relative alla modalità osu!mania
+                            telegram.sendmessage("*osu!mania*\n" +
                                                  "[Beatmap " + r['beatmap_id'] + "](" + 'https://osu.ppy.sh/b/' + r[
                                                      'beatmap_id'] + ")\n*" + r['rank'] + "*\n" + mods +
                                                  "\n*Punti*: " + r['score'] + "\n"
@@ -366,7 +368,6 @@ while True:
                         r = osu.getuserrecent(osunames[username.lower()], 0)
                         if "enabled_mods" in r:
                             mods = "*Mod:*"
-                            # Adoro SE
                             # Dividi in bit l'ID delle mod selezionate
                             if int(r['enabled_mods']) & 0b1:
                                 mods += " NoFail"
@@ -440,22 +441,28 @@ while True:
             elif text.startswith('/roll'):
                 print("@" + username + ": /roll")
                 cmd = text.split(' ', 1)
+                # Se è stato specificato un numero
                 if len(cmd) >= 2:
+                    # Controlla che sia convertibile in un intero.
                     try:
                         m = int(cmd[1])
                     except ValueError:
                         telegram.sendmessage(chr(9888) + " Il numero specificato non è un intero.", sentin, source)
                 else:
+                    # Imposta il numero massimo a 100.
                     m = 100
+                # Prova a generare un numero casuale.
                 try:
                     n = random.randrange(m) + 1
                 except ValueError:
-                    telegram.sendmessage(chr(9888) + " Il numero specificato non è maggiore o uguale a 0.", sentin, source)
+                    telegram.sendmessage(chr(9888) + " Il numero specificato non è maggiore o uguale a 0.", sentin,
+                                         source)
+                # Se tutto va bene visualizza il numero generato
                 else:
                     telegram.sendmessage("Numero casuale da 1 a " + str(m) + ":\n*" + str(n) + "*", sentin, source)
             elif text.startswith('/automah'):
                 print("@" + username + ": /automah")
-                # TODO: Mettere l'audio di Tobia
+                # Invia il messaggio.
                 telegram.sendmessage("Automaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa! Devi funzionare, cavolo!", sentin,
                                      source)
             elif text.startswith('/hs'):
@@ -463,14 +470,16 @@ while True:
                 # Informa Telegram che il messaggio è stato ricevuto.
                 telegram.sendchataction(sentin)
                 cmd = text.split(" ", 1)
-                r = None
+                # Se è stata specificata una carta...
                 if len(cmd) >= 2:
+                    # Controlla che la carta specificata esista.
                     try:
                         r = hearthstone.card(cmd[1])
                         # Se ci sono più carte, prendine una a caso!
                         r = r[random.randrange(len(r))]
                     except ValueError:
                         telegram.sendmessage(chr(9888) + " La carta specificata non esiste!", sentin, source)
+                    # Se tutto va bene, elabora e visualizza le informazioni sulla carta.
                     else:
                         # Si trova nelle bustine
                         if 'howToGet' not in r:
@@ -484,11 +493,12 @@ while True:
                         # Nessun effetto
                         if 'text' not in r:
                             r['text'] = ""
-                        # HTML nella descrizione
+                        # Converti l'HTML nella descrizione in Markdown. Circa.
                         r['text'] = r['text'].replace("<b>", "*")
                         r['text'] = r['text'].replace("</b>", "*")
                         r['text'] = r['text'].replace("<i>", "_")
                         r['text'] = r['text'].replace("</i>", "_")
+                        # Togli il $, che indica che il numero di danni può essere modificato dallo Spell Damage
                         r['text'] = r['text'].replace("$", "")
                         # Nessuna rarità
                         if 'rarity' not in r:
@@ -497,7 +507,6 @@ while True:
                         if 'flavor' not in r:
                             r['flavor'] = ""
                         # Testo principale
-                        text = None
                         # Magie
                         if r['type'] == "Spell":
                             text = str("[" + r['name'] + "](" + r['img'] + ") "
