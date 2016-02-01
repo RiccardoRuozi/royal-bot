@@ -168,7 +168,7 @@ while True:
             # Altrimenti, salva l'userID
             username = str(msg['from']['id'])
         # Se sei un membro della Royal Games
-        if username in telegramnames:
+        if username.lower() in telegramnames:
             # Riconosci il comando.
             # Viene usato startswith perchè il comando potrebbe anche essere inviato in forma /ciao@RoyalBot.
             if text.startswith('/ahnonlosoio'):
