@@ -677,7 +677,7 @@ while True:
                 print("@" + username + ": /diario ")
                 cmd = text.split(" ", 1)
                 d = filemanager.readfile("diario.txt")
-                d += "`" + str(int(time.time())) + "` | " + cmd[1] + "\n"
+                d += str(int(time.time())) + "|" + cmd[1] + "\n"
                 filemanager.writefile("diario.txt", d)
                 telegram.sendmessage("Aggiunto al diario RYG.", sentin, source)
             elif text.startswith('/leggi'):
@@ -688,7 +688,10 @@ while True:
                 text = str()
                 # L'ultimo numero è escluso.
                 for n in range(int(cmd[1]) + 1, 1, -1):
-                    text += d[len(d) - n] + "\n"
+                    riga = d[len(d) - n]
+                    riga = riga.split("|", 1)
+                    ora = time.gmtime(int(riga[0]))
+                    text += "`" + str(ora.tm_hour) + ":" + str(ora.tm_min) + "` " + riga[1] + "\n"
                 telegram.sendmessage(text, sentin, source)
         else:
             print("@" + username + " bloccato.")
