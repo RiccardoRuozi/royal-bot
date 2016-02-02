@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import requests
 import filemanager
 
@@ -23,7 +24,7 @@ def getbeatmap(num):
 def getuser(user, mode=0):
     """Ottieni informazioni su un utente.
     :param user: Username o ID dell'utente
-    :param mode: Modalità (0 = osu!, 1 = Taiko, 2 = CtB, 3 = osu!mania)
+    :param mode: Modalita' (0 = osu!, 1 = Taiko, 2 = CtB, 3 = osu!mania)
     """
     parametri = {
         'k': apikey,
