@@ -213,6 +213,31 @@ while True:
                                          "[Visualizza tutte le offerte]"
                                          "(https://isthereanydeal.com/#/search:.;/scroll:%23gamelist).",
                                          sentin, source)
+            elif text.startswith('/audio'):
+                # Se qualcuno ne ha voglia, qui si potrebbe aggiungere la selezione degli audio come argomento,
+                # invece che fare una playlist casuale...
+                # Se non ci sono rage nella playlist, riempila e mescolala!
+                if len(rage) <= 0:
+                    # TODO: Rimettere gli audio di /audio
+                    rage = ['BQADAgADMwIAAh8GgAFQaq1JNk1ZtwI', #ma dinuovo
+                            'BQADAgADrAIAAh8GgAHTdcu8cG-LbAI', #sallati
+                            'BQADAgADEAIAAh8GgAE4O2578G1EagI', #giummy per sempre
+                            'BQADAgAD3wEAAh8GgAEUqoKiAaPP9wI', #non è wollac è gion sina
+                            'BQADAgADqwIAAh8GgAE62csQVNai8QI', #tette crystal maiden
+                            'BQADAgAD6wEAAh8GgAGe6IDqRVSAhwI', #la barba che apeggia
+                            'BQADAgAD4AEAAh8GgAFRi-UD1VvyLwI', #gion cina original
+                            'BQADAgADEwIAAh8GgAE-iNm-4V6pZAI', #ma porco 3
+                            'BQADAgADrgIAAh8GgAGKOIASQZevMwI', #5 anni tette grosse
+                            'BQADAgAD5gEAAh8GgAFsphnhj_xOnAI', #infilatevi un dito nel..
+                            'BQADAgADqAIAAh8GgAEDx7kiV1MdAwI', #ma siete nvidiosi?
+                            'BQADAgADqQIAAh8GgAHhGzfuq1LGXAI', #mi sale il cazzo
+                            'BQADAgADpgIAAh8GgAFoIX9f88R-vAI', #mamma di mari e le parolacce..
+                            ]
+                    random.shuffle(rage)
+                # Estrai un audio a caso tra quelli nella playlist e rimuovilo.
+                ragesend = rage.pop()
+                print("@" + username + ": /audio")
+                telegram.senddocument(ragesend, sentin)
             elif text.startswith('/sbam'):
                 print("@" + username + ": /sbam")
                 # Manda l'audio contenente gli sbam di tutti i membri Royal Games.
@@ -253,58 +278,59 @@ while True:
                             # Dividi in bit l'ID delle mod selezionate usando un bitwise and
                             # Forse si potrebbe rifare usando la forma esadecimale...?
                             if int(r['enabled_mods']) & 0b1:
+                            if int(r['enabled_mods']) & 0x1:
                                 mods += " NoFail"
-                            if int(r['enabled_mods']) & 0b10:
+                            if int(r['enabled_mods']) & 0x2:
                                 mods += " Easy"
-                            if int(r['enabled_mods']) & 0b100:
+                            if int(r['enabled_mods']) & 0x4:
                                 mods += " NoVideo (?)"
-                            if int(r['enabled_mods']) & 0b1000:
+                            if int(r['enabled_mods']) & 0x8:
                                 mods += " Hidden"
-                            if int(r['enabled_mods']) & 0b10000:
+                            if int(r['enabled_mods']) & 0x10:
                                 mods += " HardRock"
-                            if int(r['enabled_mods']) & 0b100000:
+                            if int(r['enabled_mods']) & 0x20:
                                 mods += " SuddenDeath"
-                            if int(r['enabled_mods']) & 0b1000000:
+                            if int(r['enabled_mods']) & 0x40:
                                 mods += " DoubleTime"
-                            if int(r['enabled_mods']) & 0b10000000:
+                            if int(r['enabled_mods']) & 0x80:
                                 mods += " Relax"
-                            if int(r['enabled_mods']) & 0b100000000:
+                            if int(r['enabled_mods']) & 0x100:
                                 mods += " HalfTime"
-                            if int(r['enabled_mods']) & 0b1000000000:
+                            if int(r['enabled_mods']) & 0x200:
                                 mods += " Nightcore"
-                            if int(r['enabled_mods']) & 0b10000000000:
+                            if int(r['enabled_mods']) & 0x400:
                                 mods += " Flashlight"
-                            if int(r['enabled_mods']) & 0b100000000000:
+                            if int(r['enabled_mods']) & 0x800:
                                 mods += " Autoplay"
-                            if int(r['enabled_mods']) & 0b1000000000000:
+                            if int(r['enabled_mods']) & 0x1000:
                                 mods += " SpunOut"
-                            if int(r['enabled_mods']) & 0b10000000000000:
+                            if int(r['enabled_mods']) & 0x2000:
                                 mods += " Autopilot"
-                            if int(r['enabled_mods']) & 0b100000000000000:
+                            if int(r['enabled_mods']) & 0x4000:
                                 mods += " Perfect"
-                            if int(r['enabled_mods']) & 0b1000000000000000:
+                            if int(r['enabled_mods']) & 0x8000:
                                 mods += " 4K"
-                            if int(r['enabled_mods']) & 0b10000000000000000:
+                            if int(r['enabled_mods']) & 0x10000:
                                 mods += " 5K"
-                            if int(r['enabled_mods']) & 0b100000000000000000:
+                            if int(r['enabled_mods']) & 0x20000:
                                 mods += " 6K"
-                            if int(r['enabled_mods']) & 0b1000000000000000000:
+                            if int(r['enabled_mods']) & 0x40000:
                                 mods += " 7K"
-                            if int(r['enabled_mods']) & 0b10000000000000000000:
+                            if int(r['enabled_mods']) & 0x80000:
                                 mods += " 8K"
-                            if int(r['enabled_mods']) & 0b100000000000000000000:
+                            if int(r['enabled_mods']) & 0x100000:
                                 mods += " FadeIn"
-                            if int(r['enabled_mods']) & 0b1000000000000000000000:
+                            if int(r['enabled_mods']) & 0x200000:
                                 mods += " Random"
-                            if int(r['enabled_mods']) & 0b1000000000000000000000000:
+                            if int(r['enabled_mods']) & 0x400000:
                                 mods += " 9K"
-                            if int(r['enabled_mods']) & 0b10000000000000000000000000:
+                            if int(r['enabled_mods']) & 0x800000:
                                 mods += " 10K"
-                            if int(r['enabled_mods']) & 0b100000000000000000000000000:
+                            if int(r['enabled_mods']) & 0x1000000:
                                 mods += " 1K"
-                            if int(r['enabled_mods']) & 0b1000000000000000000000000000:
+                            if int(r['enabled_mods']) & 0x2000000:
                                 mods += " 3K"
-                            if int(r['enabled_mods']) & 0b10000000000000000000000000000:
+                            if int(r['enabled_mods']) & 0x4000000:
                                 mods += " 2K"
                             mods += '\n'
                         else:
