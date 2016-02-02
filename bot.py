@@ -277,7 +277,6 @@ while True:
                             mods = "*Mod:*"
                             # Dividi in bit l'ID delle mod selezionate usando un bitwise and
                             # Forse si potrebbe rifare usando la forma esadecimale...?
-                            if int(r['enabled_mods']) & 0b1:
                             if int(r['enabled_mods']) & 0x1:
                                 mods += " NoFail"
                             if int(r['enabled_mods']) & 0x2:
