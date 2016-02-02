@@ -677,7 +677,7 @@ while True:
                 print("@" + username + ": /diario ")
                 cmd = text.split(" ", 1)
                 d = filemanager.readfile("diario.txt")
-                d += str(time.time()) + " | " + cmd[1] + "\n"
+                d += "`" + str(int(time.time())) + "` | " + cmd[1] + "\n"
                 filemanager.writefile("diario.txt", d)
                 telegram.sendmessage("Aggiunto al diario RYG.", sentin, source)
             elif text.startswith('/leggi'):
