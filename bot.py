@@ -229,6 +229,13 @@ while True:
                             'BQADAgADqAIAAh8GgAEDx7kiV1MdAwI', #ma siete nvidiosi?
                             'BQADAgADqQIAAh8GgAHhGzfuq1LGXAI', #mi sale il cazzo
                             'BQADAgADpgIAAh8GgAFoIX9f88R-vAI', #mamma di mari e le parolacce..
+                            'BQADAgADrwIAAh8GgAGdfZO0w1wAAYYC', #benny al lucca comics?
+                            'BQADAgADZwIAAh8GgAF_-z9G8aJWQAI', #wowowowowloloooo
+                            'BQADAgADEQIAAh8GgAHaG4P-MmuJKAI', #ma spariii
+                            'BQADAgAD6QEAAh8GgAF0xIIbFxW6NQI', #basta garffff
+                            'BQADAgADmgIAAh8GgAE8TVwdCMjHVAI', #nel punto del pene
+                            'BQADAgADdwIAAh8GgAGLEM7C9dILaQI', #la trombettaaaaa
+                            'BQADAgADMgIAAh8GgAFe9-lVwzdFzAI', #o mio dio!
                             ]
                     random.shuffle(rage)
                 # Estrai un audio a caso tra quelli nella playlist e rimuovilo.
