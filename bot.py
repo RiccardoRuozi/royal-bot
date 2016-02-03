@@ -89,6 +89,26 @@ rage = []
 # TODO: Rimettere gli audio di Wololo
 # wololo = []
 
+audio = {
+        'madinuovo': 'BQADAgADMwIAAh8GgAFQaq1JNk1ZtwI', #ma dinuovo 
+        'sallati': 'BQADAgADrAIAAh8GgAHTdcu8cG-LbAI', #sallati
+        'giummipersempre': 'BQADAgADEAIAAh8GgAE4O2578G1EagI', #giummy per sempre
+        'nonewallhack': 'BQADAgAD3wEAAh8GgAEUqoKiAaPP9wI', #non è wollac è gion sina
+        'crystalmaiden': 'BQADAgADqwIAAh8GgAE62csQVNai8QI', #tette crystal maiden
+        'apeggia': 'BQADAgAD6wEAAh8GgAGe6IDqRVSAhwI', #la barba che apeggia
+        'johncena': 'BQADAgAD4AEAAh8GgAFRi-UD1VvyLwI', #gion cina original
+        'tre': 'BQADAgADEwIAAh8GgAE-iNm-4V6pZAI', #ma porco 3
+        'cinqueanni': 'BQADAgADrgIAAh8GgAGKOIASQZevMwI', #5 anni tette grosse
+        'infilatevi': 'BQADAgAD5gEAAh8GgAFsphnhj_xOnAI', #infilatevi un dito nel..
+        'invidiosi': 'BQADAgADqAIAAh8GgAEDx7kiV1MdAwI', #ma siete nvidiosi?
+        'salitipo': 'BQADAgADqQIAAh8GgAHhGzfuq1LGXAI', #mi sale il cazzo
+        'mammadimari': 'BQADAgADpgIAAh8GgAFoIX9f88R-vAI', #mamma di mari e le parolacce..
+        'plug': 'BQADAgADrwIAAh8GgAGdfZO0w1wAAYYC', #benny al lucca comics?
+        'spari': 'BQADAgADEQIAAh8GgAHaG4P-MmuJKAI', #ma spariii
+        'bastagarf': 'BQADAgAD6QEAAh8GgAF0xIIbFxW6NQI', #basta garffff
+        'omiodio': 'BQADAgADMgIAAh8GgAFe9-lVwzdFzAI', #o mio dio!
+        } 
+
 # Dizionario con i nomi utenti di osu!
 # Se qualcuno cambia nome utente di Telegram, lo cambi anche QUI.
 osunames = {
@@ -214,37 +234,10 @@ while True:
                                          "(https://isthereanydeal.com/#/search:.;/scroll:%23gamelist).",
                                          sentin, source)
             elif text.startswith('/audio'):
-                # Se qualcuno ne ha voglia, qui si potrebbe aggiungere la selezione degli audio come argomento,
-                # invece che fare una playlist casuale...
-                # Se non ci sono rage nella playlist, riempila e mescolala!
-                if len(rage) <= 0:
-                    # TODO: Rimettere gli audio di /audio
-                    rage = ['BQADAgADMwIAAh8GgAFQaq1JNk1ZtwI', #ma dinuovo
-                            'BQADAgADrAIAAh8GgAHTdcu8cG-LbAI', #sallati
-                            'BQADAgADEAIAAh8GgAE4O2578G1EagI', #giummy per sempre
-                            'BQADAgAD3wEAAh8GgAEUqoKiAaPP9wI', #non è wollac è gion sina
-                            'BQADAgADqwIAAh8GgAE62csQVNai8QI', #tette crystal maiden
-                            'BQADAgAD6wEAAh8GgAGe6IDqRVSAhwI', #la barba che apeggia
-                            'BQADAgAD4AEAAh8GgAFRi-UD1VvyLwI', #gion cina original
-                            'BQADAgADEwIAAh8GgAE-iNm-4V6pZAI', #ma porco 3
-                            'BQADAgADrgIAAh8GgAGKOIASQZevMwI', #5 anni tette grosse
-                            'BQADAgAD5gEAAh8GgAFsphnhj_xOnAI', #infilatevi un dito nel..
-                            'BQADAgADqAIAAh8GgAEDx7kiV1MdAwI', #ma siete nvidiosi?
-                            'BQADAgADqQIAAh8GgAHhGzfuq1LGXAI', #mi sale il cazzo
-                            'BQADAgADpgIAAh8GgAFoIX9f88R-vAI', #mamma di mari e le parolacce..
-                            'BQADAgADrwIAAh8GgAGdfZO0w1wAAYYC', #benny al lucca comics?
-                            'BQADAgADZwIAAh8GgAF_-z9G8aJWQAI', #wowowowowloloooo
-                            'BQADAgADEQIAAh8GgAHaG4P-MmuJKAI', #ma spariii
-                            'BQADAgAD6QEAAh8GgAF0xIIbFxW6NQI', #basta garffff
-                            'BQADAgADmgIAAh8GgAE8TVwdCMjHVAI', #nel punto del pene
-                            'BQADAgADdwIAAh8GgAGLEM7C9dILaQI', #la trombettaaaaa
-                            'BQADAgADMgIAAh8GgAFe9-lVwzdFzAI', #o mio dio!
-                            ]
-                    random.shuffle(rage)
-                # Estrai un audio a caso tra quelli nella playlist e rimuovilo.
-                ragesend = rage.pop()
                 print("@" + username + ": /audio")
-                telegram.senddocument(ragesend, sentin)
+                cmd = text.split(" ", 1)
+                sendme = audio[cmd[1]]
+                telegram.senddocument(sendme, sentin)
             elif text.startswith('/sbam'):
                 print("@" + username + ": /sbam")
                 # Manda l'audio contenente gli sbam di tutti i membri Royal Games.
