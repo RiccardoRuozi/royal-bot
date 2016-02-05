@@ -531,7 +531,7 @@ while True:
                         incorso.register(username.lower(), 1)
                         telegram.sendmessage("Votazione registrata!", sentin, source)
                 else:
-                        telegram.sendmessage(chr(9888) + " Non è in corso nessuna votazione!")
+                    telegram.sendmessage(chr(9888) + " Non è in corso nessuna votazione!", sentin, source)
             elif text.startswith('/no'):
                 print("@" + username + ": /no ")
                 if incorso is not None:
@@ -539,7 +539,7 @@ while True:
                         incorso.register(username.lower(), 2)
                         telegram.sendmessage("Votazione registrata!", sentin, source)
                 else:
-                    telegram.sendmessage(chr(9888) + " Non è in corso nessuna votazione!")
+                    telegram.sendmessage(chr(9888) + " Non è in corso nessuna votazione!", sentin, source)
             elif text.startswith('/astieniti'):
                 print("@" + username + ": /astieniti ")
                 if incorso is not None:
@@ -547,21 +547,21 @@ while True:
                         incorso.register(username.lower(), 3)
                         telegram.sendmessage("Votazione registrata!", sentin, source)
                 else:
-                    telegram.sendmessage(chr(9888) + " Non è in corso nessuna votazione!")
+                    telegram.sendmessage(chr(9888) + " Non è in corso nessuna votazione!", sentin, source)
             elif text.startswith('/domanda'):
-               print("@" + username + ": /domanda ")
+                print("@" + username + ": /domanda ")
                 if incorso is not None:
                     if incorso.chat == sentin:
                         incorso.ask()
                 else:
-                    telegram.sendmessage(chr(9888) + " Non è in corso nessuna votazione!")
+                    telegram.sendmessage(chr(9888) + " Non è in corso nessuna votazione!", sentin, source)
             elif text.startswith('/risultati'):
                 print("@" + username + ": /risultati ")
                 if incorso is not None:
                     if incorso.chat == sentin:
                         incorso.showresults()
                 else:
-                    telegram.sendmessage(chr(9888) + " Non è in corso nessuna votazione!")
+                    telegram.sendmessage(chr(9888) + " Non è in corso nessuna votazione!", sentin, source)
             elif text.startswith('/cv'):
                 print("@" + username + ": /cv ")
                 # Informa Telegram che il messaggio è stato ricevuto.
