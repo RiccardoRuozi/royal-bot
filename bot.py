@@ -90,23 +90,23 @@ rage = []
 # wololo = []
 
 audio = {
-        'madinuovo': 'BQADAgADMwIAAh8GgAFQaq1JNk1ZtwI', #ma dinuovo 
-        'sallati': 'BQADAgADrAIAAh8GgAHTdcu8cG-LbAI', #sallati
-        'giummipersempre': 'BQADAgADEAIAAh8GgAE4O2578G1EagI', #giummy per sempre
-        'nonewallhack': 'BQADAgAD3wEAAh8GgAEUqoKiAaPP9wI', #non è wollac è gion sina
-        'crystalmaiden': 'BQADAgADqwIAAh8GgAE62csQVNai8QI', #tette crystal maiden
-        'apeggia': 'BQADAgAD6wEAAh8GgAGe6IDqRVSAhwI', #la barba che apeggia
-        'johncena': 'BQADAgAD4AEAAh8GgAFRi-UD1VvyLwI', #gion cina original
-        'tre': 'BQADAgADEwIAAh8GgAE-iNm-4V6pZAI', #ma porco 3
-        'cinqueanni': 'BQADAgADrgIAAh8GgAGKOIASQZevMwI', #5 anni tette grosse
-        'infilatevi': 'BQADAgAD5gEAAh8GgAFsphnhj_xOnAI', #infilatevi un dito nel..
-        'invidiosi': 'BQADAgADqAIAAh8GgAEDx7kiV1MdAwI', #ma siete nvidiosi?
-        'salitipo': 'BQADAgADqQIAAh8GgAHhGzfuq1LGXAI', #mi sale il cazzo
-        'mammadimari': 'BQADAgADpgIAAh8GgAFoIX9f88R-vAI', #mamma di mari e le parolacce..
-        'plug': 'BQADAgADrwIAAh8GgAGdfZO0w1wAAYYC', #benny al lucca comics?
-        'spari': 'BQADAgADEQIAAh8GgAHaG4P-MmuJKAI', #ma spariii
-        'bastagarf': 'BQADAgAD6QEAAh8GgAF0xIIbFxW6NQI', #basta garffff
-        'omiodio': 'BQADAgADMgIAAh8GgAFe9-lVwzdFzAI', #o mio dio!
+        'madinuovo': 'BQADAgADMwIAAh8GgAFQaq1JNk1ZtwI',
+        'sallati': 'BQADAgADrAIAAh8GgAHTdcu8cG-LbAI',
+        'giummipersempre': 'BQADAgADEAIAAh8GgAE4O2578G1EagI',
+        'nonewallhack': 'BQADAgAD3wEAAh8GgAEUqoKiAaPP9wI',
+        'crystalmaiden': 'BQADAgADqwIAAh8GgAE62csQVNai8QI',
+        'apeggia': 'BQADAgAD6wEAAh8GgAGe6IDqRVSAhwI',
+        'johncena': 'BQADAgAD4AEAAh8GgAFRi-UD1VvyLwI',
+        'tre': 'BQADAgADEwIAAh8GgAE-iNm-4V6pZAI',
+        'cinqueanni': 'BQADAgADrgIAAh8GgAGKOIASQZevMwI',
+        'infilatevi': 'BQADAgAD5gEAAh8GgAFsphnhj_xOnAI',
+        'invidiosi': 'BQADAgADqAIAAh8GgAEDx7kiV1MdAwI',
+        'salitipo': 'BQADAgADqQIAAh8GgAHhGzfuq1LGXAI',
+        'mammadimari': 'BQADAgADpgIAAh8GgAFoIX9f88R-vAI',
+        'plug': 'BQADAgADrwIAAh8GgAGdfZO0w1wAAYYC',
+        'spari': 'BQADAgADEQIAAh8GgAHaG4P-MmuJKAI',
+        'bastagarf': 'BQADAgAD6QEAAh8GgAF0xIIbFxW6NQI',
+        'omiodio': 'BQADAgADMgIAAh8GgAFe9-lVwzdFzAI',
         } 
 
 # Dizionario con i nomi utenti di osu!
