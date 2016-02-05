@@ -562,11 +562,15 @@ while True:
             elif text.startswith('/diario'):
                 print("@" + username + ": /diario ")
                 cmd = text.split(" ", 1)
-                cmd[1] = cmd[1].replace("\n", " ")
-                d = filemanager.readfile("diario.txt")
-                d += str(int(time.time())) + "|" + cmd[1] + "\n"
-                filemanager.writefile("diario.txt", d)
-                telegram.sendmessage("Aggiunto al diario RYG.", sentin, source)
+                if len(cmd) > 1:
+                    cmd[1] = cmd[1].replace("\n", " ")
+                    d = filemanager.readfile("diario.txt")
+                    d += str(int(time.time())) + "|" + cmd[1] + "\n"
+                    filemanager.writefile("diario.txt", d)
+                    telegram.sendmessage("Aggiunto al diario RYG.", sentin, source)
+                else:
+                    telegram.sendmessage(chr(9888) + " Non hai scritto niente sul diario!\n"
+                                         "Sintassi corretta: /diario _quello che vuoi scrivere_", sentin, source)
             elif text.startswith('/leggi'):
                 print("@" + username + ": /leggi")
                 cmd = text.split(" ", 1)
