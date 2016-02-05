@@ -89,7 +89,7 @@ rage = []
 # TODO: Rimettere gli audio di Wololo
 # wololo = []
 
-audio = {
+audiolist = {
         'madinuovo': 'BQADAgADMwIAAh8GgAFQaq1JNk1ZtwI',
         'sallati': 'BQADAgADrAIAAh8GgAHTdcu8cG-LbAI',
         'giummipersempre': 'BQADAgADEAIAAh8GgAE4O2578G1EagI',
@@ -111,7 +111,7 @@ audio = {
 
 # Dizionario con i nomi utenti di osu!
 # Se qualcuno cambia nome utente di Telegram, lo cambi anche QUI.
-osunames = {
+osuplayers = {
     'steffo': 'SteffoRYG',
     'evilbalu': 'NemesisRYG',
     'fultz': 'ftz99',
@@ -131,13 +131,13 @@ osunames = {
 }
 
 # Elenco di username dei membri della RYG
-telegramnames = ['steffo', 'alby1', 'boni3099', 'maxsensei', 'cosimo03', 'frankrekt', 'heisendoc', 'acterryg', 'adry99',
+royalgames = ['steffo', 'alby1', 'boni3099', 'maxsensei', 'cosimo03', 'frankrekt', 'heisendoc', 'acterryg', 'adry99',
                  'alleanderl', 'thevagginadestroyer', 'tiztiztiz', 'fultz', 'gotob', 'enribenassati', 'iemax',
                  'peraemela99', 'ilgattopardo', 'mrdima98', 'ruozir', 'supersmurf', 'tauei', 'voltaggio', 'gibait']
 
 # Dizionario con gli steamID
 # Vedi sopra
-steamids = {
+rygsteamids = {
     'steffo': 76561198034314260,
     'alby1': 76561198071383448,
     'boni3099': 76561198131868211,
@@ -188,7 +188,7 @@ while True:
             # Altrimenti, salva l'userID
             username = str(msg['from']['id'])
         # Se sei un membro della Royal Games
-        if username.lower() in telegramnames:
+        if username.lower() in royalgames:
             # Riconosci il comando.
             # Viene usato startswith perchè il comando potrebbe anche essere inviato in forma /ciao@RoyalBot.
             if text.startswith('/ahnonlosoio'):
@@ -236,7 +236,7 @@ while True:
             elif text.startswith('/audio'):
                 print("@" + username + ": /audio")
                 cmd = text.split(" ", 1)
-                sendme = audio[cmd[1]]
+                sendme = audiolist[cmd[1]]
                 telegram.senddocument(sendme, sentin)
             elif text.startswith('/sbam'):
                 print("@" + username + ": /sbam")
@@ -274,73 +274,15 @@ while True:
                     else:
                         # Se ci sono delle mod attive...
                         if "enabled_mods" in r:
-                            mods = "*Mod:*"
-                            # Dividi in bit l'ID delle mod selezionate usando un bitwise and
-                            # Forse si potrebbe rifare usando la forma esadecimale...?
-                            if int(r['enabled_mods']) & 0x1:
-                                mods += " NoFail"
-                            if int(r['enabled_mods']) & 0x2:
-                                mods += " Easy"
-                            if int(r['enabled_mods']) & 0x4:
-                                mods += " NoVideo (?)"
-                            if int(r['enabled_mods']) & 0x8:
-                                mods += " Hidden"
-                            if int(r['enabled_mods']) & 0x10:
-                                mods += " HardRock"
-                            if int(r['enabled_mods']) & 0x20:
-                                mods += " SuddenDeath"
-                            if int(r['enabled_mods']) & 0x40:
-                                mods += " DoubleTime"
-                            if int(r['enabled_mods']) & 0x80:
-                                mods += " Relax"
-                            if int(r['enabled_mods']) & 0x100:
-                                mods += " HalfTime"
-                            if int(r['enabled_mods']) & 0x200:
-                                mods += " Nightcore"
-                            if int(r['enabled_mods']) & 0x400:
-                                mods += " Flashlight"
-                            if int(r['enabled_mods']) & 0x800:
-                                mods += " Autoplay"
-                            if int(r['enabled_mods']) & 0x1000:
-                                mods += " SpunOut"
-                            if int(r['enabled_mods']) & 0x2000:
-                                mods += " Autopilot"
-                            if int(r['enabled_mods']) & 0x4000:
-                                mods += " Perfect"
-                            if int(r['enabled_mods']) & 0x8000:
-                                mods += " 4K"
-                            if int(r['enabled_mods']) & 0x10000:
-                                mods += " 5K"
-                            if int(r['enabled_mods']) & 0x20000:
-                                mods += " 6K"
-                            if int(r['enabled_mods']) & 0x40000:
-                                mods += " 7K"
-                            if int(r['enabled_mods']) & 0x80000:
-                                mods += " 8K"
-                            if int(r['enabled_mods']) & 0x100000:
-                                mods += " FadeIn"
-                            if int(r['enabled_mods']) & 0x200000:
-                                mods += " Random"
-                            if int(r['enabled_mods']) & 0x400000:
-                                mods += " 9K"
-                            if int(r['enabled_mods']) & 0x800000:
-                                mods += " 10K"
-                            if int(r['enabled_mods']) & 0x1000000:
-                                mods += " 1K"
-                            if int(r['enabled_mods']) & 0x2000000:
-                                mods += " 3K"
-                            if int(r['enabled_mods']) & 0x4000000:
-                                mods += " 2K"
-                            mods += '\n'
+                            mods = osu.listmods(r['enabled_mods'])
                         else:
-                            # Lascia la riga delle mod vuota.
-                            mods = '\n'
+                            mods = ""
                         if mode == 0:
                             # Visualizza le informazioni relative alla modalità osu!
                             telegram.sendmessage("*osu!*\n"
                                                  "[Beatmap " + r['beatmap_id'] + "](" + 'https://osu.ppy.sh/b/' + r[
                                                      'beatmap_id'] +
-                                                 ")\n*" + r['rank'] + "*\n" + mods +
+                                                 ")\n*" + r['rank'] + "*\n" + mods + "\n"
                                                  "*Punti*: " + r['score'] + "\n"
                                                  "*Combo* x" + r['maxcombo'] + "\n"
                                                  "*300*: " + r['count300'] + "\n"
@@ -389,68 +331,12 @@ while True:
                                                  "*Miss*: " + r['countmiss'], sentin, source)
                 else:
                     # TODO: Mettere a posto sto schifo.
-                    if username.lower() in osunames:
-                        r = osu.getuserrecent(osunames[username.lower()], 0)
+                    if username.lower() in osuplayers:
+                        r = osu.getuserrecent(osuplayers[username.lower()], 0)
                         if "enabled_mods" in r:
-                            mods = "*Mod:*"
-                            # Dividi in bit l'ID delle mod selezionate
-                            if int(r['enabled_mods']) & 0b1:
-                                mods += " NoFail"
-                            if int(r['enabled_mods']) & 0b10:
-                                mods += " Easy"
-                            if int(r['enabled_mods']) & 0b100:
-                                mods += " NoVideo (?)"
-                            if int(r['enabled_mods']) & 0b1000:
-                                mods += " Hidden"
-                            if int(r['enabled_mods']) & 0b10000:
-                                mods += " HardRock"
-                            if int(r['enabled_mods']) & 0b100000:
-                                mods += " SuddenDeath"
-                            if int(r['enabled_mods']) & 0b1000000:
-                                mods += " DoubleTime"
-                            if int(r['enabled_mods']) & 0b10000000:
-                                mods += " Relax"
-                            if int(r['enabled_mods']) & 0b100000000:
-                                mods += " HalfTime"
-                            if int(r['enabled_mods']) & 0b1000000000:
-                                mods += " Nightcore"
-                            if int(r['enabled_mods']) & 0b10000000000:
-                                mods += " Flashlight"
-                            if int(r['enabled_mods']) & 0b100000000000:
-                                mods += " Autoplay"
-                            if int(r['enabled_mods']) & 0b1000000000000:
-                                mods += " SpunOut"
-                            if int(r['enabled_mods']) & 0b10000000000000:
-                                mods += " Autopilot"
-                            if int(r['enabled_mods']) & 0b100000000000000:
-                                mods += " Perfect"
-                            if int(r['enabled_mods']) & 0b1000000000000000:
-                                mods += " 4K"
-                            if int(r['enabled_mods']) & 0b10000000000000000:
-                                mods += " 5K"
-                            if int(r['enabled_mods']) & 0b100000000000000000:
-                                mods += " 6K"
-                            if int(r['enabled_mods']) & 0b1000000000000000000:
-                                mods += " 7K"
-                            if int(r['enabled_mods']) & 0b10000000000000000000:
-                                mods += " 8K"
-                            if int(r['enabled_mods']) & 0b100000000000000000000:
-                                mods += " FadeIn"
-                            if int(r['enabled_mods']) & 0b1000000000000000000000:
-                                mods += " Random"
-                            if int(r['enabled_mods']) & 0b1000000000000000000000000:
-                                mods += " 9K"
-                            if int(r['enabled_mods']) & 0b10000000000000000000000000:
-                                mods += " 10K"
-                            if int(r['enabled_mods']) & 0b100000000000000000000000000:
-                                mods += " 1K"
-                            if int(r['enabled_mods']) & 0b1000000000000000000000000000:
-                                mods += " 3K"
-                            if int(r['enabled_mods']) & 0b10000000000000000000000000000:
-                                mods += " 2K"
-                            mods += '\n'
+                            mods = osu.listmods(r['enabled_mods'])
                         else:
-                            mods = '\n'
+                            mods = ""
                         telegram.sendmessage("*Osu!*\n"
                                              "[Beatmap " + r['beatmap_id'] + "](" + 'https://osu.ppy.sh/b/' + r[
                                                  'beatmap_id'] +
@@ -594,8 +480,8 @@ while True:
                 else:
                     # Stringa utilizzata per ottenere informazioni su tutti gli utenti in una sola richiesta a steam
                     userids = str()
-                    for nome in steamids:
-                        userids += str(steamids[nome]) + ','
+                    for nome in rygsteamids:
+                        userids += str(rygsteamids[nome]) + ','
                     tosend = "*Online ora:*\n"
                     r = steam.getplayersummaries(userids)
                     for player in r:

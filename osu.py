@@ -86,3 +86,68 @@ def getuserrecent(user, mode=0):
         return r[0]
     else:
         raise NameError
+
+def listmods(n):
+    """
+    Trasforma il valore restituito dall'API di osu! di enabled_mods in una stringa contenente l'elenco corrispondente a
+    parole.
+    :param n: Valore da trasformare in stringa
+    """
+    mods = "*Mod:*"
+    # Dividi in bit l'ID delle mod selezionate usando un bitwise and
+    # Forse si potrebbe rifare usando la forma esadecimale...?
+    if int(n) & 0x1:
+        mods += " NoFail"
+    if int(n) & 0x2:
+        mods += " Easy"
+    if int(n) & 0x4:
+        mods += " NoVideo (?)"
+    if int(n) & 0x8:
+        mods += " Hidden"
+    if int(n) & 0x10:
+        mods += " HardRock"
+    if int(n) & 0x20:
+        mods += " SuddenDeath"
+    if int(n) & 0x40:
+        mods += " DoubleTime"
+    if int(n) & 0x80:
+        mods += " Relax"
+    if int(n) & 0x100:
+        mods += " HalfTime"
+    if int(n) & 0x200:
+        mods += " Nightcore"
+    if int(n) & 0x400:
+        mods += " Flashlight"
+    if int(n) & 0x800:
+        mods += " Autoplay"
+    if int(n) & 0x1000:
+        mods += " SpunOut"
+    if int(n) & 0x2000:
+        mods += " Autopilot"
+    if int(n) & 0x4000:
+        mods += " Perfect"
+    if int(n) & 0x8000:
+        mods += " 4K"
+    if int(n) & 0x10000:
+        mods += " 5K"
+    if int(n) & 0x20000:
+        mods += " 6K"
+    if int(n) & 0x40000:
+        mods += " 7K"
+    if int(n) & 0x80000:
+        mods += " 8K"
+    if int(n) & 0x100000:
+        mods += " FadeIn"
+    if int(n) & 0x200000:
+        mods += " Random"
+    if int(n) & 0x400000:
+        mods += " 9K"
+    if int(n) & 0x800000:
+        mods += " 10K"
+    if int(n) & 0x1000000:
+        mods += " 1K"
+    if int(n) & 0x2000000:
+        mods += " 3K"
+    if int(n) & 0x4000000:
+        mods += " 2K"
+    return mods
