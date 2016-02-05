@@ -132,8 +132,8 @@ osuplayers = {
 
 # Elenco di username dei membri della RYG
 royalgames = ['steffo', 'alby1', 'boni3099', 'maxsensei', 'cosimo03', 'frankrekt', 'heisendoc', 'acterryg', 'adry99',
-                 'alleanderl', 'thevagginadestroyer', 'tiztiztiz', 'fultz', 'gotob', 'enribenassati', 'iemax',
-                 'peraemela99', 'ilgattopardo', 'mrdima98', 'ruozir', 'supersmurf', 'tauei', 'voltaggio', 'gibait']
+              'alleanderl', 'thevagginadestroyer', 'tiztiztiz', 'fultz', 'gotob', 'enribenassati', 'iemax',
+              'peraemela99', 'ilgattopardo', 'mrdima98', 'ruozir', 'supersmurf', 'tauei', 'voltaggio', 'gibait']
 
 # Dizionario con gli steamID
 # Vedi sopra
@@ -572,15 +572,22 @@ while True:
                 d = filemanager.readfile("diario.txt")
                 d = d.split('\n')
                 text = str()
-                # L'ultimo numero è escluso.
-                for n in range(int(cmd[1]) + 1, 1, -1):
-                    riga = d[len(d) - n]
+                # Se è incluso un numero dopo leggi, prendi quel numero di eventi più recenti.
+                if len(cmd) > 1:
+                    # L'ultimo numero è escluso.
+                    for n in range(int(cmd[1]) + 1, 1, -1):
+                        riga = d[len(d) - n]
+                        riga = riga.split("|", 1)
+                        ora = time.gmtime(int(riga[0]))
+                        text += "`" + str(ora.tm_mday) + "/" + str(ora.tm_mon) + "/" + str(ora.tm_year) + "`: `" +\
+                            str(ora.tm_hour) + ":" + str(ora.tm_min) + "` " + riga[1] + "\n"
+                # Altrimenti, prendi un evento a caso.
+                else:
+                    riga = d[random.randrange(0, len(d))]
                     riga = riga.split("|", 1)
                     ora = time.gmtime(int(riga[0]))
-                    text += "`" + str(ora.tm_hour) + ":" + str(ora.tm_min) + "` " + riga[1] + "\n"
+                    text += "`" + str(ora.tm_mday) + "/" + str(ora.tm_mon) + "/" + str(ora.tm_year) + "`: `" +\
+                            str(ora.tm_hour) + ":" + str(ora.tm_min) + "` " + riga[1] + "\n"
                 telegram.sendmessage(text, sentin, source)
         else:
             print("@" + username + " bloccato.")
-
-
-
