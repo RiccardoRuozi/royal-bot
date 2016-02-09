@@ -510,12 +510,18 @@ while True:
                     else:
                         telegram.sendmessage(tosend, sentin, source)
             elif text.startswith('/shrekt'):
+                # Manda l'audio So much to do, so much to see
                 print("@" + username + ": /shrekt ")
                 telegram.senddocument("BQADBAADsQADiBjiAqYN-EBXASyhAg", sentin)
-            elif text.startswith('/restart') and username == "Steffo":
-                print("@" + username + ": /restart ")
-                telegram.sendmessage("Riavvio accettato.", sentin, source)
-                sys.exit(0)
+            elif text.startswith('/restart'):
+                # Riavvia il bot
+                if username == "Steffo":
+                    print("@" + username + ": /restart ")
+                    telegram.sendmessage("Riavvio accettato.", sentin, source)
+                    sys.exit(0)
+                else:
+                    telegram.sendmessage(chr(9888) + " Non hai i permessi necessari per creare una nuova votazione.",
+                                         sentin, source)
             elif text.startswith('/nuovavotazione'):
                 if username == "Steffo":
                     print("@" + username + ": /nuovavotazione ")
@@ -563,6 +569,7 @@ while True:
                 else:
                     telegram.sendmessage(chr(9888) + " Non è in corso nessuna votazione!", sentin, source)
             elif text.startswith('/cv'):
+                # Visualizza l'elenco di persone nella chat di Mumble
                 print("@" + username + ": /cv ")
                 # Informa Telegram che il messaggio è stato ricevuto.
                 telegram.sendchataction(sentin)
@@ -579,6 +586,7 @@ while True:
                         tosend += u['name'] + "\n"
                 telegram.sendmessage(tosend, sentin, source)
             elif text.startswith('/diario'):
+                # Aggiungi una riga al diario Royal Games
                 print("@" + username + ": /diario ")
                 cmd = text.split(" ", 1)
                 if len(cmd) > 1:
@@ -591,6 +599,7 @@ while True:
                     telegram.sendmessage(chr(9888) + " Non hai scritto niente sul diario!\n"
                                          "Sintassi corretta: /diario _quello che vuoi scrivere_", sentin, source)
             elif text.startswith('/leggi'):
+                # Leggi dal diario Royal Games
                 print("@" + username + ": /leggi")
                 cmd = text.split(" ", 1)
                 d = filemanager.readfile("diario.txt")
