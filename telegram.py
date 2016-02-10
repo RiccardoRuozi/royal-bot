@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import requests
 import filemanager
+import time
 
 # Per far funzionare questa libreria serve un file "lastid.txt" contenente l'update ID dell'ultimo messaggio non letto e
 # un file "telegramapi.txt" contenente il token di accesso del bot assegnato da @BotFather.
@@ -22,13 +23,18 @@ def getupdates():
             'limit': 1,  # Numero di messaggi da ricevere alla volta, lasciare 1
             'timeout': 1500,  # Secondi da mantenere attiva la richiesta se non c'e' nessun messaggio
         }
-        data = requests.get("https://api.telegram.org/bot" + telegramtoken + "/getUpdates", params=parametri).json()
-        if data['ok']:
-            if data['result']:
-                filemanager.writefile("lastid.txt", str(data['result'][0]['update_id'] + 1))
-                # Controlla che la risposta sia effettivamente un messaggio e non una notifica di servizio
-                if 'message' in data['result'][0]:
-                    return data['result'][0]['message']
+        data = requests.get("https://api.telegram.org/bot" + telegramtoken + "/getUpdates", params=parametri)
+        if data.status_code == 200:
+            data = data.json()
+            if data['ok']:
+                if data['result']:
+                    filemanager.writefile("lastid.txt", str(data['result'][0]['update_id'] + 1))
+                    # Controlla che la risposta sia effettivamente un messaggio e non una notifica di servizio
+                    if 'message' in data['result'][0]:
+                        return data['result'][0]['message']
+        else:
+            # Non vogliamo DDoSsare telegram, vero?
+            time.sleep(2)
 
 
 def sendmessage(content, to, reply=None):
