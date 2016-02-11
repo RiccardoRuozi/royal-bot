@@ -26,7 +26,7 @@ class Votazione:
         'maxsensei': int(0),
         'cosimo03': int(0),
         'frankrekt': int(0),
-        'heisendoc': int(0),
+        'jaslg': int(0),
         'acterryg': int(0),
         'adry99': int(0),
         'alleanderl': int(0),
@@ -120,7 +120,7 @@ osuplayers = {
     'tiztiztiz': 'fedececco',
     'acterryg': 'Acter1',
     'maxsensei': 'MaxSensei',
-    'heisendoc': 'ImHeisenberg',
+    'jaslg': 'ImHeisenberg',
     'thevagginadestroyer': 'barboll',
     'cosimo03': 'Cosimo03',
     'albertino04': 'Alby1',
@@ -131,7 +131,7 @@ osuplayers = {
 }
 
 # Elenco di username dei membri della RYG
-royalgames = ['steffo', 'alby1', 'boni3099', 'maxsensei', 'cosimo03', 'frankrekt', 'heisendoc', 'acterryg', 'adry99',
+royalgames = ['steffo', 'alby1', 'boni3099', 'maxsensei', 'cosimo03', 'frankrekt', 'jaslg', 'acterryg', 'adry99',
               'alleanderl', 'thevagginadestroyer', 'tiztiztiz', 'fultz', 'gotob', 'enribenassati', 'iemax',
               'peraemela99', 'ilgattopardo', 'mrdima98', 'ruozir', 'supersmurf', 'tauei', 'voltaggio', 'gibait']
 
@@ -144,7 +144,7 @@ rygsteamids = {
     'maxsensei': 76561198121094516,
     'cosimo03': 76561198062778224,
     'frankrekt': 76561198071099951,
-    'heisendoc': 76561198080377213,
+    'jaslg': 76561198080377213,
     'acterryg': 76561198146704979,
     'adry99': 76561198230034568,
     'alleanderl': 76561198154175301,
