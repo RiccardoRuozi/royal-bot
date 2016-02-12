@@ -591,9 +591,9 @@ while True:
                 cmd = text.split(" ", 1)
                 if len(cmd) > 1:
                     cmd[1] = cmd[1].replace("\n", " ")
-                    d = filemanager.readfile("diario.txt")
-                    d += str(int(time.time())) + "|" + cmd[1] + "\n"
-                    filemanager.writefile("diario.txt", d)
+                    diario = filemanager.readfile("diario.txt")
+                    diario += str(int(time.time())) + "|" + cmd[1] + "\n"
+                    filemanager.writefile("diario.txt", diario)
                     telegram.sendmessage("Aggiunto al diario RYG.", sentin, source)
                 else:
                     telegram.sendmessage(chr(9888) + " Non hai scritto niente sul diario!\n"
@@ -602,21 +602,25 @@ while True:
                 # Leggi dal diario Royal Games
                 print("@" + username + ": /leggi")
                 cmd = text.split(" ", 1)
-                d = filemanager.readfile("diario.txt")
-                d = d.split('\n')
+                diario = filemanager.readfile("diario.txt")
+                diario = diario.split('\n')
                 text = str()
                 # Se è incluso un numero dopo leggi, prendi quel numero di eventi più recenti.
                 if len(cmd) > 1:
-                    # L'ultimo numero è escluso.
-                    for n in range(int(cmd[1]) + 1, 1, -1):
-                        riga = d[len(d) - n]
-                        riga = riga.split("|", 1)
-                        ora = time.gmtime(int(riga[0]))
-                        text += "`" + str(ora.tm_mday) + "/" + str(ora.tm_mon) + "/" + str(ora.tm_year) + "`: `" +\
-                            str(ora.tm_hour) + ":" + str(ora.tm_min) + "` " + riga[1] + "\n"
+                    if int(cmd[1]) < len(diario):
+                        # L'ultimo numero è escluso.
+                        for n in range(int(cmd[1]) + 1, 1, -1):
+                            riga = diario[len(diario) - n]
+                            riga = riga.split("|", 1)
+                            ora = time.gmtime(int(riga[0]))
+                            text += "`" + str(ora.tm_mday) + "/" + str(ora.tm_mon) + "/" + str(ora.tm_year) + "`: `" +\
+                                str(ora.tm_hour) + ":" + str(ora.tm_min) + "` " + riga[1] + "\n"
+                    else:
+                        telegram.sendmessage(chr(9888) + " Il numero massimo di stringhe visualizzabili è " +
+                                             str(len(diario) - 1), sentin, source)
                 # Altrimenti, prendi un evento a caso.
                 else:
-                    riga = d[random.randrange(0, len(d))]
+                    riga = diario[random.randrange(0, len(diario))]
                     riga = riga.split("|", 1)
                     ora = time.gmtime(int(riga[0]))
                     text += "`" + str(ora.tm_mday) + "/" + str(ora.tm_mon) + "/" + str(ora.tm_year) + "`: `" +\
