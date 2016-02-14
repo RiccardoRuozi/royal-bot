@@ -611,7 +611,7 @@ while True:
                 # Informa Telegram che il messaggio è stato ricevuto.
                 telegram.sendchataction(sentin)
                 r = mumbleboxes.getserverstatus("https://www.mumbleboxes.com/servers/5454/cvp.json").json()
-                tosend = "Utenti online:\n"
+                tosend = "*Utenti online:*\n"
                 for u in r['root']['users']:
                     if not u['mute']:
                         if u['selfDeaf']:
@@ -630,7 +630,7 @@ while True:
                                 tosend += chr(128264) + " "
                             else:
                                 tosend += chr(128266) + " "
-                            tosend += u['name'] + " | " + ch['name'] + "\n"
+                            tosend += u['name'] + " | _" + ch['name'] + "_\n"
                 telegram.sendmessage(tosend, sentin, source)
             elif text.startswith('/diario'):
                 # Aggiungi una riga al diario Royal Games
