@@ -287,17 +287,27 @@ while True:
                         if mode == 0:
                             # Visualizza le informazioni relative alla modalità osu!
                             telegram.sendmessage("*osu!*\n"
-                                                 "[Beatmap {0}](https://osu.ppy.sh/b/{1})\n"
-                                                 "*{2}*\n"
-                                                 "{3}\n"
-                                                 "*Punti*: {4}\n"
-                                                 "*Combo* x{5}\n"
-                                                 "*300*: {6}\n"
-                                                 "*100*: {7}\n"
-                                                 "*50*: {8}\n"
-                                                 "*Awesome*: {9}\n"
-                                                 "*Good*: {10}\n"
-                                                 "*Miss*: {11}".format(), sentin, source)
+                                                 "[Beatmap {0}](https://osu.ppy.sh/b/{0})\n"
+                                                 "*{1}*\n"
+                                                 "{2}\n"
+                                                 "*Punti*: {3}\n"
+                                                 "*Combo* x{4}\n"
+                                                 "*300*: {5}\n"
+                                                 "*100*: {6}\n"
+                                                 "*50*: {7}\n"
+                                                 "*Awesome*: {8}\n"
+                                                 "*Good*: {9}\n"
+                                                 "*Miss*: {10}"
+                                                 .format(r['beatmap_id'],
+                                                         r['rank'],
+                                                         r['score'],
+                                                         r['maxcombo'],
+                                                         r['count300'],
+                                                         r['count100'],
+                                                         r['count50'],
+                                                         r['countkatu'],
+                                                         r['countgeki'],
+                                                         r['countmiss']), sentin, source)
                         elif mode == 1:
                             # Visualizza le informazioni relative alla modalità osu!taiko
                             telegram.sendmessage("*osu!taiko*\n"
@@ -352,21 +362,28 @@ while True:
                             mods = osu.listmods(r['enabled_mods'])
                         else:
                             mods = ""
-                        telegram.sendmessage("*Osu!*\n"
-                                             "[Beatmap " + r['beatmap_id'] + "](" + 'https://osu.ppy.sh/b/' + r[
-                                                 'beatmap_id'] +
-                                             ")\n*" + r['rank'] + "*\n" + mods +
-                                             "\n*Punti*: " + r['score'] + "\n"
-                                                                          "*Combo* x" + r['maxcombo'] + "\n"
-                                                                                                        "*300*: " + r[
-                                                 'count300'] + "\n"
-                                                               "*100*: " + r['count100'] + "\n"
-                                                                                           "*50*: " + r[
-                                                 'count50'] + "\n"
-                                                              "*Awesome*: " + r['countkatu'] + "\n"
-                                                                                               "*Good*: " + r[
-                                                 'countgeki'] + "\n"
-                                                                "*Miss*: " + r['countmiss'], sentin, source)
+                        telegram.sendmessage("*osu!*\n"
+                                             "[Beatmap {0}](https://osu.ppy.sh/b/{0})\n"
+                                             "*{1}*\n"
+                                             "{2}\n"
+                                             "*Punti*: {3}\n"
+                                             "*Combo* x{4}\n"
+                                             "*300*: {5}\n"
+                                             "*100*: {6}\n"
+                                             "*50*: {7}\n"
+                                             "*Awesome*: {8}\n"
+                                             "*Good*: {9}\n"
+                                             "*Miss*: {10}"
+                                             .format(r['beatmap_id'],
+                                                     r['rank'],
+                                                     r['score'],
+                                                     r['maxcombo'],
+                                                     r['count300'],
+                                                     r['count100'],
+                                                     r['count50'],
+                                                     r['countkatu'],
+                                                     r['countgeki'],
+                                                     r['countmiss']), sentin, source)
             elif text.startswith('/roll'):
                 print("@" + username + ": /roll")
                 cmd = text.split(' ', 1)
