@@ -621,6 +621,16 @@ while True:
                         else:
                             tosend += chr(128266) + " "
                         tosend += u['name'] + "\n"
+                for ch in r['root']['channels']:
+                    for u in ch['users']:
+                        if not u['mute']:
+                            if u['selfDeaf']:
+                                tosend += chr(128263) + " "
+                            elif u['selfMute']:
+                                tosend += chr(128264) + " "
+                            else:
+                                tosend += chr(128266) + " "
+                            tosend += u['name'] + " | " + ch['name'] + "\n"
                 telegram.sendmessage(tosend, sentin, source)
             elif text.startswith('/diario'):
                 # Aggiungi una riga al diario Royal Games
