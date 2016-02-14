@@ -8,7 +8,7 @@ import osu
 import hearthstone
 import sys
 import mumbleboxes
-
+import lol
 
 # Check per la modalità votazione del bot, corrisponde al numero della chat in cui è attiva la votazione
 # 0 per disattivare la votazione
@@ -625,6 +625,17 @@ while True:
                     ora = time.gmtime(int(riga[0]))
                     text += "`" + str(ora.tm_mday) + "/" + str(ora.tm_mon) + "/" + str(ora.tm_year) + "`: `" +\
                             str(ora.tm_hour) + ":" + str(ora.tm_min) + "` " + riga[1] + "\n"
+                telegram.sendmessage(text, sentin, source)
+            elif text.startswith('/lolfree'):
+                # Visualizza i campioni gratuiti di LoL di questa settimana
+                print("@" + username + ": /lolfree")
+                # Informa Telegram che il messaggio è stato ricevuto.
+                telegram.sendchataction(sentin)
+                text = str()
+                r = lol.getfreerotation()
+                for champion in r:
+                    staticdata = lol.getsinglestaticdata(champion['id'])
+                    text += "*" + staticdata['name'] + "* " + staticdata['title'] + '\n'
                 telegram.sendmessage(text, sentin, source)
         else:
             print("@" + username + " bloccato.")
