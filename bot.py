@@ -611,7 +611,7 @@ while True:
                 # Informa Telegram che il messaggio è stato ricevuto.
                 telegram.sendchataction(sentin)
                 r = mumbleboxes.getserverstatus("https://www.mumbleboxes.com/servers/5454/cvp.json").json()
-                tosend = "Utenti online: " + str(len(r['root']['users'])) + " / 15\n"
+                tosend = "Utenti online:\n"
                 for u in r['root']['users']:
                     if not u['mute']:
                         if u['selfDeaf']:
