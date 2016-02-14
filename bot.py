@@ -300,6 +300,7 @@ while True:
                                                  "*Miss*: {10}"
                                                  .format(r['beatmap_id'],
                                                          r['rank'],
+                                                         mods,
                                                          r['score'],
                                                          r['maxcombo'],
                                                          r['count300'],
@@ -376,6 +377,7 @@ while True:
                                              "*Miss*: {10}"
                                              .format(r['beatmap_id'],
                                                      r['rank'],
+                                                     mods,
                                                      r['score'],
                                                      r['maxcombo'],
                                                      r['count300'],
