@@ -10,6 +10,7 @@ import sys
 import mumbleboxes
 import lol
 
+
 # Check per la modalità votazione del bot, corrisponde al numero della chat in cui è attiva la votazione
 # 0 per disattivare la votazione
 class Votazione:
@@ -75,10 +76,13 @@ class Votazione:
                 lista += chr(9899)
             lista += " @" + membro + "\n"
         telegram.sendmessage(self.domanda + "\n"
-                             "*Risultati:*\n"
-                             "Sì: " + str(si) + " (" + str(round(si / (si + no + astenuti) * 100, 2)) + "%)\n"
-                             "No: " + str(no) + " (" + str(round(no / (si + no + astenuti) * 100, 2)) + "%)\n"
-                             "Astenuti: " + str(astenuti) + "\n\n" + lista, self.chat)
+                                            "*Risultati:*\n"
+                                            "Sì: " + str(si) + " (" + str(
+            round(si / (si + no + astenuti) * 100, 2)) + "%)\n"
+                                                         "No: " + str(no) + " (" + str(
+            round(no / (si + no + astenuti) * 100, 2)) + "%)\n"
+                                                         "Astenuti: " + str(astenuti) + "\n\n" + lista, self.chat)
+
 
 # Votazione in corso
 incorso = None
@@ -90,24 +94,24 @@ rage = []
 # wololo = []
 
 audiolist = {
-        'madinuovo': 'BQADAgADMwIAAh8GgAFQaq1JNk1ZtwI',
-        'sallati': 'BQADAgADrAIAAh8GgAHTdcu8cG-LbAI',
-        'giummipersempre': 'BQADAgADEAIAAh8GgAE4O2578G1EagI',
-        'nonewallhack': 'BQADAgAD3wEAAh8GgAEUqoKiAaPP9wI',
-        'crystalmaiden': 'BQADAgADqwIAAh8GgAE62csQVNai8QI',
-        'apeggia': 'BQADAgAD6wEAAh8GgAGe6IDqRVSAhwI',
-        'johncena': 'BQADAgAD4AEAAh8GgAFRi-UD1VvyLwI',
-        'tre': 'BQADAgADEwIAAh8GgAE-iNm-4V6pZAI',
-        'cinqueanni': 'BQADAgADrgIAAh8GgAGKOIASQZevMwI',
-        'infilatevi': 'BQADAgAD5gEAAh8GgAFsphnhj_xOnAI',
-        'invidiosi': 'BQADAgADqAIAAh8GgAEDx7kiV1MdAwI',
-        'salitipo': 'BQADAgADqQIAAh8GgAHhGzfuq1LGXAI',
-        'mammadimari': 'BQADAgADpgIAAh8GgAFoIX9f88R-vAI',
-        'plug': 'BQADAgADrwIAAh8GgAGdfZO0w1wAAYYC',
-        'spari': 'BQADAgADEQIAAh8GgAHaG4P-MmuJKAI',
-        'bastagarf': 'BQADAgAD6QEAAh8GgAF0xIIbFxW6NQI',
-        'omiodio': 'BQADAgADMgIAAh8GgAFe9-lVwzdFzAI',
-        } 
+    'madinuovo': 'BQADAgADMwIAAh8GgAFQaq1JNk1ZtwI',
+    'sallati': 'BQADAgADrAIAAh8GgAHTdcu8cG-LbAI',
+    'giummipersempre': 'BQADAgADEAIAAh8GgAE4O2578G1EagI',
+    'nonewallhack': 'BQADAgAD3wEAAh8GgAEUqoKiAaPP9wI',
+    'crystalmaiden': 'BQADAgADqwIAAh8GgAE62csQVNai8QI',
+    'apeggia': 'BQADAgAD6wEAAh8GgAGe6IDqRVSAhwI',
+    'johncena': 'BQADAgAD4AEAAh8GgAFRi-UD1VvyLwI',
+    'tre': 'BQADAgADEwIAAh8GgAE-iNm-4V6pZAI',
+    'cinqueanni': 'BQADAgADrgIAAh8GgAGKOIASQZevMwI',
+    'infilatevi': 'BQADAgAD5gEAAh8GgAFsphnhj_xOnAI',
+    'invidiosi': 'BQADAgADqAIAAh8GgAEDx7kiV1MdAwI',
+    'salitipo': 'BQADAgADqQIAAh8GgAHhGzfuq1LGXAI',
+    'mammadimari': 'BQADAgADpgIAAh8GgAFoIX9f88R-vAI',
+    'plug': 'BQADAgADrwIAAh8GgAGdfZO0w1wAAYYC',
+    'spari': 'BQADAgADEQIAAh8GgAHaG4P-MmuJKAI',
+    'bastagarf': 'BQADAgAD6QEAAh8GgAF0xIIbFxW6NQI',
+    'omiodio': 'BQADAgADMgIAAh8GgAFe9-lVwzdFzAI',
+}
 
 # Dizionario con i nomi utenti di osu!
 # Se qualcuno cambia nome utente di Telegram, lo cambi anche QUI.
@@ -165,6 +169,9 @@ rygsteamids = {
     'gibait': 76561198157721704,
 }
 
+# TODO: magari fare scadere questi dati quando cambiano sui server della rito
+lolfreestring = None
+
 random.seed()
 
 # Ciclo principale del bot
@@ -215,7 +222,7 @@ while True:
                                              '](https://steamdb.info/app/' + cmd[1] + '/graphs/)', sentin, source)
                 else:
                     telegram.sendmessage(chr(9888) + ' Non hai specificato un AppID!\n'
-                                         'La sintassi corretta è /playing <AppID>.', sentin, source)
+                                                     'La sintassi corretta è /playing <AppID>.', sentin, source)
             elif text.startswith('/saldi'):
                 print("@" + username + ": /saldi")
                 # Visualizza il link di isthereanydeal con i saldi di un gioco.
@@ -280,17 +287,17 @@ while True:
                         if mode == 0:
                             # Visualizza le informazioni relative alla modalità osu!
                             telegram.sendmessage("*osu!*\n"
-                                                 "[Beatmap " + r['beatmap_id'] + "](" + 'https://osu.ppy.sh/b/' + r[
-                                                     'beatmap_id'] +
-                                                 ")\n*" + r['rank'] + "*\n" + mods + "\n"
-                                                 "*Punti*: " + r['score'] + "\n"
-                                                 "*Combo* x" + r['maxcombo'] + "\n"
-                                                 "*300*: " + r['count300'] + "\n"
-                                                 "*100*: " + r['count100'] + "\n"
-                                                 "*50*: " + r['count50'] + "\n"
-                                                 "*Awesome*: " + r['countkatu'] + "\n"
-                                                 "*Good*: " + r['countgeki'] + "\n"
-                                                 "*Miss*: " + r['countmiss'], sentin, source)
+                                                 "[Beatmap {0}](https://osu.ppy.sh/b/{1})\n"
+                                                 "*{2}*\n"
+                                                 "{3}\n"
+                                                 "*Punti*: {4}\n"
+                                                 "*Combo* x{5}\n"
+                                                 "*300*: {6}\n"
+                                                 "*100*: {7}\n"
+                                                 "*50*: {8}\n"
+                                                 "*Awesome*: {9}\n"
+                                                 "*Good*: {10}\n"
+                                                 "*Miss*: {11}".format(), sentin, source)
                         elif mode == 1:
                             # Visualizza le informazioni relative alla modalità osu!taiko
                             telegram.sendmessage("*osu!taiko*\n"
@@ -298,12 +305,15 @@ while True:
                                                      'beatmap_id'] +
                                                  ")\n*" + r['rank'] + "*\n" + mods +
                                                  "\n*Punti*: " + r['score'] + "\n"
-                                                 "*Combo* x" + r['maxcombo'] + "\n"
-                                                 "*Great*: " + r['count300'] + "\n"
-                                                 "*Good*: " + r['count100'] + "\n"
-                                                 "_Large_ *Great*: " + r['countkatu'] + "\n"
-                                                 "_Large_ *Good*: " + r['countgeki'] + "\n"
-                                                 "*Bad*: " + r['countmiss'], sentin, source)
+                                                                              "*Combo* x" + r['maxcombo'] + "\n"
+                                                                                                            "*Great*: " +
+                                                 r['count300'] + "\n"
+                                                                 "*Good*: " + r['count100'] + "\n"
+                                                                                              "_Large_ *Great*: " + r[
+                                                     'countkatu'] + "\n"
+                                                                    "_Large_ *Good*: " + r['countgeki'] + "\n"
+                                                                                                          "*Bad*: " + r[
+                                                     'countmiss'], sentin, source)
                         elif mode == 2:
                             # Visualizza le informazioni relative alla modalità osu!catch
                             telegram.sendmessage("*osu!catch*\n"
@@ -311,24 +321,29 @@ while True:
                                                      'beatmap_id'] +
                                                  ")\n*" + r['rank'] + "*\n" + mods +
                                                  "\n*Punti*: " + r['score'] + "\n"
-                                                 "*Combo* x" + r['maxcombo'] + "\n"
-                                                 "*Fruit*: " + r['count300'] + "\n"
-                                                 "*Droplet* _tick_: " + r['count100'] + "\n"
-                                                 "*Droplet* _trail_: " + r['count50'] + "\n"
-                                                 "*Miss*: " + r['countmiss'], sentin, source)
+                                                                              "*Combo* x" + r['maxcombo'] + "\n"
+                                                                                                            "*Fruit*: " +
+                                                 r['count300'] + "\n"
+                                                                 "*Droplet* _tick_: " + r['count100'] + "\n"
+                                                                                                        "*Droplet* _trail_: " +
+                                                 r['count50'] + "\n"
+                                                                "*Miss*: " + r['countmiss'], sentin, source)
                         elif mode == 3:
                             # Visualizza le informazioni relative alla modalità osu!mania
                             telegram.sendmessage("*osu!mania*\n" +
                                                  "[Beatmap " + r['beatmap_id'] + "](" + 'https://osu.ppy.sh/b/' + r[
                                                      'beatmap_id'] + ")\n*" + r['rank'] + "*\n" + mods +
                                                  "\n*Punti*: " + r['score'] + "\n"
-                                                 "*Combo* x" + r['maxcombo'] + "\n"
-                                                 "_Rainbow_ *300*: " + r['countgeki'] + "\n"
-                                                 "*300*: " + r['count300'] + "\n"
-                                                 "*100*: " + r['count100'] + "\n"
-                                                 "*200*: " + r['countkatu'] + "\n"
-                                                 "*50*: " + r['count50'] + "\n"
-                                                 "*Miss*: " + r['countmiss'], sentin, source)
+                                                                              "*Combo* x" + r['maxcombo'] + "\n"
+                                                                                                            "_Rainbow_ *300*: " +
+                                                 r['countgeki'] + "\n"
+                                                                  "*300*: " + r['count300'] + "\n"
+                                                                                              "*100*: " + r[
+                                                     'count100'] + "\n"
+                                                                   "*200*: " + r['countkatu'] + "\n"
+                                                                                                "*50*: " + r[
+                                                     'count50'] + "\n"
+                                                                  "*Miss*: " + r['countmiss'], sentin, source)
                 else:
                     # TODO: Mettere a posto sto schifo.
                     if username.lower() in osuplayers:
@@ -342,13 +357,16 @@ while True:
                                                  'beatmap_id'] +
                                              ")\n*" + r['rank'] + "*\n" + mods +
                                              "\n*Punti*: " + r['score'] + "\n"
-                                             "*Combo* x" + r['maxcombo'] + "\n"
-                                             "*300*: " + r['count300'] + "\n"
-                                             "*100*: " + r['count100'] + "\n"
-                                             "*50*: " + r['count50'] + "\n"
-                                             "*Awesome*: " + r['countkatu'] + "\n"
-                                             "*Good*: " + r['countgeki'] + "\n"
-                                             "*Miss*: " + r['countmiss'], sentin, source)
+                                                                          "*Combo* x" + r['maxcombo'] + "\n"
+                                                                                                        "*300*: " + r[
+                                                 'count300'] + "\n"
+                                                               "*100*: " + r['count100'] + "\n"
+                                                                                           "*50*: " + r[
+                                                 'count50'] + "\n"
+                                                              "*Awesome*: " + r['countkatu'] + "\n"
+                                                                                               "*Good*: " + r[
+                                                 'countgeki'] + "\n"
+                                                                "*Miss*: " + r['countmiss'], sentin, source)
             elif text.startswith('/roll'):
                 print("@" + username + ": /roll")
                 cmd = text.split(' ', 1)
@@ -421,7 +439,7 @@ while True:
                         # Magie
                         if r['type'] == "Spell":
                             text = str("[" + r['name'] + "](" + r['img'] + ") "
-                                       "(" + r['rarity'] + ")\n" +
+                                                                           "(" + r['rarity'] + ")\n" +
                                        r['playerClass'] + "\n" +
                                        str(r['cost']) + " mana\n" +
                                        r['text'] + "\n" +
@@ -430,7 +448,7 @@ while True:
                         # Servitori
                         elif r['type'] == "Minion":
                             text = str("[" + r['name'] + "](" + r['img'] + ") "
-                                       "(" + r['rarity'] + ")\n" +
+                                                                           "(" + r['rarity'] + ")\n" +
                                        r['playerClass'] + "\n" +
                                        str(r['cost']) + " mana\n" +
                                        str(r['attack']) + " attacco\n" +
@@ -441,7 +459,7 @@ while True:
                         # Armi
                         elif r['type'] == "Weapon":
                             text = str("[" + r['name'] + "](" + r['img'] + ") "
-                                       "(" + r['rarity'] + ")\n" +
+                                                                           "(" + r['rarity'] + ")\n" +
                                        r['playerClass'] + "\n" +
                                        str(r['cost']) + " mana\n" +
                                        str(r['attack']) + " attacco\n" +
@@ -463,7 +481,7 @@ while True:
                         telegram.sendmessage(text, sentin, source)
                 else:
                     telegram.sendmessage(chr(9888) + " Non hai specificato nessuna carta!\n"
-                                         "La sintassi corretta è _/hs nomecarta_ .", sentin, source)
+                                                     "La sintassi corretta è _/hs nomecarta_ .", sentin, source)
             elif text.startswith('/online'):
                 # Elenco di tutte le persone online su Steam
                 print("@" + username + ": /online ")
@@ -597,7 +615,8 @@ while True:
                     telegram.sendmessage("Aggiunto al diario RYG.", sentin, source)
                 else:
                     telegram.sendmessage(chr(9888) + " Non hai scritto niente sul diario!\n"
-                                         "Sintassi corretta: /diario _quello che vuoi scrivere_", sentin, source)
+                                                     "Sintassi corretta: /diario _quello che vuoi scrivere_", sentin,
+                                         source)
             elif text.startswith('/leggi'):
                 # Leggi dal diario Royal Games
                 print("@" + username + ": /leggi")
@@ -613,8 +632,8 @@ while True:
                             riga = diario[len(diario) - n]
                             riga = riga.split("|", 1)
                             ora = time.gmtime(int(riga[0]))
-                            text += "`" + str(ora.tm_mday) + "/" + str(ora.tm_mon) + "/" + str(ora.tm_year) + "`: `" +\
-                                str(ora.tm_hour) + ":" + str(ora.tm_min) + "` " + riga[1] + "\n"
+                            text += "`" + str(ora.tm_mday) + "/" + str(ora.tm_mon) + "/" + str(ora.tm_year) + "`: `" + \
+                                    str(ora.tm_hour) + ":" + str(ora.tm_min) + "` " + riga[1] + "\n"
                     else:
                         telegram.sendmessage(chr(9888) + " Il numero massimo di stringhe visualizzabili è " +
                                              str(len(diario) - 1), sentin, source)
@@ -623,7 +642,7 @@ while True:
                     riga = diario[random.randrange(0, len(diario))]
                     riga = riga.split("|", 1)
                     ora = time.gmtime(int(riga[0]))
-                    text += "`" + str(ora.tm_mday) + "/" + str(ora.tm_mon) + "/" + str(ora.tm_year) + "`: `" +\
+                    text += "`" + str(ora.tm_mday) + "/" + str(ora.tm_mon) + "/" + str(ora.tm_year) + "`: `" + \
                             str(ora.tm_hour) + ":" + str(ora.tm_min) + "` " + riga[1] + "\n"
                 telegram.sendmessage(text, sentin, source)
             elif text.startswith('/lolfree'):
@@ -631,11 +650,26 @@ while True:
                 print("@" + username + ": /lolfree")
                 # Informa Telegram che il messaggio è stato ricevuto.
                 telegram.sendchataction(sentin)
-                text = str()
-                r = lol.getfreerotation()
-                for champion in r:
-                    staticdata = lol.getsinglestaticdata(champion['id'])
-                    text += "*" + staticdata['name'] + "* " + staticdata['title'] + '\n'
-                telegram.sendmessage(text, sentin, source)
+                ora = time.gmtime()
+                cmd = text.split(" ", 1)
+                if len(cmd) > 1:
+                    if cmd[1].startswith("refresh"):
+                        refresh = True
+                    else:
+                        refresh = False
+                else:
+                    refresh = False
+                # Controlla se i dati sono già stati scaricati.
+                if lolfreestring is None or refresh:
+                    # Crea un nuovo set di dati.
+                    print("Aggiornamento champ gratuiti di League of Legends...")
+                    lolfreestring = "Champion gratuiti del `" + str(ora.tm_mday) + "/" + str(ora.tm_mon) + "/" + \
+                                    str(ora.tm_year) + " " + str(ora.tm_hour) + ":" + str(ora.tm_min) + "`\n"
+                    r = lol.getfreerotation()
+                    for champion in r:
+                        staticdata = lol.getsinglestaticdata(champion['id'])
+                        lolfreestring += "*" + staticdata['name'] + "* " + staticdata['title'] + '\n'
+                    print("Completato.")
+                telegram.sendmessage(lolfreestring, sentin, source)
         else:
             print("@" + username + " bloccato.")
