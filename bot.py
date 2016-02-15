@@ -76,12 +76,10 @@ class Votazione:
                 lista += chr(9899)
             lista += " @" + membro + "\n"
         telegram.sendmessage(self.domanda + "\n"
-                                            "*Risultati:*\n"
-                                            "Sì: " + str(si) + " (" + str(
-            round(si / (si + no + astenuti) * 100, 2)) + "%)\n"
-                                                         "No: " + str(no) + " (" + str(
-            round(no / (si + no + astenuti) * 100, 2)) + "%)\n"
-                                                         "Astenuti: " + str(astenuti) + "\n\n" + lista, self.chat)
+                             "*Risultati:*\n"
+                             "Sì: " + str(si) + " (" + str(round(si / (si + no + astenuti) * 100, 2)) + "%)\n"
+                             "No: " + str(no) + " (" + str(round(no / (si + no + astenuti) * 100, 2)) + "%)\n"
+                             "Astenuti: " + str(astenuti) + "\n\n" + lista, self.chat)
 
 
 # Votazione in corso
@@ -343,7 +341,7 @@ while True:
                                                                                                             "*Fruit*: " +
                                                  r['count300'] + "\n"
                                                                  "*Droplet* _tick_: " + r['count100'] + "\n"
-                                                                                                        "*Droplet* _trail_: " +
+                                                                                                "*Droplet* _trail_: " +
                                                  r['count50'] + "\n"
                                                                 "*Miss*: " + r['countmiss'], sentin, source)
                         elif mode == 3:
@@ -353,7 +351,7 @@ while True:
                                                      'beatmap_id'] + ")\n*" + r['rank'] + "*\n" + mods +
                                                  "\n*Punti*: " + r['score'] + "\n"
                                                                               "*Combo* x" + r['maxcombo'] + "\n"
-                                                                                                            "_Rainbow_ *300*: " +
+                                                                                                "_Rainbow_ *300*: " +
                                                  r['countgeki'] + "\n"
                                                                   "*300*: " + r['count300'] + "\n"
                                                                                               "*100*: " + r[
