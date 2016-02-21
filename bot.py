@@ -282,6 +282,11 @@ while True:
                             mods = osu.listmods(r['enabled_mods'])
                         else:
                             mods = ""
+                        # Specifica cosa vuole dire il grado F e il grado X
+                        if r['rank'] == 'F':
+                            r['rank'] = 'Failed'
+                        elif r['rank'] == 'X':
+                            r['rank'] = 'Unranked'
                         if mode == 0:
                             # Visualizza le informazioni relative alla modalità osu!
                             telegram.sendmessage("*osu!*\n"
@@ -405,14 +410,17 @@ while True:
                     # Imposta il numero massimo a 100.
                     m = 100
                 # Prova a generare un numero casuale.
-                try:
-                    n = random.randrange(m) + 1
-                except ValueError:
-                    telegram.sendmessage(chr(9888) + " Il numero specificato non è maggiore o uguale a 0.", sentin,
-                                         source)
-                # Se tutto va bene visualizza il numero generato
+                if m == 34261891881215712181524122318242223183627453833:
+                    telegram.sendmessage("Numero casuale da 1 a _get rekt_:\n*@FrankRekt è scarso*", sentin, source)
                 else:
-                    telegram.sendmessage("Numero casuale da 1 a " + str(m) + ":\n*" + str(n) + "*", sentin, source)
+                    try:
+                        n = random.randrange(m) + 1
+                    except ValueError:
+                        telegram.sendmessage(chr(9888) + " Il numero specificato non è maggiore o uguale a 0.", sentin,
+                                             source)
+                    # Se tutto va bene visualizza il numero generato
+                    else:
+                        telegram.sendmessage("Numero casuale da 1 a " + str(m) + ":\n*" + str(n) + "*", sentin, source)
             elif text.startswith('/automah'):
                 print("@" + username + ": /automah")
                 # Invia il messaggio.
