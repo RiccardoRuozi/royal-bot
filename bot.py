@@ -717,7 +717,7 @@ while True:
                 elif text.startswith('/crash'):
                     # Crasha il bot. Mi sembra geniale.
                     if username == 'Steffo':
-                        raise SystemExit("Ho appena fatto crashare tutto apposta. Sono un genio.")
+                        raise Exception("Ho appena fatto crashare tutto apposta. Sono un genio.")
             else:
                 print("@" + username + " bloccato.")
     except Exception:
