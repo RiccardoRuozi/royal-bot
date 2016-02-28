@@ -714,6 +714,10 @@ while True:
                             lolfreestring += "*" + staticdata['name'] + "* " + staticdata['title'] + '\n'
                         print("Completato.")
                     telegram.sendmessage(lolfreestring, sentin, source)
+                elif text.startswith('/crash'):
+                    # Crasha il bot. Mi sembra geniale.
+                    if username == 'Steffo':
+                        raise SystemExit("Ho appena fatto crashare tutto apposta. Sono un genio.")
             else:
                 print("@" + username + " bloccato.")
     except Exception:
