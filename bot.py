@@ -721,5 +721,7 @@ while True:
             else:
                 print("@" + username + " bloccato.")
     except Exception as e:
-        telegram.sendmessage("*ERRORE:\n*"
+        telegram.sendmessage(chr(9762) + " *ERRORE CRITICO:\n*"
                              "{0}\n".format(repr(e.args)), -2141322)
+        print("ERRORE CRITICO:\n"
+              "{0}".format(repr(e)))
