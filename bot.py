@@ -720,5 +720,6 @@ while True:
                         raise Exception("Ho appena fatto crashare tutto apposta. Sono un genio.")
             else:
                 print("@" + username + " bloccato.")
-    except Exception:
-        telegram.sendmessage(sys.exc_info(), -2141322)
+    except Exception as e:
+        telegram.sendmessage("*ERRORE:\n*"
+                             "{0}\n".format(repr(e.args)), -2141322)
