@@ -135,7 +135,7 @@ osuplayers = {
 # Elenco di username dei membri della RYG
 royalgames = ['steffo', 'alby1', 'boni3099', 'maxsensei', 'cosimo03', 'frankrekt', 'doctorkawaii', 'acterryg', 'adry99',
               'alleanderl', 'thevagginadestroyer', 'tiztiztiz', 'fultz', 'gotob', 'enribenassati', 'iemax',
-              'peraemela99', 'ilgattopardo', 'mrdima98', 'ruozir', 'supersmurf', 'tauei', 'voltaggio', 'gibait']
+              'peraemela99', 'ilgattopardo', 'mrdima98', 'ruozir', 'supersmurf', 'tauei', 'voltaggio', 'gibait', 'evilbalu', 'generalapathy', 'paltri', 'doom_darth_vader']
 
 # Dizionario con gli steamID
 # Vedi sopra
