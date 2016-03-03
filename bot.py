@@ -10,6 +10,7 @@ import sys
 import lol
 import string
 
+
 # Check per la modalità votazione del bot, corrisponde al numero della chat in cui è attiva la votazione
 # 0 per disattivare la votazione
 class Votazione:
@@ -52,10 +53,12 @@ class Votazione:
                 lista += chr(9899)
             lista += " @" + membro + "\n"
         telegram.sendmessage(self.domanda + "\n"
-                             "*Risultati:*\n"
-                             "Sì: " + str(si) + " (" + str(round(si / (si + no + astenuti) * 100, 2)) + "%)\n"
-                             "No: " + str(no) + " (" + str(round(no / (si + no + astenuti) * 100, 2)) + "%)\n"
-                             "Astenuti: " + str(astenuti) + "\n\n" + lista, self.chat)
+                                            "*Risultati:*\n"
+                                            "Sì: " + str(si) + " (" + str(
+            round(si / (si + no + astenuti) * 100, 2)) + "%)\n"
+                                                         "No: " + str(no) + " (" + str(
+            round(no / (si + no + astenuti) * 100, 2)) + "%)\n"
+                                                         "Astenuti: " + str(astenuti) + "\n\n" + lista, self.chat)
 
 
 # Votazione in corso
@@ -196,8 +199,9 @@ while True:
                         if n is None:
                             telegram.sendmessage(chr(9888) + " L'app specificata non esiste!", sentin, source)
                         else:
-                            telegram.sendmessage('In questo momento, ' + str(n) + ' persone stanno giocando a [' + cmd[1] +
-                                                 '](https://steamdb.info/app/' + cmd[1] + '/graphs/)', sentin, source)
+                            telegram.sendmessage(
+                                'In questo momento, ' + str(n) + ' persone stanno giocando a [' + cmd[1] +
+                                '](https://steamdb.info/app/' + cmd[1] + '/graphs/)', sentin, source)
                     else:
                         telegram.sendmessage(chr(9888) + ' Non hai specificato un AppID!\n'
                                                          'La sintassi corretta è /playing <AppID>.', sentin, source)
@@ -260,7 +264,8 @@ while True:
                             r = osu.getuserrecent(cmd[1], mode)
                         # Se la funzione restituisce un errore, riferisci su Telegram l'errore e previeni il crash.
                         except NameError:
-                            telegram.sendmessage(chr(9888) + " Errore nella richiesta ai server di Osu!", sentin, source)
+                            telegram.sendmessage(chr(9888) + " Errore nella richiesta ai server di Osu!", sentin,
+                                                 source)
                         # Se tutto va bene, continua!
                         else:
                             # Se ci sono delle mod attive...
@@ -322,6 +327,7 @@ while True:
                                                              r['countgeki'],
                                                              r['countmiss']), sentin, source)
                             elif mode == 2:
+                                # TODO: Cos'è successo qui?
                                 # Visualizza le informazioni relative alla modalità osu!catch
                                 telegram.sendmessage("*osu!catch*\n"
                                                      "[Beatmap " + r['beatmap_id'] + "](" + 'https://osu.ppy.sh/b/' + r[
@@ -329,20 +335,21 @@ while True:
                                                      ")\n*" + r['rank'] + "*\n" + mods +
                                                      "\n*Punti*: " + r['score'] + "\n"
                                                                                   "*Combo* x" + r['maxcombo'] + "\n"
-                                                                                                                "*Fruit*: " +
+                                                                                                        "*Fruit*: " +
                                                      r['count300'] + "\n"
                                                                      "*Droplet* _tick_: " + r['count100'] + "\n"
-                                                                                                    "*Droplet* _trail_: " +
+                                                                                                "*Droplet* _trail_: " +
                                                      r['count50'] + "\n"
                                                                     "*Miss*: " + r['countmiss'], sentin, source)
                             elif mode == 3:
+                                # TODO: Cos'è successo qui?
                                 # Visualizza le informazioni relative alla modalità osu!mania
                                 telegram.sendmessage("*osu!mania*\n" +
                                                      "[Beatmap " + r['beatmap_id'] + "](" + 'https://osu.ppy.sh/b/' + r[
                                                          'beatmap_id'] + ")\n*" + r['rank'] + "*\n" + mods +
                                                      "\n*Punti*: " + r['score'] + "\n"
                                                                                   "*Combo* x" + r['maxcombo'] + "\n"
-                                                                                                    "_Rainbow_ *300*: " +
+                                                                                                "_Rainbow_ *300*: " +
                                                      r['countgeki'] + "\n"
                                                                       "*300*: " + r['count300'] + "\n"
                                                                                                   "*100*: " + r[
@@ -402,15 +409,18 @@ while True:
                         try:
                             n = random.randrange(m) + 1
                         except ValueError:
-                            telegram.sendmessage(chr(9888) + " Il numero specificato non è maggiore o uguale a 0.", sentin,
+                            telegram.sendmessage(chr(9888) + " Il numero specificato non è maggiore o uguale a 0.",
+                                                 sentin,
                                                  source)
                         # Se tutto va bene visualizza il numero generato
                         else:
-                            telegram.sendmessage("Numero casuale da 1 a " + str(m) + ":\n*" + str(n) + "*", sentin, source)
+                            telegram.sendmessage("Numero casuale da 1 a " + str(m) + ":\n*" + str(n) + "*", sentin,
+                                                 source)
                 elif text.startswith('/automah'):
                     print("@" + username + ": /automah")
                     # Invia il messaggio.
-                    telegram.sendmessage("Automaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa! Devi funzionare, cavolo!", sentin,
+                    telegram.sendmessage("Automaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa! Devi funzionare, cavolo!",
+                                         sentin,
                                          source)
                 elif text.startswith('/hs'):
                     print("@" + username + ": /hs")
@@ -556,16 +566,18 @@ while True:
                         telegram.sendmessage("Riavvio accettato.", sentin, source)
                         sys.exit(0)
                     else:
-                        telegram.sendmessage(chr(9888) + " Non hai i permessi necessari per creare una nuova votazione.",
-                                             sentin, source)
+                        telegram.sendmessage(
+                            chr(9888) + " Non hai i permessi necessari per creare una nuova votazione.",
+                            sentin, source)
                 elif text.startswith('/nuovavotazione'):
                     if username == "Steffo":
                         print("@" + username + ": /nuovavotazione ")
                         cmd = text.split(" ", 1)
                         incorso = Votazione(cmd[1], sentin)
                     else:
-                        telegram.sendmessage(chr(9888) + " Non hai i permessi necessari per creare una nuova votazione.",
-                                             sentin, source)
+                        telegram.sendmessage(
+                            chr(9888) + " Non hai i permessi necessari per creare una nuova votazione.",
+                            sentin, source)
                 elif text.startswith('/si'):
                     print("@" + username + ": /si ")
                     if incorso is not None:
@@ -615,10 +627,13 @@ while True:
                             diario += str(int(time.time())) + "|" + cmd[1] + "\n"
                             filemanager.writefile("diario.txt", diario)
                             telegram.sendmessage("Aggiunto al diario RYG.", sentin, source)
+                        else:
+                            telegram.sendmessage(chr(9888) + " Il messaggio non può essere scritto.\n"
+                                                 "Prova a togliere le emoji o boh?")
                     else:
                         telegram.sendmessage(chr(9888) + " Non hai scritto niente sul diario!\n"
-                                                         "Sintassi corretta: /diario _quello che vuoi scrivere_", sentin,
-                                             source)
+                                                         "Sintassi corretta: /diario _quello che vuoi scrivere_",
+                                             sentin, source)
                 elif text.startswith('/leggi'):
                     # Leggi dal diario Royal Games
                     print("@" + username + ": /leggi")
@@ -634,7 +649,8 @@ while True:
                                 riga = diario[len(diario) - n]
                                 riga = riga.split("|", 1)
                                 ora = time.gmtime(int(riga[0]))
-                                text += "`" + str(ora.tm_mday) + "/" + str(ora.tm_mon) + "/" + str(ora.tm_year) + "`: `" + \
+                                text += "`" + str(ora.tm_mday) + "/" + str(ora.tm_mon) + "/" + str(
+                                    ora.tm_year) + "`: `" + \
                                         str(ora.tm_hour) + ":" + str(ora.tm_min) + "` " + riga[1] + "\n"
                         else:
                             telegram.sendmessage(chr(9888) + " Il numero massimo di stringhe visualizzabili è " +
@@ -681,6 +697,6 @@ while True:
                 print("@" + username + " bloccato.")
     except Exception as e:
         telegram.sendmessage(chr(9762) + " *ERRORE CRITICO:\n*"
-                             "{0}\n".format(repr(e.args)), -2141322)
+                                         "{0}\n".format(repr(e.args)), -2141322)
         print("ERRORE CRITICO:\n"
               "{0}".format(repr(e)))
