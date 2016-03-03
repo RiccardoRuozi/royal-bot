@@ -671,10 +671,7 @@ while True:
                     ora = time.gmtime()
                     cmd = text.split(" ", 1)
                     if len(cmd) > 1:
-                        if cmd[1].startswith("refresh"):
-                            refresh = True
-                        else:
-                            refresh = False
+                        refresh = cmd[1].startswith("refresh")
                     else:
                         refresh = False
                     # Controlla se i dati sono già stati scaricati.
