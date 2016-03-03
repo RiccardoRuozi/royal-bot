@@ -242,8 +242,13 @@ while True:
                 elif text.startswith('/audio'):
                     print("@" + username + ": /audio")
                     cmd = text.split(" ", 1)
-                    sendme = audiolist[cmd[1]]
-                    telegram.senddocument(sendme, sentin)
+                    if cmd[1] in audiolist:
+                        sendme = audiolist[cmd[1]]
+                    else:
+                        sendme = chr(9888) + " L'audio richiesto non esiste!\n*Audio disponibili*:\n"
+                        for audio in audiolist:
+                            sendme += audio + "\n"
+                    telegram.sendmessage(sendme, sentin)
                 elif text.startswith('/sbam'):
                     print("@" + username + ": /sbam")
                     # Manda l'audio contenente gli sbam di tutti i membri Royal Games.
