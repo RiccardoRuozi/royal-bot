@@ -7,9 +7,8 @@ import random
 import osu
 import hearthstone
 import sys
-import mumbleboxes
 import lol
-
+import string
 
 # Check per la modalità votazione del bot, corrisponde al numero della chat in cui è attiva la votazione
 # 0 per disattivare la votazione
@@ -20,36 +19,13 @@ class Votazione:
     # 1: sì
     # 2: no
     # 3: astenuto
-    voto = {
-        'steffo': int(0),
-        'alby1': int(0),
-        'boni3099': int(0),
-        'maxsensei': int(0),
-        'cosimo03': int(0),
-        'frankrekt': int(0),
-        'doctorkawaii': int(0),
-        'acterryg': int(0),
-        'adry99': int(0),
-        'alleanderl': int(0),
-        'thevagginadestroyer': int(0),
-        'tiztiztiz': int(0),
-        'fultz': int(0),
-        'gotob': int(0),
-        'enribenassati': int(0),
-        'iemax': int(0),
-        'peraemela99': int(0),
-        'ilgattopardo': int(0),
-        'mrdima98': int(0),
-        'ruozir': int(0),
-        'supersmurf': int(0),
-        'tauei': int(0),
-        'voltaggio': int(0),
-        'gibait': int(0),
-    }
+    voto = dict()
 
     def __init__(self, question, askin):
         self.domanda = question
         self.chat = askin
+        for membro in royalgames:
+        self.voto[membro] = int()
 
     def ask(self):
         telegram.sendmessage(self.domanda, self.chat)
@@ -135,7 +111,8 @@ osuplayers = {
 # Elenco di username dei membri della RYG
 royalgames = ['steffo', 'alby1', 'boni3099', 'maxsensei', 'cosimo03', 'frankrekt', 'doctorkawaii', 'acterryg', 'adry99',
               'alleanderl', 'thevagginadestroyer', 'tiztiztiz', 'fultz', 'gotob', 'enribenassati', 'iemax',
-              'peraemela99', 'ilgattopardo', 'mrdima98', 'ruozir', 'supersmurf', 'tauei', 'voltaggio', 'gibait', 'evilbalu', 'generalapathy', 'paltri', 'doom_darth_vader']
+              'peraemela99', 'ilgattopardo', 'mrdima98', 'ruozir', 'supersmurf', 'tauei', 'voltaggio', 'gibait',
+              'evilbalu', 'generalapathy', 'paltri', 'doom_darth_vader', 'dpdani']
 
 # Dizionario con gli steamID
 # Vedi sopra
@@ -165,10 +142,12 @@ rygsteamids = {
     'tauei': 76561198104305298,
     'voltaggio': 76561198147601821,
     'gibait': 76561198157721704,
+    'evilbalu': 76561198071012695,
+    'generalapathy': 76561198101210474,
+    'paltri': 76561198237950260,
+    'doom_darth_vader': 76561198049862893,
+    'dpdani': 76561198076690771,
 }
-
-# TODO: magari fare scadere questi dati quando cambiano sui server della rito
-lolfreestring = None
 
 random.seed()
 
@@ -625,43 +604,17 @@ while True:
                             incorso.showresults()
                     else:
                         telegram.sendmessage(chr(9888) + " Non è in corso nessuna votazione!", sentin, source)
-                elif text.startswith('/cv'):
-                    # Visualizza l'elenco di persone nella chat di Mumble
-                    print("@" + username + ": /cv ")
-                    # Informa Telegram che il messaggio è stato ricevuto.
-                    telegram.sendchataction(sentin)
-                    r = mumbleboxes.getserverstatus("https://www.mumbleboxes.com/servers/5454/cvp.json").json()
-                    tosend = "*Utenti online:*\n"
-                    for u in r['root']['users']:
-                        if not u['mute']:
-                            if u['selfDeaf']:
-                                tosend += chr(128263) + " "
-                            elif u['selfMute']:
-                                tosend += chr(128264) + " "
-                            else:
-                                tosend += chr(128266) + " "
-                            tosend += u['name'] + "\n"
-                    for ch in r['root']['channels']:
-                        for u in ch['users']:
-                            if not u['mute']:
-                                if u['selfDeaf']:
-                                    tosend += chr(128263) + " "
-                                elif u['selfMute']:
-                                    tosend += chr(128264) + " "
-                                else:
-                                    tosend += chr(128266) + " "
-                                tosend += u['name'] + " | _" + ch['name'] + "_\n"
-                    telegram.sendmessage(tosend, sentin, source)
                 elif text.startswith('/diario'):
                     # Aggiungi una riga al diario Royal Games
                     print("@" + username + ": /diario ")
                     cmd = text.split(" ", 1)
                     if len(cmd) > 1:
-                        cmd[1] = cmd[1].replace("\n", " ")
-                        diario = filemanager.readfile("diario.txt")
-                        diario += str(int(time.time())) + "|" + cmd[1] + "\n"
-                        filemanager.writefile("diario.txt", diario)
-                        telegram.sendmessage("Aggiunto al diario RYG.", sentin, source)
+                        if cmd[1] in string.printable:
+                            cmd[1] = cmd[1].replace("\n", " ")
+                            diario = filemanager.readfile("diario.txt")
+                            diario += str(int(time.time())) + "|" + cmd[1] + "\n"
+                            filemanager.writefile("diario.txt", diario)
+                            telegram.sendmessage("Aggiunto al diario RYG.", sentin, source)
                     else:
                         telegram.sendmessage(chr(9888) + " Non hai scritto niente sul diario!\n"
                                                          "Sintassi corretta: /diario _quello che vuoi scrivere_", sentin,
