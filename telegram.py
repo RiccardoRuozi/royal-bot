@@ -97,7 +97,7 @@ def sendaudio(aud, to):
     requests.get("https://api.telegram.org/bot" + telegramtoken + "/sendAudio", params=parametri)
 
 
-def senddocument(doc, to):
+def senddocument(doc, to, reply=None):
     """Manda un file a una chat.
     :param doc: ID del documento
     :param to: Destinatario del documento
@@ -105,6 +105,7 @@ def senddocument(doc, to):
     parametri = {
         'chat_id': to,
         'document': doc,
+        'reply_to_message_id': reply
     }
     # Manda la richiesta ai server di Telegram.
     requests.get("https://api.telegram.org/bot" + telegramtoken + "/sendDocument", params=parametri)
