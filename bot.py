@@ -25,7 +25,7 @@ class Votazione:
         self.domanda = question
         self.chat = askin
         for membro in royalgames:
-        self.voto[membro] = int()
+            self.voto[membro] = int()
 
     def ask(self):
         telegram.sendmessage(self.domanda, self.chat)
