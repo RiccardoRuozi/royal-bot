@@ -629,7 +629,7 @@ while True:
                             telegram.sendmessage("Aggiunto al diario RYG.", sentin, source)
                         else:
                             telegram.sendmessage(chr(9888) + " Il messaggio non può essere scritto.\n"
-                                                 "Prova a togliere le emoji o boh?")
+                                                 "Prova a togliere le emoji o boh?", sentin, source)
                     else:
                         telegram.sendmessage(chr(9888) + " Non hai scritto niente sul diario!\n"
                                                          "Sintassi corretta: /diario _quello che vuoi scrivere_",
