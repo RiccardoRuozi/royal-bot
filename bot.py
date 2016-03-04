@@ -305,8 +305,8 @@ while True:
                                                                       "*Miss*: " + r['countmiss'], sentin, source)
                     else:
                         # TODO: Mettere a posto sto schifo.
-                        if username.lower() in osuplayers:
-                            r = osu.getuserrecent(osuplayers[username.lower()], 0)
+                        if "osu" in royalgames[username.lower()]:
+                            r = osu.getuserrecent(royalgames[username.lower()]['osu'], 0)
                             if "enabled_mods" in r:
                                 mods = osu.listmods(r['enabled_mods'])
                             else:
