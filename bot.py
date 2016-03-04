@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import json
 import time
 import filemanager
 import telegram
@@ -24,8 +25,8 @@ class Votazione:
     def __init__(self, question, askin):
         self.domanda = question
         self.chat = askin
-        for membro in royalgames:
-            self.voto[membro] = int()
+        for persona in royalgames:
+            self.voto[persona] = int()
 
     def ask(self):
         telegram.sendmessage(self.domanda, self.chat)
@@ -38,19 +39,19 @@ class Votazione:
         si = 0
         no = 0
         astenuti = 0
-        for membro in self.voto:
-            if self.voto[membro] == 0:
+        for persona in self.voto:
+            if self.voto[persona] == 0:
                 lista += chr(9898)
-            elif self.voto[membro] == 1:
+            elif self.voto[persona] == 1:
                 si += 1
                 lista += chr(128309)
-            elif self.voto[membro] == 2:
+            elif self.voto[persona] == 2:
                 no += 1
                 lista += chr(128308)
-            elif self.voto[membro] == 3:
+            elif self.voto[persona] == 3:
                 astenuti += 1
                 lista += chr(9899)
-            lista += " @" + membro + "\n"
+            lista += " @" + persona + "\n"
         if not si and not no and not astenuti:
             telegram.sendmessage(chr(9888) + " Nessuno ha ancora votato!", self.chat)
         else:
@@ -112,45 +113,7 @@ osuplayers = {
 }
 
 # Elenco di username dei membri della RYG
-royalgames = ['steffo', 'alby1', 'boni3099', 'maxsensei', 'cosimo03', 'frankrekt', 'doctorkawaii', 'acterryg', 'adry99',
-              'alleanderl', 'thevagginadestroyer', 'tiztiztiz', 'fultz', 'gotob', 'enribenassati', 'iemax',
-              'peraemela99', 'ilgattopardo', 'mrdima98', 'ruozir', 'supersmurf', 'tauei', 'voltaggio', 'gibait',
-              'evilbalu', 'generalapathy', 'paltri', 'doom_darth_vader', 'dpdani']
-
-# Dizionario con gli steamID
-# Vedi sopra
-rygsteamids = {
-    'steffo': 76561198034314260,
-    'alby1': 76561198071383448,
-    'boni3099': 76561198131868211,
-    'maxsensei': 76561198121094516,
-    'cosimo03': 76561198062778224,
-    'frankrekt': 76561198071099951,
-    'doctorkawaii': 76561198080377213,
-    'acterryg': 76561198146704979,
-    'adry99': 76561198230034568,
-    'alleanderl': 76561198154175301,
-    'thevagginadestroyer': 76561198128738388,
-    'tiztiztiz': 76561198109189938,
-    'fultz': 76561198035547490,
-    'gattino02': 76561198071069550,
-    'gotob': 76561198096658890,
-    'enribenassati': 76561198123018368,
-    'iemax': 76561198149695151,
-    'peraemela99': 76561198161867082,
-    'ilgattopardo': 76561198111021344,
-    'mrdima98': 76561198140863530,
-    'ruozir': 76561198117708290,
-    'supersmurf': 76561198115852550,
-    'tauei': 76561198104305298,
-    'voltaggio': 76561198147601821,
-    'gibait': 76561198157721704,
-    'evilbalu': 76561198071012695,
-    'generalapathy': 76561198101210474,
-    'paltri': 76561198237950260,
-    'doom_darth_vader': 76561198049862893,
-    'dpdani': 76561198076690771,
-}
+royalgames = json.loads(filemanager.readfile("db.json"))
 
 # Stringa dove mettere l'elenco di champion di lol gratuiti
 lolfreestring = str()
@@ -528,8 +491,9 @@ while True:
                     else:
                         # Stringa utilizzata per ottenere informazioni su tutti gli utenti in una sola richiesta a steam
                         userids = str()
-                        for nome in rygsteamids:
-                            userids += str(rygsteamids[nome]) + ','
+                        for membro in royalgames:
+                            if "steam" in membro:
+                                userids += str(royalgames[membro]["steam"]) + ','
                         tosend = "*Online ora:*\n"
                         r = steam.getplayersummaries(userids)
                         for player in r:
