@@ -32,5 +32,6 @@ def getmatchlist(sid):
         'region': "euw",
         'api_key': lolkey,
     }
-    r = requests.get("https://euw.api.pvp.net/api/lol/euw/v2.2/matchlist/by-summoner/" + sid, params=parametri).json()
-    return r['matches']
+    r = requests.get("https://euw.api.pvp.net/api/lol/euw/v2.2/matchlist/by-summoner/" + str(sid), params=parametri)\
+        .json()
+    return r
