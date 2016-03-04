@@ -51,11 +51,14 @@ class Votazione:
                 astenuti += 1
                 lista += chr(9899)
             lista += " @" + membro + "\n"
-        telegram.sendmessage(self.domanda + "\n"
-                             "*Risultati:*\n"
-                             "Sì: " + str(si) + " (" + str(round(si / (si + no + astenuti) * 100, 2)) + "%)\n"
-                             "No: " + str(no) + " (" + str(round(no / (si + no + astenuti) * 100, 2)) + "%)\n"
-                             "Astenuti: " + str(astenuti) + "\n\n" + lista, self.chat)
+        if not si and not no and not astenuti:
+            telegram.sendmessage(chr(9888) + " Nessuno ha ancora votato!", self.chat)
+        else:
+            telegram.sendmessage(self.domanda + "\n"
+                                 "*Risultati:*\n"
+                                 "Sì: " + str(si) + " (" + str(round(si / (si + no + astenuti) * 100, 2)) + "%)\n"
+                                 "No: " + str(no) + " (" + str(round(no / (si + no + astenuti) * 100, 2)) + "%)\n"
+                                 "Astenuti: " + str(astenuti) + "\n\n" + lista, self.chat)
 
 
 # Votazione in corso
