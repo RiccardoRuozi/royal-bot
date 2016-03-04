@@ -617,7 +617,7 @@ while True:
                                         str(ora.tm_year) + " " + str(ora.tm_hour) + ":" + str(ora.tm_min) + "`\n"
                         r = lol.getfreerotation()
                         for champion in r:
-                            staticdata = lol.getsinglestaticdata(champion['id'])
+                            staticdata = lol.getchampionstaticdata(champion['id'])
                             lolfreestring += "*" + staticdata['name'] + "* " + staticdata['title'] + '\n'
                         print("Completato.")
                     telegram.sendmessage(lolfreestring, sentin, source)

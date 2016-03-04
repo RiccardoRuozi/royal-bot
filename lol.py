@@ -4,7 +4,7 @@ import filemanager
 lolkey = filemanager.readfile("lolapi.txt")
 
 
-def getsinglestaticdata(cid, extra=None):
+def getchampionstaticdata(cid, extra=None):
     parametri = {
         'api_key': lolkey,
         'region': "euw",
