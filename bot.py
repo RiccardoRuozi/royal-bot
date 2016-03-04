@@ -413,8 +413,7 @@ while True:
                             n = random.randrange(m) + 1
                         except ValueError:
                             telegram.sendmessage(chr(9888) + " Il numero specificato non è maggiore o uguale a 0.",
-                                                 sentin,
-                                                 source)
+                                                 sentin, source)
                         # Se tutto va bene visualizza il numero generato
                         else:
                             telegram.sendmessage("Numero casuale da 1 a " + str(m) + ":\n*" + str(n) + "*", sentin,
