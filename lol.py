@@ -25,3 +25,12 @@ def getfreerotation():
     }
     r = requests.get("https://euw.api.pvp.net/api/lol/euw/v1.2/champion", params=parametri).json()
     return r['champions']
+
+
+def getmatchlist(sid):
+    parametri = {
+        'region': "euw",
+        'api_key': lolkey,
+    }
+    r = requests.get("https://euw.api.pvp.net/api/lol/euw/v2.2/matchlist/by-summoner/" + sid, params=parametri).json()
+    return r['matches']
