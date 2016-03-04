@@ -85,7 +85,7 @@ def getuserrecent(user, mode=0):
     if len(r) >= 1:
         return r[0]
     else:
-        raise NameError
+        raise NameError("Errore di osu")
 
 def listmods(n):
     """
