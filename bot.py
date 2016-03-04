@@ -6,7 +6,6 @@ import steam
 import random
 import osu
 import hearthstone
-import sys
 import lol
 import string
 
@@ -559,16 +558,6 @@ while True:
                     # Manda l'audio So much to do, so much to see
                     print("@" + username + ": /shrekt ")
                     telegram.senddocument("BQADBAADsQADiBjiAqYN-EBXASyhAg", sentin)
-                elif text.startswith('/restart'):
-                    # Riavvia il bot
-                    if username == "Steffo":
-                        print("@" + username + ": /restart ")
-                        telegram.sendmessage("Riavvio accettato.", sentin, source)
-                        sys.exit(0)
-                    else:
-                        telegram.sendmessage(
-                            chr(9888) + " Non hai i permessi necessari per creare una nuova votazione.",
-                            sentin, source)
                 elif text.startswith('/nuovavotazione'):
                     if username == "Steffo":
                         print("@" + username + ": /nuovavotazione ")
