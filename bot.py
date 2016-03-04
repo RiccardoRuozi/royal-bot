@@ -52,12 +52,10 @@ class Votazione:
                 lista += chr(9899)
             lista += " @" + membro + "\n"
         telegram.sendmessage(self.domanda + "\n"
-                                            "*Risultati:*\n"
-                                            "Sì: " + str(si) + " (" + str(
-            round(si / (si + no + astenuti) * 100, 2)) + "%)\n"
-                                                         "No: " + str(no) + " (" + str(
-            round(no / (si + no + astenuti) * 100, 2)) + "%)\n"
-                                                         "Astenuti: " + str(astenuti) + "\n\n" + lista, self.chat)
+                             "*Risultati:*\n"
+                             "Sì: " + str(si) + " (" + str(round(si / (si + no + astenuti) * 100, 2)) + "%)\n"
+                             "No: " + str(no) + " (" + str(round(no / (si + no + astenuti) * 100, 2)) + "%)\n"
+                             "Astenuti: " + str(astenuti) + "\n\n" + lista, self.chat)
 
 
 # Votazione in corso
