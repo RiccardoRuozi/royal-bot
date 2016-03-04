@@ -151,6 +151,9 @@ rygsteamids = {
     'dpdani': 76561198076690771,
 }
 
+# Stringa dove mettere l'elenco di champion di lol gratuiti
+lolfreestring = str()
+
 random.seed()
 
 # Ciclo principale del bot
