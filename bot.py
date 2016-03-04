@@ -91,27 +91,6 @@ audiolist = {
     'omiodio': 'BQADAgADMgIAAh8GgAFe9-lVwzdFzAI',
 }
 
-# Dizionario con i nomi utenti di osu!
-# Se qualcuno cambia nome utente di Telegram, lo cambi anche QUI.
-osuplayers = {
-    'steffo': 'SteffoRYG',
-    'evilbalu': 'NemesisRYG',
-    'fultz': 'ftz99',
-    'ilgattopardo': 'gattopardo',
-    'frankrekt': 'FrankezRYG',
-    'tiztiztiz': 'fedececco',
-    'acterryg': 'Acter1',
-    'maxsensei': 'MaxSensei',
-    'doctorkawaii': 'ImHeisenberg',
-    'thevagginadestroyer': 'barboll',
-    'cosimo03': 'Cosimo03',
-    'albertino04': 'Alby1',
-    'voltaggio': 'voltaggio',
-    'tauei': 'tauei',
-    'boni3099': 'boni3099',
-    'mrdima98': 'MRdima98',
-}
-
 # Elenco di username dei membri della RYG
 royalgames = json.loads(filemanager.readfile("db.json"))
 
@@ -492,7 +471,7 @@ while True:
                         # Stringa utilizzata per ottenere informazioni su tutti gli utenti in una sola richiesta a steam
                         userids = str()
                         for membro in royalgames:
-                            if "steam" in membro:
+                            if "steam" in royalgames[membro]:
                                 userids += str(royalgames[membro]["steam"]) + ','
                         tosend = "*Online ora:*\n"
                         r = steam.getplayersummaries(userids)
@@ -650,6 +629,6 @@ while True:
                 print("@" + username + " bloccato.")
     except Exception as e:
         telegram.sendmessage(chr(9762) + " *ERRORE CRITICO:\n*"
-                                         "{0}\n".format(repr(e.args)), -2141322)
+                                         "{0}\n".format(repr(e)), -2141322)
         print("ERRORE CRITICO:\n"
               "{0}".format(repr(e)))
