@@ -556,7 +556,7 @@ while True:
                     print("@" + username + ": /diario ")
                     cmd = text.split(" ", 1)
                     if len(cmd) > 1:
-                        if cmd[1] in string.printable:
+                        if cmd[1].isprintable():
                             cmd[1] = cmd[1].replace("\n", " ")
                             diario = filemanager.readfile("diario.txt")
                             diario += str(int(time.time())) + "|" + cmd[1] + "\n"
