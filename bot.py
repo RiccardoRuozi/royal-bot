@@ -585,7 +585,7 @@ while True:
                                 riga = riga.split("|", 1)
                                 ora = time.gmtime(int(riga[0]))
                                 text += "`" + str(ora.tm_mday) + "/" + str(ora.tm_mon) + "/" + str(
-                                    ora.tm_year) + "`: `" + \
+                                        ora.tm_year) + "`: `" + \
                                         str(ora.tm_hour) + ":" + str(ora.tm_min) + "` " + riga[1] + "\n"
                         else:
                             telegram.sendmessage(chr(9888) + " Il numero massimo di stringhe visualizzabili è " +
