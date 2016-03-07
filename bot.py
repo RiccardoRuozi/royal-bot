@@ -630,8 +630,8 @@ while True:
                     cmd = text.split(" ", 1)
                     if "lol" in royalgames[username.lower()]:
                         r = lol.getmatchlist(royalgames[username.lower()]['lol'])
-                        if len(match) > 0:
-                            for match in r[:5]:
+                        if len(r['matches']) > 0:
+                            for match in r['matches'][:5]:
                                 sd = lol.getchampionstaticdata(match['champion'])
                                 sendme += "`{0}` {1} ({2})\n".format(str(match['matchId']),
                                                                      sd['name'],
