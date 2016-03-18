@@ -641,6 +641,8 @@ while True:
                             telegram.sendmessage(chr(9888) + " Non hai mai giocato ranked.", sentin, source)
                     else:
                         telegram.sendmessage(chr(9888) + " Non hai un account di LoL nel database.", sentin, source)
+                elif text.startswith('/begintheadventure'):
+                    import adventure
                 elif text.startswith('/crash'):
                     # Crasha il bot. Mi sembra geniale.
                     if username == 'Steffo':
