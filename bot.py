@@ -8,7 +8,6 @@ import random
 import osu
 import hearthstone
 import lol
-import string
 
 
 # Check per la modalità votazione del bot, corrisponde al numero della chat in cui è attiva la votazione
@@ -645,8 +644,6 @@ while True:
                             telegram.sendmessage(chr(9888) + " Non hai mai giocato ranked.", sentin, source)
                     else:
                         telegram.sendmessage(chr(9888) + " Non hai un account di LoL nel database.", sentin, source)
-                elif text.startswith('/begintheadventure'):
-                    import adventure
                 elif text.startswith('/crash'):
                     # Crasha il bot. Mi sembra geniale.
                     if username == 'Steffo':
