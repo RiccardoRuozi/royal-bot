@@ -62,7 +62,9 @@ class Game:
             if not player.alive:
                 tosend += "\U0001F480 "
             elif player.role == 1:
-                tosend += "RRYG "
+                tosend += "\U0001F608 "
+            elif player.role == 2:
+                tosend += "Detective "
             else:
                 tosend += "\U0001F636 "
             tosend += player.username + "\n"
@@ -115,13 +117,10 @@ class Game:
                     mostvotes = votelist[player]
         return self.findusername(mostvoted)
 
-    def save(self):
-        """Salva in un file di testo con il numero del gruppo lo stato attuale del gioco"""
-        try:
-            file = open(str(self.groupid) + ".txt", "w")
-        except OSError:
-            file = open(str(self.groupid) + ".txt", "x")
-        pickle.dump(self, file)
+    # def save(self):
+    #    """Salva in un file di testo con il numero del gruppo lo stato attuale del gioco"""
+    #    file = open(str(self.groupid) + ".txt", "x")
+    #    pickle.dump(self, file)
 
     def endday(self):
         for player in self.players:
@@ -166,8 +165,9 @@ while True:
                 g.groupid = t['chat']['id']
                 g.adminid = t['from']['id']
                 partiteincorso.append(g)
-            elif t['text'].startswith("/load"):
-                g = load(t['chat']['id'])
+                g.message("Partita creata!")
+            # elif t['text'].startswith("/load"):
+            #     g = load(t['chat']['id'])
             elif t['text'].startswith("/status"):
                 telegram.sendmessage("Nessuna partita in corso.", t['chat']['id'], t['message_id'])
             # else:
@@ -175,29 +175,41 @@ while True:
             #                         t['message_id'])
         else:
             if t['text'].startswith("/join"):
-                p = Player()
-                p.telegramid = t['from']['id']
-                # Qui crasha se non è stato impostato un username. Fare qualcosa?
-                p.username = t['from']['username']
-                # Assegnazione dei ruoli
-                # Spiegare meglio cosa deve fare ogni ruolo?
-                balanced = random.randrange(0, 100, 1)
-                if balanced <= 15:
-                    p.role = 1
-                    p.special = True
-                    p.message("Sei stato assegnato alla squadra *MIFIA*.")
-                elif balanced >= 95:
-                    p.role = 2
-                    p.special = True
-                    p.message("Sei stato assegnato alla squadra *ROYAL*.")
-                    p.message("Hai il ruolo speciale di detective.")
+                if g.joinphase:
+                    p = Player()
+                    p.telegramid = t['from']['id']
+                    # Qui crasha se non è stato impostato un username. Fare qualcosa?
+                    p.username = t['from']['username']
+                    # Assegnazione dei ruoli
+                    # Spiegare meglio cosa deve fare ogni ruolo?
+                    balanced = random.randrange(0, 100, 1)
+                    if balanced <= 15:
+                        p.role = 1
+                        p.special = True
+                        p.message("Sei stato assegnato alla squadra *MIFIA*.")
+                        p.message("L'ID della partita è " + g.groupid + ".\n"
+                                  "Non dimenticarlo. ")
+                    elif balanced >= 95:
+                        p.role = 2
+                        p.special = True
+                        p.message("Sei stato assegnato alla squadra *ROYAL*.")
+                        p.message("Hai il ruolo speciale di detective.")
+                    else:
+                        p.role = 0
+                        p.message("Sei stato assegnato alla squadra *ROYAL*.")
+                    g.addplayer(p)
+                    g.message(p.username + " si è unito alla partita!")
                 else:
-                    p.role = 0
-                    p.message("Sei stato assegnato alla squadra *ROYAL*.")
-                g.addplayer(p)
-                g.message(p.username + " si è unito alla partita!")
-            elif t['text'].startswith("/save"):
-                g.save()
+                    g.message("La fase di iscrizione è terminata.")
+            # elif t['text'].startswith("/save"):
+            #     g.save()
             elif t['text'].startswith("/status"):
                 if t['from']['id'] == g.adminid:
                     g.adminmessage(g.fullstatus())
+                else:
+                    g.message(g.status())
+            elif t['text'].startswith("/endjoin"):
+                if t['from']['id'] == g.adminid:
+                    g.message("Fase di iscrizione chiusa.")
+                    g.message(g.status())
+            elif t['text'].startswith("/")
