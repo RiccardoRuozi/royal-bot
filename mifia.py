@@ -22,6 +22,7 @@ class Game:
     groupid = int()
     adminid = int()
     players = list()
+    tokill = list()
     joinphase = True
 
     def message(self, text):
@@ -123,13 +124,15 @@ class Game:
     #    pickle.dump(self, file)
 
     def endday(self):
+        self.message(self.mostvoted().username + " è stato il più votato del giorno.")
+        self.tokill.append(self.mostvoted())
+        for killed in self.tokill:
+            self.message(killed.username + " è stato ucciso.")
+            killed.alive = False
         for player in self.players:
             player.votedfor = str()
             if player.role != 0:
                 player.special = True
-            killed = self.mostvoted()
-            killed.alive = False
-            self.message(killed.username + " è stato il più votato del giorno.")
 
 
 def load(filename) -> Game:
@@ -170,9 +173,21 @@ while True:
             #     g = load(t['chat']['id'])
             elif t['text'].startswith("/status"):
                 telegram.sendmessage("Nessuna partita in corso.", t['chat']['id'], t['message_id'])
-            # else:
-            #    telegram.sendmessage("Comando non riconosciuto. Avvia una partita prima!", t['chat']['id'],
-            #                         t['message_id'])
+            else:
+                xtra = t['text'].split(' ')
+                try:
+                    g = findgame(int(xtra[0]))
+                except ValueError:
+                    g = None
+                if g is not None:
+                    if xtra[1] == "SPECIAL":
+                        if g.findid(t['from']['id']).role == 1 and g.findid(t['from']['id']).special:
+                            target = g.findusername(xtra[2])
+                            if target is not None:
+                                g.tokill.append(target)
+                                g.findid(t['from']['id']).special = False
+                                g.evilmessage("Il bersaglio di " + t['from']['username'] + " è " + target.username +
+                                              ".")
         else:
             if t['text'].startswith("/join"):
                 if g.joinphase:
@@ -183,11 +198,11 @@ while True:
                     # Assegnazione dei ruoli
                     # Spiegare meglio cosa deve fare ogni ruolo?
                     balanced = random.randrange(0, 100, 1)
-                    if balanced <= 15:
+                    if balanced <= 100:
                         p.role = 1
                         p.special = True
                         p.message("Sei stato assegnato alla squadra *MIFIA*.")
-                        p.message("L'ID della partita è " + g.groupid + ".\n"
+                        p.message("L'ID della partita è " + str(g.groupid) + ".\n"
                                   "Non dimenticarlo. ")
                     elif balanced >= 95:
                         p.role = 2
@@ -212,4 +227,15 @@ while True:
                 if t['from']['id'] == g.adminid:
                     g.message("Fase di iscrizione chiusa.")
                     g.message(g.status())
-            elif t['text'].startswith("/")
+            elif t['text'].startswith("/endday"):
+                if t['from']['id'] == g.adminid:
+                    g.endday()
+                    g.message(g.status())
+            elif t['text'].startswith("/vote"):
+                username = t['text'].split(' ')
+                if g.findusername(username[1]) is not None:
+                    voter = g.findid(t['from']['id'])
+                    voter.votedfor = username[1]
+                    g.message("Hai votato per " + username[1] + ".")
+                else:
+                    g.message("La persona selezionata non esiste.")
