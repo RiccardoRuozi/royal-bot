@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import telegram
 import pickle
-
+import random
 
 class Player:
     telegramid = int()
@@ -22,12 +22,13 @@ class Game:
     groupid = int()
     adminid = int()
     players = list()
+    joinphase = True
 
     def message(self, text):
         """Manda un messaggio alla chat generale del gioco
         :param text: Testo del messaggio
         """
-        telegram.sendmessage(text, self.chat)
+        telegram.sendmessage(text, self.groupid)
 
     def adminmessage(self, text):
         """Manda un messaggio all'admin del gioco
@@ -158,27 +159,45 @@ def findgame(chatid) -> Game:
 while True:
     t = telegram.getupdates()
     if 'text' in t:
-        if t['text'].startswith("/newgame"):
-            g = findgame(t['chat']['id'])
-            if g is None:
+        g = findgame(t['chat']['id'])
+        if g is None:
+            if t['text'].startswith("/newgame"):
                 g = Game()
                 g.groupid = t['chat']['id']
                 g.adminid = t['from']['id']
                 partiteincorso.append(g)
-            else:
-                telegram.sendmessage("Una partita è già in corso qui.", t['chat']['id'], t['message_id'])
-        elif t['text'].startswith("/loadgame"):
-            # Facendo così mi sovrascrive il Game dentro la lista o no?
-            g = findgame(t['chat']['id'])
-            add = False
-            if g is None:
-                add = True
-            g = load(t['chat']['id'])
-            if add:
-                partiteincorso.append(g)
-        if t['text'].startswith("/echo"):
-            g = findgame(t['chat']['id'])
-            if g is None:
+            elif t['text'].startswith("/load"):
+                g = load(t['chat']['id'])
+            elif t['text'].startswith("/status"):
                 telegram.sendmessage("Nessuna partita in corso.", t['chat']['id'], t['message_id'])
-            else:
-                g.message(g.fullstatus())
+            # else:
+            #    telegram.sendmessage("Comando non riconosciuto. Avvia una partita prima!", t['chat']['id'],
+            #                         t['message_id'])
+        else:
+            if t['text'].startswith("/join"):
+                p = Player()
+                p.telegramid = t['from']['id']
+                # Qui crasha se non è stato impostato un username. Fare qualcosa?
+                p.username = t['from']['username']
+                # Assegnazione dei ruoli
+                # Spiegare meglio cosa deve fare ogni ruolo?
+                balanced = random.randrange(0, 100, 1)
+                if balanced <= 15:
+                    p.role = 1
+                    p.special = True
+                    p.message("Sei stato assegnato alla squadra *MIFIA*.")
+                elif balanced >= 95:
+                    p.role = 2
+                    p.special = True
+                    p.message("Sei stato assegnato alla squadra *ROYAL*.")
+                    p.message("Hai il ruolo speciale di detective.")
+                else:
+                    p.role = 0
+                    p.message("Sei stato assegnato alla squadra *ROYAL*.")
+                g.addplayer(p)
+                g.message(p.username + " si è unito alla partita!")
+            elif t['text'].startswith("/save"):
+                g.save()
+            elif t['text'].startswith("/status"):
+                if t['from']['id'] == g.adminid:
+                    g.adminmessage(g.fullstatus())
