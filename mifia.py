@@ -2,10 +2,11 @@
 import telegram
 import pickle
 
+
 class Player:
     telegramid = int()
     username = str()
-    role = 0 # 0 normale | 1 rryg | 2 resistenza
+    role = 0  # 0 normale | 1 rryg | 2 resistenza
     alive = True
     votedfor = str()
     special = False
@@ -42,7 +43,7 @@ class Game:
             if player.role == 1:
                 telegram.sendmessage(text, player.telegramid)
 
-    def status(self):
+    def status(self) -> str:
         """Restituisci lo stato attuale della partita in una stringa unicode"""
         tosend = "Stato attuale del gioco: \n"
         for player in self.players:
@@ -53,7 +54,7 @@ class Game:
             tosend += player.username + "\n"
         return tosend
 
-    def fullstatus(self):
+    def fullstatus(self) -> str:
         """Restituisci lo stato attuale della partita (per admin?) in una stringa unicode"""
         tosend = "Stato attuale del gioco: \n"
         for player in self.players:
@@ -66,7 +67,7 @@ class Game:
             tosend += player.username + "\n"
         return tosend
 
-    def findusername(self, username):
+    def findusername(self, username) -> Player:
         """Trova un giocatore con un certo nome utente
         :param username: Nome utente da cercare
         """
@@ -76,7 +77,7 @@ class Game:
         else:
             return None
 
-    def findid(self, telegramid):
+    def findid(self, telegramid) -> Player:
         """Trova un giocatore con un certo ID di telegram
         :param telegramid: ID da cercare
         """
@@ -92,7 +93,7 @@ class Game:
         """
         self.players.append(player)
 
-    def mostvoted(self):
+    def mostvoted(self) -> Player:
         """Trova il giocatore più votato"""
         votelist = dict()
         for player in self.players:
@@ -131,7 +132,7 @@ class Game:
             self.message(killed.username + " è stato il più votato del giorno.")
 
 
-def load(filename):
+def load(filename) -> Game:
     """Restituisci da un file di testo con il numero del gruppo lo stato del gioco (Funzione non sicura, non importare
     file a caso pls)
     :param filename: Nome del file da cui caricare lo stato"""
@@ -142,4 +143,42 @@ def load(filename):
     else:
         return pickle.load(file)
 
+
 partiteincorso = list()
+
+
+def findgame(chatid) -> Game:
+    for game in partiteincorso:
+        if game.groupid == chatid:
+            return game
+    else:
+        return None
+
+
+while True:
+    t = telegram.getupdates()
+    if 'text' in t:
+        if t['text'].startswith("/newgame"):
+            g = findgame(t['chat']['id'])
+            if g is None:
+                g = Game()
+                g.groupid = t['chat']['id']
+                g.adminid = t['from']['id']
+                partiteincorso.append(g)
+            else:
+                telegram.sendmessage("Una partita è già in corso qui.", t['chat']['id'], t['message_id'])
+        elif t['text'].startswith("/loadgame"):
+            # Facendo così mi sovrascrive il Game dentro la lista o no?
+            g = findgame(t['chat']['id'])
+            add = False
+            if g is None:
+                add = True
+            g = load(t['chat']['id'])
+            if add:
+                partiteincorso.append(g)
+        if t['text'].startswith("/echo"):
+            g = findgame(t['chat']['id'])
+            if g is None:
+                telegram.sendmessage("Nessuna partita in corso.", t['chat']['id'], t['message_id'])
+            else:
+                g.message(g.fullstatus())
