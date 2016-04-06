@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import telegram
-import pickle
 import random
+
 
 class Player:
     telegramid = int()
@@ -43,7 +43,7 @@ class Game:
         """
         for player in self.players:
             if player.role == 1:
-                telegram.sendmessage(text, player.telegramid)
+                telegram.sendmessage("\U0001F608: " + text, player.telegramid)
 
     def status(self) -> str:
         """Restituisci lo stato attuale della partita in una stringa unicode"""
@@ -65,18 +65,18 @@ class Game:
             elif player.role == 1:
                 tosend += "\U0001F608 "
             elif player.role == 2:
-                tosend += "Detective "
+                tosend += "\U0001F46E "
             else:
                 tosend += "\U0001F636 "
             tosend += player.username + "\n"
         return tosend
 
-    def findusername(self, username) -> Player:
+    def findusername(self, fusername) -> Player:
         """Trova un giocatore con un certo nome utente
-        :param username: Nome utente da cercare
+        :param fusername: Nome utente da cercare
         """
         for player in self.players:
-            if player.username == username:
+            if player.username == fusername:
                 return player
         else:
             return None
@@ -101,7 +101,7 @@ class Game:
         """Trova il giocatore più votato"""
         votelist = dict()
         for player in self.players:
-            if player.votedfor != str():
+            if player.votedfor != str() and player.alive:
                 if player.votedfor not in votelist:
                     votelist[player.votedfor] = 1
                 else:
@@ -118,33 +118,34 @@ class Game:
                     mostvotes = votelist[player]
         return self.findusername(mostvoted)
 
-    # def save(self):
-    #    """Salva in un file di testo con il numero del gruppo lo stato attuale del gioco"""
-    #    file = open(str(self.groupid) + ".txt", "x")
-    #    pickle.dump(self, file)
-
     def endday(self):
-        self.message(self.mostvoted().username + " è stato il più votato del giorno.")
-        self.tokill.append(self.mostvoted())
+        votedout = self.mostvoted()
+        self.message(votedout.username + " è stato il più votato del giorno.")
+        self.tokill.append(votedout)
         for killed in self.tokill:
-            self.message(killed.username + " è stato ucciso.")
+            self.message(killed.username + " è stato ucciso.\n")
+            if killed.role == 1:
+                self.message("Era un Mifioso!")
+            elif killed.role == 2:
+                self.message("Era un Detective!")
             killed.alive = False
         for player in self.players:
             player.votedfor = str()
             if player.role != 0:
                 player.special = True
-
-
-def load(filename) -> Game:
-    """Restituisci da un file di testo con il numero del gruppo lo stato del gioco (Funzione non sicura, non importare
-    file a caso pls)
-    :param filename: Nome del file da cui caricare lo stato"""
-    try:
-        file = open(str(filename) + ".txt", "r")
-    except OSError:
-        return None
-    else:
-        return pickle.load(file)
+        # Controlla se la Royal Games ha vinto
+        zero = 0
+        uno = 0
+        for player in self.players:
+            if player.alive:
+                if player.role == 0 or player.role == 2:
+                    zero += 1
+                elif player.role == 1:
+                    uno += 1
+        if uno == 0:
+            self.message("*Il Team Royal ha vinto!*")
+        if uno >= zero:
+            self.message("*Il Team Mifia ha vinto!*")
 
 
 partiteincorso = list()
@@ -169,12 +170,10 @@ while True:
                 g.adminid = t['from']['id']
                 partiteincorso.append(g)
                 g.message("Partita creata!")
-            # elif t['text'].startswith("/load"):
-            #     g = load(t['chat']['id'])
             elif t['text'].startswith("/status"):
                 telegram.sendmessage("Nessuna partita in corso.", t['chat']['id'], t['message_id'])
             else:
-                xtra = t['text'].split(' ')
+                xtra = t['text'].split(' ', 2)
                 try:
                     g = findgame(int(xtra[0]))
                 except ValueError:
@@ -186,32 +185,68 @@ while True:
                             if target is not None:
                                 g.tokill.append(target)
                                 g.findid(t['from']['id']).special = False
-                                g.evilmessage("Il bersaglio di " + t['from']['username'] + " è " + target.username +
-                                              ".")
+                                g.evilmessage("Il bersaglio di " + t['from']['username'] + " è *" + target.username +
+                                              "*.")
+                        elif g.findid(t['from']['id']).role == 2 and g.findid(t['from']['id']).special:
+                            target = g.findusername(xtra[2])
+                            p = g.findid(t['from']['id'])
+                            if target is not None:
+                                if target.role == 0:
+                                    p.message(target.username + " è un Royal.")
+                                elif target.role == 1:
+                                    p.message(target.username + " è un Mifioso.")
+                                elif target.role == 2:
+                                    p.message(target.username + " è un Detective.")
+                                p.special = False
+                    elif xtra[1] == "CHAT":
+                        if g.findid(t['from']['id']).role == 1:
+                            g.evilmessage(xtra[2])
         else:
             if t['text'].startswith("/join"):
-                if g.joinphase:
+                if g.joinphase and g.findid(t['from']['id']) is None:
                     p = Player()
                     p.telegramid = t['from']['id']
                     # Qui crasha se non è stato impostato un username. Fare qualcosa?
                     p.username = t['from']['username']
                     # Assegnazione dei ruoli
                     # Spiegare meglio cosa deve fare ogni ruolo?
-                    balanced = random.randrange(0, 100, 1)
-                    if balanced <= 100:
+                    if len(g.players) % 10 == 1:
                         p.role = 1
                         p.special = True
                         p.message("Sei stato assegnato alla squadra *MIFIA*.")
-                        p.message("L'ID della partita è " + str(g.groupid) + ".\n"
-                                  "Non dimenticarlo. ")
-                    elif balanced >= 95:
+                        p.message("Apparirai agli altri come un membro del team ROYAL. Depistali e non farti uccidere!")
+                        p.message("Il team ROYAL ucciderà la persona più votata di ogni turno.\n"
+                                  "Per votare, scrivi `/vote username`!")
+                        p.message("Scrivi in questa chat `" + str(g.groupid) + " CHAT messaggio` per mandare un"
+                                  " messaggio a tutto il tuo team.")
+                        p.message("Scrivi in questa chat `" + str(g.groupid) + " SPECIAL nomeutente` per uccidere"
+                                  " qualcuno alla fine del giorno.")
+                        p.message("La squadra Mifia vince se tutta la Royal Games è eliminata.")
+                        p.message("Perdi se vieni ucciso.")
+                    elif len(g.players) % 10 == 0:
                         p.role = 2
                         p.special = True
-                        p.message("Sei stato assegnato alla squadra *ROYAL*.")
-                        p.message("Hai il ruolo speciale di detective.")
+                        p.message("Sei stato assegnato alla squadra *ROYAL* con il ruolo di *DETECTIVE*.")
+                        p.message("Apparirai agli altri come un membro del team ROYAL. "
+                                  "Non attirare l'attenzione dei Mifiosi su di te!")
+                        p.message("Il team ROYAL ucciderà la persona più votata di ogni turno.\n"
+                                  "Per votare, scrivi `/vote username`!")
+                        p.message("Tra di voi si nascondono dei Mifiosi.\n"
+                                  "Stanateli e uccideteli votando per le persone giuste!")
+                        p.message("La squadra Royal vince se tutti i Mifiosi sono morti.")
+                        p.message("La squadra Royal perde se sono vivi solo Mifiosi.")
+                        p.message("Scrivi in questa chat `" + str(g.groupid) + " SPECIAL nomeutente` per usare il tuo "
+                                  " potere di detective e indagare sul ruolo di qualcuno per un giorno.")
                     else:
                         p.role = 0
+                        p.special = True
                         p.message("Sei stato assegnato alla squadra *ROYAL*.")
+                        p.message("Il team ROYAL ucciderà la persona più votata di ogni turno.\n"
+                                  "Per votare, scrivi `/vote username`!")
+                        p.message("Tra di voi si nascondono dei Mifiosi.\n"
+                                  "Stanateli e uccideteli votando per le persone giuste!")
+                        p.message("La squadra Royal vince se tutti i Mifiosi sono morti.")
+                        p.message("La squadra Royal perde se sono vivi solo Mifiosi.")
                     g.addplayer(p)
                     g.message(p.username + " si è unito alla partita!")
                 else:
