@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 import telegram
-import random
 
 
 class Player:
@@ -23,7 +22,6 @@ class Game:
     adminid = int()
     players = list()
     tokill = list()
-    joinphase = True
 
     def message(self, text):
         """Manda un messaggio alla chat generale del gioco
@@ -120,7 +118,7 @@ class Game:
 
     def endday(self):
         votedout = self.mostvoted()
-        self.message(votedout.username + " è stato il più votato del giorno.")
+        self.message(votedout.username + " è il più votato del giorno e sarà ucciso.")
         self.tokill.append(votedout)
         for killed in self.tokill:
             self.message(killed.username + " è stato ucciso.\n")
@@ -143,9 +141,12 @@ class Game:
                 elif player.role == 1:
                     uno += 1
         if uno == 0:
-            self.message("*Il Team Royal ha vinto!*")
+            self.message("*Il Team Royal ha vinto!*\n"
+                         "Tutti i Mifiosi sono stati eliminati.")
         if uno >= zero:
-            self.message("*Il Team Mifia ha vinto!*")
+            self.message("*Il Team Mifia ha vinto!*\n"
+                         "I Mifiosi rimasti sono più dei Royal.")
+        self.tokill = list()
 
 
 partiteincorso = list()
@@ -203,14 +204,14 @@ while True:
                             g.evilmessage(xtra[2])
         else:
             if t['text'].startswith("/join"):
-                if g.joinphase and g.findid(t['from']['id']) is None:
+                if g.findid(t['from']['id']) is None:
                     p = Player()
                     p.telegramid = t['from']['id']
                     # Qui crasha se non è stato impostato un username. Fare qualcosa?
                     p.username = t['from']['username']
                     # Assegnazione dei ruoli
                     # Spiegare meglio cosa deve fare ogni ruolo?
-                    if len(g.players) % 10 == 1:
+                    if len(g.players) % 10 == 3:
                         p.role = 1
                         p.special = True
                         p.message("Sei stato assegnato alla squadra *MIFIA*.")
@@ -223,7 +224,7 @@ while True:
                                   " qualcuno alla fine del giorno.")
                         p.message("La squadra Mifia vince se tutta la Royal Games è eliminata.")
                         p.message("Perdi se vieni ucciso.")
-                    elif len(g.players) % 10 == 0:
+                    elif len(g.players) % 10 == 2:
                         p.role = 2
                         p.special = True
                         p.message("Sei stato assegnato alla squadra *ROYAL* con il ruolo di *DETECTIVE*.")
@@ -249,18 +250,10 @@ while True:
                         p.message("La squadra Royal perde se sono vivi solo Mifiosi.")
                     g.addplayer(p)
                     g.message(p.username + " si è unito alla partita!")
-                else:
-                    g.message("La fase di iscrizione è terminata.")
-            # elif t['text'].startswith("/save"):
-            #     g.save()
             elif t['text'].startswith("/status"):
                 if t['from']['id'] == g.adminid:
                     g.adminmessage(g.fullstatus())
                 else:
-                    g.message(g.status())
-            elif t['text'].startswith("/endjoin"):
-                if t['from']['id'] == g.adminid:
-                    g.message("Fase di iscrizione chiusa.")
                     g.message(g.status())
             elif t['text'].startswith("/endday"):
                 if t['from']['id'] == g.adminid:
@@ -268,9 +261,12 @@ while True:
                     g.message(g.status())
             elif t['text'].startswith("/vote"):
                 username = t['text'].split(' ')
-                if g.findusername(username[1]) is not None:
+                if len(username) > 1 and g.findusername(username[1]) is not None:
                     voter = g.findid(t['from']['id'])
-                    voter.votedfor = username[1]
-                    g.message("Hai votato per " + username[1] + ".")
+                    if voter.alive:
+                        voter.votedfor = username[1]
+                        g.message("Hai votato per " + username[1] + ".")
+                    else:
+                        g.message("I morti non votano.")
                 else:
                     g.message("La persona selezionata non esiste.")
