@@ -173,11 +173,17 @@ while True:
                 elif text.startswith('/audio'):
                     print("@" + username + ": /audio")
                     cmd = text.split(" ", 1)
-                    if cmd[1] in audiolist:
-                        sendme = audiolist[cmd[1]]
-                        telegram.senddocument(sendme, sentin, source)
+                    if len(cmd) > 1:
+                        if cmd[1] in audiolist:
+                            sendme = audiolist[cmd[1]]
+                            telegram.senddocument(sendme, sentin, source)
+                        else:
+                            sendme = chr(9888) + " L'audio richiesto non esiste!\n*Audio disponibili*:\n"
+                            for audio in audiolist:
+                                sendme += audio + "\n"
+                            telegram.sendmessage(sendme, sentin, source)
                     else:
-                        sendme = chr(9888) + " L'audio richiesto non esiste!\n*Audio disponibili*:\n"
+                        sendme = chr(9888) + " Per mandare un audio, scrivi `/audio nomeaudio`\n*Audio disponibili*:\n"
                         for audio in audiolist:
                             sendme += audio + "\n"
                         telegram.sendmessage(sendme, sentin, source)
