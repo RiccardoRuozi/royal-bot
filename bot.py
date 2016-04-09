@@ -587,6 +587,14 @@ while True:
                     text = str()
                     # Se è incluso un numero dopo leggi, prendi quel numero di eventi più recenti.
                     if len(cmd) > 1:
+                        if cmd[1].lower() == "tutto":
+                            for n in range(len(diario), 1, -1):
+                                riga = diario[len(diario) - n]
+                                riga = riga.split("|", 1)
+                                ora = time.gmtime(int(riga[0]))
+                                text += "`" + str(ora.tm_mday) + "/" + str(ora.tm_mon) + "/" + str(
+                                        ora.tm_year) + "`: `" + \
+                                        str(ora.tm_hour) + ":" + str(ora.tm_min) + "` " + riga[1] + "\n"
                         if int(cmd[1]) < len(diario):
                             # L'ultimo numero è escluso.
                             for n in range(int(cmd[1]) + 1, 1, -1):
