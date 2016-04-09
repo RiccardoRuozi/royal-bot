@@ -457,7 +457,7 @@ while True:
                     else:
                         telegram.sendmessage(chr(9888) + " Non hai specificato nessuna carta!\n"
                                                          "La sintassi corretta è _/hs nomecarta_ .", sentin, source)
-                elif text.startswith('/online'):
+                elif text.startswith('/online') or text.startswith('/cv'):
                     # Elenco di tutte le persone online su Steam
                     print("@" + username + ": /online ")
                     # Informa Telegram che il messaggio è stato ricevuto.
