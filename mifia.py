@@ -160,7 +160,7 @@ class Game:
         }
         for player in self.players:
             status[player.username] = {
-                "telegramid": player.username,
+                "telegramid": player.telegramid,
                 "role": player.role,
                 "alive": player.alive,
             }
@@ -185,14 +185,18 @@ def loadgame(chatid) -> Game:
     loaded = configparser.ConfigParser()
     loaded.read(str(chatid) + ".ini")
     # General non è un giocatore, quindi toglilo
-    playerlist = loaded.sections().remove("General")
+    playerlist = loaded.sections()
+    playerlist.remove("General")
     for player in playerlist:
         lp = Player()
         lp.alive = bool(loaded[player]['alive'])
         lp.username = player
         lp.role = int(loaded[player]['role'])
-        lp.telegramid = int(loaded[player]['alive'])
-    partiteincorso.append(l)
+        lp.telegramid = int(loaded[player]['telegramid'])
+        l.players.append(lp)
+    l.groupid = int(loaded['General']['groupid'])
+    l.adminid = int(loaded['General']['adminid'])
+    return l
 
 
 while True:
@@ -208,6 +212,7 @@ while True:
                 g.message("Partita creata!")
             elif t['text'].startswith("/loadgame"):
                 g = loadgame(t['chat']['id'])
+                partiteincorso.append(g)
                 g.message("Partita caricata!\n_Forse._")
             elif t['text'].startswith("/status"):
                 telegram.sendmessage("Nessuna partita in corso.", t['chat']['id'], t['message_id'])
@@ -275,7 +280,7 @@ while True:
                         p.message("La squadra Royal vince se tutti i Mifiosi sono morti.")
                         p.message("La squadra Royal perde se sono vivi solo Mifiosi.")
                         p.message("Scrivi in questa chat `" + str(g.groupid) + " SPECIAL nomeutente` per usare il tuo "
-                                                                               " potere di detective e indagare sul ruolo di qualcuno per un giorno.")
+                                  " potere di detective e indagare sul ruolo di qualcuno per un giorno.")
                     else:
                         p.role = 0
                         p.special = True
