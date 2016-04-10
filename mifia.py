@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import telegram
+import configparser
 
 
 class Player:
@@ -15,6 +16,9 @@ class Player:
         :param text: Testo del messaggio
         """
         telegram.sendmessage(text, self.telegramid)
+
+
+partiteincorso = list()
 
 
 class Game:
@@ -148,8 +152,24 @@ class Game:
                          "I Mifiosi rimasti sono più dei Royal.")
         self.tokill = list()
 
-
-partiteincorso = list()
+    def save(self):
+        status = configparser.ConfigParser()
+        status['General'] = {
+            "groupid": self.groupid,
+            "adminid": self.adminid,
+        }
+        for player in self.players:
+            status[player.username] = {
+                "telegramid": player.username,
+                "role": player.role,
+                "alive": player.alive,
+            }
+        try:
+            f = open(str(self.groupid) + ".ini", "w")
+        except OSError:
+            open(str(self.groupid) + ".ini", "x")
+            f = open(str(self.groupid) + ".ini", "w")
+        status.write(f)
 
 
 def findgame(chatid) -> Game:
@@ -158,6 +178,21 @@ def findgame(chatid) -> Game:
             return game
     else:
         return None
+
+
+def loadgame(chatid) -> Game:
+    l = Game()
+    loaded = configparser.ConfigParser()
+    loaded.read(str(chatid) + ".ini")
+    # General non è un giocatore, quindi toglilo
+    playerlist = loaded.sections().remove("General")
+    for player in playerlist:
+        lp = Player()
+        lp.alive = bool(loaded[player]['alive'])
+        lp.username = player
+        lp.role = int(loaded[player]['role'])
+        lp.telegramid = int(loaded[player]['alive'])
+    partiteincorso.append(l)
 
 
 while True:
@@ -171,6 +206,9 @@ while True:
                 g.adminid = t['from']['id']
                 partiteincorso.append(g)
                 g.message("Partita creata!")
+            elif t['text'].startswith("/loadgame"):
+                g = loadgame(t['chat']['id'])
+                g.message("Partita caricata!\n_Forse._")
             elif t['text'].startswith("/status"):
                 telegram.sendmessage("Nessuna partita in corso.", t['chat']['id'], t['message_id'])
             else:
@@ -219,9 +257,9 @@ while True:
                         p.message("Il team ROYAL ucciderà la persona più votata di ogni turno.\n"
                                   "Per votare, scrivi `/vote username`!")
                         p.message("Scrivi in questa chat `" + str(g.groupid) + " CHAT messaggio` per mandare un"
-                                  " messaggio a tutto il tuo team.")
+                                                                               " messaggio a tutto il tuo team.")
                         p.message("Scrivi in questa chat `" + str(g.groupid) + " SPECIAL nomeutente` per uccidere"
-                                  " qualcuno alla fine del giorno.")
+                                                                               " qualcuno alla fine del giorno.")
                         p.message("La squadra Mifia vince se tutta la Royal Games è eliminata.")
                         p.message("Perdi se vieni ucciso.")
                     elif len(g.players) % 10 == 2:
@@ -237,7 +275,7 @@ while True:
                         p.message("La squadra Royal vince se tutti i Mifiosi sono morti.")
                         p.message("La squadra Royal perde se sono vivi solo Mifiosi.")
                         p.message("Scrivi in questa chat `" + str(g.groupid) + " SPECIAL nomeutente` per usare il tuo "
-                                  " potere di detective e indagare sul ruolo di qualcuno per un giorno.")
+                                                                               " potere di detective e indagare sul ruolo di qualcuno per un giorno.")
                     else:
                         p.role = 0
                         p.special = True
@@ -251,10 +289,14 @@ while True:
                     g.addplayer(p)
                     g.message(p.username + " si è unito alla partita!")
             elif t['text'].startswith("/status"):
+                g.message(g.status())
+            elif t['text'].startswith("/fullstatus"):
                 if t['from']['id'] == g.adminid:
                     g.adminmessage(g.fullstatus())
-                else:
-                    g.message(g.status())
+            elif t['text'].startswith("/save"):
+                if t['from']['id'] == g.adminid:
+                    g.save()
+                    g.message("Partita salvata!\n_Funzione instabile, speriamo che non succedano casini..._")
             elif t['text'].startswith("/endday"):
                 if t['from']['id'] == g.adminid:
                     g.endday()
