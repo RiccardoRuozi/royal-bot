@@ -28,6 +28,9 @@ class Game:
     players = list()
     tokill = list()
 
+    def __del__(self):
+        print("Partita {0} eliminata.\n".format(self.groupid))
+
     def message(self, text):
         """Manda un messaggio alla chat generale del gioco
         :param text: Testo del messaggio
@@ -152,6 +155,7 @@ class Game:
         if uno == 0:
             self.message("*Il Team Royal ha vinto!*\n"
                          "Tutti i Mifiosi sono stati eliminati.")
+            partiteincorso.remove(findgame(self.groupid))
         if uno >= zero:
             self.message("*Il Team Mifia ha vinto!*\n"
                          "I Mifiosi rimasti sono più dei Royal.")
