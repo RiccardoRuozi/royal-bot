@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import telegram
 import configparser
+import random
 
 
 class Player:
@@ -138,7 +139,7 @@ class Game:
             player.votedfor = str()
             if player.role != 0:
                 player.special = True
-        self.msg(self.displaycount())
+        self.message(self.displaycount())
         # Controlla se la Royal Games ha vinto
         zero = 0
         uno = 0
@@ -270,6 +271,7 @@ while True:
                     # Qui crasha se non è stato impostato un username. Fare qualcosa?
                     p.username = t['from']['username']
                     # Assegnazione dei ruoli
+                    r = random.randrange(0, 100)
                     # Spiegare meglio cosa deve fare ogni ruolo?
                     if len(g.players) % 10 == 3:
                         p.role = 1
@@ -279,7 +281,7 @@ while True:
                         p.message("Il team ROYAL ucciderà la persona più votata di ogni turno.\n"
                                   "Per votare, scrivi `/vote username`!")
                         p.message("Scrivi in questa chat `" + str(g.groupid) + " CHAT messaggio` per mandare un"
-                                                                               " messaggio a tutto il tuo team.")
+                                                                               " messaggio segreto al tuo team.")
                         p.message("Scrivi in questa chat `" + str(g.groupid) + " SPECIAL nomeutente` per uccidere"
                                                                                " qualcuno alla fine del giorno.")
                         p.message("La squadra Mifia vince se tutta la Royal Games è eliminata.")
