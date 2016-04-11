@@ -166,7 +166,7 @@ class Game:
                     zero += 1
                 elif player.role == 1:
                     uno += 1
-        msg = "*Royal*: {0} persone rimaste" \
+        msg = "*Royal*: {0} persone rimaste\n" \
               "*Mifia*: {1} persone rimaste".format(str(zero), str(uno))
         return msg
 
