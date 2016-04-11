@@ -118,7 +118,10 @@ class Game:
                 if votelist[player] > mostvotes:
                     mostvoted = player
                     mostvotes = votelist[player]
-        return self.findusername(mostvoted)
+        if mostvoted is not None:
+            return self.findusername(mostvoted)
+        else:
+            return None
 
     def endday(self):
         votedout = self.mostvoted()
@@ -135,6 +138,7 @@ class Game:
             player.votedfor = str()
             if player.role != 0:
                 player.special = True
+        self.msg(self.displaycount())
         # Controlla se la Royal Games ha vinto
         zero = 0
         uno = 0
@@ -151,6 +155,19 @@ class Game:
             self.message("*Il Team Mifia ha vinto!*\n"
                          "I Mifiosi rimasti sono più dei Royal.")
         self.tokill = list()
+
+    def displaycount(self) -> str:
+        zero = 0
+        uno = 0
+        for player in self.players:
+            if player.alive:
+                if player.role == 0 or player.role == 2:
+                    zero += 1
+                elif player.role == 1:
+                    uno += 1
+        msg = "*Royal*: {0} persone rimaste" \
+              "*Mifia*: {1} persone rimaste".format(str(zero), str(uno))
+        return msg
 
     def save(self):
         status = configparser.ConfigParser()
@@ -295,9 +312,11 @@ while True:
                     g.message(p.username + " si è unito alla partita!")
             elif t['text'].startswith("/status"):
                 g.message(g.status())
+                g.message(g.displaycount())
             elif t['text'].startswith("/fullstatus"):
                 if t['from']['id'] == g.adminid:
                     g.adminmessage(g.fullstatus())
+                    g.message(g.displaycount())
             elif t['text'].startswith("/save"):
                 if t['from']['id'] == g.adminid:
                     g.save()
