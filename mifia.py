@@ -277,7 +277,7 @@ while True:
                     # Assegnazione dei ruoli
                     r = random.randrange(0, 100)
                     # Spiegare meglio cosa deve fare ogni ruolo?
-                    if len(g.players) % 10 == 3:
+                    if r < 15:
                         p.role = 1
                         p.special = True
                         p.message("Sei stato assegnato alla squadra *MIFIA*.")
@@ -290,7 +290,7 @@ while True:
                                                                                " qualcuno alla fine del giorno.")
                         p.message("La squadra Mifia vince se tutta la Royal Games è eliminata.")
                         p.message("Perdi se vieni ucciso.")
-                    elif len(g.players) % 10 == 2:
+                    elif r > 85:
                         p.role = 2
                         p.special = True
                         p.message("Sei stato assegnato alla squadra *ROYAL* con il ruolo di *DETECTIVE*.")
