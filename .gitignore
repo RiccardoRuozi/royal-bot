@@ -8,5 +8,5 @@ hearthstoneapi.txt
 .idea/*
 diario.txt
 lolapi.txt
-save.txt
 *.ini
+nohup.out
