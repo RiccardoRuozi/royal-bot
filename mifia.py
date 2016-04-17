@@ -64,7 +64,7 @@ class Game:
 
     def fullstatus(self) -> str:
         """Restituisci lo stato attuale della partita (per admin?) in una stringa unicode"""
-        tosend = "Stato attuale del gioco: \n"
+        tosend = str(self.groupid) + "\n"
         for player in self.players:
             if not player.alive:
                 tosend += "\U0001F480 "
@@ -322,7 +322,7 @@ while True:
             elif t['text'].startswith("/fullstatus"):
                 if t['from']['id'] == g.adminid:
                     g.adminmessage(g.fullstatus())
-                    g.message(g.displaycount())
+                    g.adminmessage(g.displaycount())
             elif t['text'].startswith("/save"):
                 if t['from']['id'] == g.adminid:
                     g.save()
