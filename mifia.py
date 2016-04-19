@@ -73,7 +73,7 @@ class Game:
             elif player.role == 2:
                 tosend += "\U0001F46E "
             else:
-                tosend += "\U0001F636 "
+                tosend += "\U0001F610 "
             tosend += player.username + "\n"
         return tosend
 
@@ -133,10 +133,12 @@ class Game:
         self.tokill.append(votedout)
         for killed in self.tokill:
             self.message(killed.username + " è stato ucciso.\n")
-            if killed.role == 1:
-                self.message("Era un Mifioso!")
+            if killed.role == 0:
+                self.message("Era un \U0001F610 Royal.")
+            elif killed.role == 1:
+                self.message("Era un \U0001F608 Mifioso!")
             elif killed.role == 2:
-                self.message("Era un Detective!")
+                self.message("Era un \U0001F46E Detective!")
             killed.alive = False
         for player in self.players:
             player.votedfor = str()
@@ -258,11 +260,11 @@ while True:
                             p = g.findid(t['from']['id'])
                             if target is not None:
                                 if target.role == 0:
-                                    p.message(target.username + " è un Royal.")
+                                    p.message(target.username + " è un \U0001F610 Royal.")
                                 elif target.role == 1:
-                                    p.message(target.username + " è un Mifioso.")
+                                    p.message(target.username + " è un \U0001F608 Mifioso.")
                                 elif target.role == 2:
-                                    p.message(target.username + " è un Detective.")
+                                    p.message(target.username + " è un \U0001F46E Detective.")
                                 p.special = False
                     elif xtra[1] == "CHAT":
                         if g.findid(t['from']['id']).role == 1:
@@ -280,34 +282,36 @@ while True:
                     if r < 15:
                         p.role = 1
                         p.special = True
-                        p.message("Sei stato assegnato alla squadra *MIFIA*.")
-                        p.message("Apparirai agli altri come un membro del team ROYAL. Depistali e non farti uccidere!")
-                        p.message("Il team ROYAL ucciderà la persona più votata di ogni turno.\n"
-                                  "Per votare, scrivi `/vote username`!")
-                        p.message("Scrivi in questa chat `" + str(g.groupid) + " CHAT messaggio` per mandare un"
-                                                                               " messaggio segreto al tuo team.")
-                        p.message("Scrivi in questa chat `" + str(g.groupid) + " SPECIAL nomeutente` per uccidere"
-                                                                               " qualcuno alla fine del giorno.")
-                        p.message("La squadra Mifia vince se tutta la Royal Games è eliminata.")
-                        p.message("Perdi se vieni ucciso.")
+                        p.message("Sei stato assegnato alla squadra \U0001F608 *MIFIA*."
+                                  "Apparirai agli altri come un membro del team ROYAL. Depistali e non farti uccidere!"
+                                  "Il team ROYAL ucciderà la persona più votata di ogni turno.\n"
+                                  "Per votare, scrivi `/vote username`!"
+                                  "Scrivi in questa chat `{0} CHAT messaggio` per mandare un"
+                                  " messaggio segreto al tuo team."
+                                  "Scrivi in questa chat `{0} SPECIAL username` per uccidere"
+                                  " qualcuno alla fine del giorno."
+                                  "La squadra Mifia vince se tutta la Royal Games è eliminata."
+                                  "Perdi se vieni ucciso."
+                                  .format(g.groupid))
                     elif r > 85:
                         p.role = 2
                         p.special = True
-                        p.message("Sei stato assegnato alla squadra *ROYAL* con il ruolo di *DETECTIVE*.")
-                        p.message("Apparirai agli altri come un membro del team ROYAL. "
-                                  "Non attirare l'attenzione dei Mifiosi su di te!")
-                        p.message("Il team ROYAL ucciderà la persona più votata di ogni turno.\n"
-                                  "Per votare, scrivi `/vote username`!")
-                        p.message("Tra di voi si nascondono dei Mifiosi.\n"
-                                  "Stanateli e uccideteli votando per le persone giuste!")
-                        p.message("La squadra Royal vince se tutti i Mifiosi sono morti.")
-                        p.message("La squadra Royal perde se sono vivi solo Mifiosi.")
-                        p.message("Scrivi in questa chat `" + str(g.groupid) + " SPECIAL nomeutente` per usare il tuo "
-                                  " potere di detective e indagare sul ruolo di qualcuno per un giorno.")
+                        p.message("Sei stato assegnato alla squadra *ROYAL* con il ruolo di \U0001F46E *DETECTIVE*."
+                                  "Apparirai agli altri come un membro del team ROYAL. "
+                                  "Non attirare l'attenzione dei Mifiosi su di te!"
+                                  "Il team ROYAL ucciderà la persona più votata di ogni turno.\n"
+                                  "Per votare, scrivi `/vote username`!"
+                                  "Tra di voi si nascondono dei Mifiosi.\n"
+                                  "Stanateli e uccideteli votando per le persone giuste!"
+                                  "La squadra Royal vince se tutti i Mifiosi sono morti."
+                                  "La squadra Royal perde se sono vivi solo Mifiosi."
+                                  "Scrivi in questa chat `{0} SPECIAL nomeutente` per usare il tuo "
+                                  " potere di detective e indagare sul ruolo di qualcuno per un giorno."
+                                  .format(g.groupid))
                     else:
                         p.role = 0
                         p.special = True
-                        p.message("Sei stato assegnato alla squadra *ROYAL*.")
+                        p.message("Sei stato assegnato alla squadra \U0001F610 *ROYAL*.")
                         p.message("Il team ROYAL ucciderà la persona più votata di ogni turno.\n"
                                   "Per votare, scrivi `/vote username`!")
                         p.message("Tra di voi si nascondono dei Mifiosi.\n"
@@ -317,12 +321,10 @@ while True:
                     g.addplayer(p)
                     g.message(p.username + " si è unito alla partita!")
             elif t['text'].startswith("/status"):
-                g.message(g.status())
-                g.message(g.displaycount())
+                g.message(g.status() + "\n" + g.displaycount())
             elif t['text'].startswith("/fullstatus"):
                 if t['from']['id'] == g.adminid:
-                    g.adminmessage(g.fullstatus())
-                    g.message(g.displaycount())
+                    g.adminmessage(g.fullstatus() + "\n" + g.displaycount())
             elif t['text'].startswith("/save"):
                 if t['from']['id'] == g.adminid:
                     g.save()
