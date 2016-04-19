@@ -364,4 +364,3 @@ while True:
                     g.message("\U000FEB23 La partita non è ancora iniziata; non puoi votare.")
             elif t['text'].startswith("/endjoin"):
                 g.endjoin()
-                g.message("La fase di join è terminata.")
