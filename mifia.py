@@ -244,7 +244,7 @@ while True:
                 partiteincorso.append(g)
                 g.message("Partita caricata!\n_Forse._")
             elif t['text'].startswith("/status"):
-                telegram.sendmessage("Nessuna partita in corso.", t['chat']['id'], t['message_id'])
+                telegram.sendmessage("Nessuna partita in corso in questo gruppo.", t['chat']['id'], t['message_id'])
             else:
                 xtra = t['text'].split(' ', 2)
                 try:
@@ -327,7 +327,7 @@ while True:
                     g.addplayer(p)
                     g.message(p.username + " si è unito alla partita!")
                 else:
-                    g.message("Non puoi unirti alla partita.\n"
+                    g.message("\U000FEB23 Non puoi unirti alla partita.\n"
                               "La fase di unione è terminata o ti sei già unito in precedenza.")
             elif t['text'].startswith("/status"):
                 g.message(g.status() + "\n" + g.displaycount())
@@ -335,19 +335,19 @@ while True:
                 if t['from']['id'] == g.adminid:
                     g.adminmessage(g.fullstatus() + "\n" + g.displaycount())
                 else:
-                    g.message("Non sei il creatore della partita; non puoi vedere lo status completo.")
+                    g.message("\U000FEB23 Non sei il creatore della partita; non puoi vedere lo status completo.")
             elif t['text'].startswith("/save"):
                 if t['from']['id'] == g.adminid:
                     g.save()
                     g.message("Partita salvata!\n_Funzione instabile, speriamo che non succedano casini..._")
                 else:
-                    g.message("Non sei il creatore della partita; non puoi salvare la partita.")
+                    g.message("\U000FEB23 Non sei il creatore della partita; non puoi salvare la partita.")
             elif t['text'].startswith("/endday"):
                 if t['from']['id'] == g.adminid:
                     g.endday()
                     g.message(g.status())
                 else:
-                    g.message("Non sei il creatore della partita; non puoi finire il giorno.")
+                    g.message("\U000FEB23 Non sei il creatore della partita; non puoi finire il giorno.")
             elif t['text'].startswith("/vote"):
                 if not g.joinphase:
                     username = t['text'].split(' ')
@@ -358,8 +358,8 @@ while True:
                             g.message("Hai votato per " + username[1] + ".")
                         else:
                             g.message("_La tua votazione riecheggia nel nulla._\n"
-                                      "Sei morto, e i morti non votano.")
+                                      "\U000FEB23 Sei morto, e i morti non votano.")
                     else:
-                        g.message("La persona selezionata non esiste.")
+                        g.message("\U000FEB23 La persona selezionata non esiste.")
                 else:
-                    g.message("La partita non è ancora iniziata; non puoi votare.")
+                    g.message("\U000FEB23 La partita non è ancora iniziata; non puoi votare.")
