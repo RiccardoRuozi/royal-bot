@@ -27,6 +27,7 @@ class Game:
     adminid = int()
     players = list()
     tokill = list()
+    joinphase = True
 
     def __del__(self):
         print("Partita {0} eliminata.\n".format(self.groupid))
@@ -195,6 +196,10 @@ class Game:
             f = open(str(self.groupid) + ".ini", "w")
         status.write(f)
 
+    def endjoin(self):
+        self.message("La fase di join è finita.")
+        self.joinphase = False
+
 
 def findgame(chatid) -> Game:
     for game in partiteincorso:
@@ -271,7 +276,7 @@ while True:
                             g.evilmessage(xtra[2])
         else:
             if t['text'].startswith("/join"):
-                if g.findid(t['from']['id']) is None:
+                if g.joinphase and g.findid(t['from']['id']) is None:
                     p = Player()
                     p.telegramid = t['from']['id']
                     # Qui crasha se non è stato impostato un username. Fare qualcosa?
@@ -321,27 +326,40 @@ while True:
                                   "La squadra Royal perde se sono vivi solo Mifiosi.")
                     g.addplayer(p)
                     g.message(p.username + " si è unito alla partita!")
+                else:
+                    g.message("Non puoi unirti alla partita.\n"
+                              "La fase di unione è terminata o ti sei già unito in precedenza.")
             elif t['text'].startswith("/status"):
                 g.message(g.status() + "\n" + g.displaycount())
             elif t['text'].startswith("/fullstatus"):
                 if t['from']['id'] == g.adminid:
                     g.adminmessage(g.fullstatus() + "\n" + g.displaycount())
+                else:
+                    g.message("Non sei il creatore della partita; non puoi vedere lo status completo.")
             elif t['text'].startswith("/save"):
                 if t['from']['id'] == g.adminid:
                     g.save()
                     g.message("Partita salvata!\n_Funzione instabile, speriamo che non succedano casini..._")
+                else:
+                    g.message("Non sei il creatore della partita; non puoi salvare la partita.")
             elif t['text'].startswith("/endday"):
                 if t['from']['id'] == g.adminid:
                     g.endday()
                     g.message(g.status())
-            elif t['text'].startswith("/vote"):
-                username = t['text'].split(' ')
-                if len(username) > 1 and g.findusername(username[1]) is not None:
-                    voter = g.findid(t['from']['id'])
-                    if voter.alive:
-                        voter.votedfor = username[1]
-                        g.message("Hai votato per " + username[1] + ".")
-                    else:
-                        g.message("_La tua votazione riecheggia nel nulla. Sei morto, e i morti non parlano._")
                 else:
-                    g.message("La persona selezionata non esiste.")
+                    g.message("Non sei il creatore della partita; non puoi finire il giorno.")
+            elif t['text'].startswith("/vote"):
+                if not g.joinphase:
+                    username = t['text'].split(' ')
+                    if len(username) > 1 and g.findusername(username[1]) is not None:
+                        voter = g.findid(t['from']['id'])
+                        if voter.alive:
+                            voter.votedfor = username[1]
+                            g.message("Hai votato per " + username[1] + ".")
+                        else:
+                            g.message("_La tua votazione riecheggia nel nulla._\n"
+                                      "Sei morto, e i morti non votano.")
+                    else:
+                        g.message("La persona selezionata non esiste.")
+                else:
+                    g.message("La partita non è ancora iniziata; non puoi votare.")
