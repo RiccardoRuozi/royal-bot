@@ -349,14 +349,9 @@ while True:
                     p.message(g.mifiastatus())
             elif t['text'].startswith("/fullstatus"):
                 if t['from']['id'] == g.adminid:
-<<<<<<< HEAD
-                    g.adminmessage(g.fullstatus())
-                    g.adminmessage(g.displaycount())
-=======
                     g.adminmessage(g.fullstatus() + "\n" + g.displaycount())
                 else:
                     g.message("\u26A0\uFE0F Non sei il creatore della partita; non puoi vedere lo status completo.")
->>>>>>> 6a580d30baa57bd0c46db6953c19f07ee865ac5e
             elif t['text'].startswith("/save"):
                 if t['from']['id'] == g.adminid:
                     g.save()
