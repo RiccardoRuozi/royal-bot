@@ -27,6 +27,7 @@ class Game:
     adminid = int()
     players = list()
     tokill = list()
+    joinphase = True
 
     def __del__(self):
         print("Partita {0} eliminata.\n".format(self.groupid))
@@ -52,7 +53,7 @@ class Game:
                 telegram.sendmessage("\U0001F608: " + text, player.telegramid)
 
     def status(self) -> str:
-        """Restituisci lo stato attuale della partita in una stringa unicode"""
+        """Restituisci lo stato attuale della partita in una stringa"""
         tosend = "Stato attuale del gioco: \n"
         for player in self.players:
             if not player.alive:
@@ -62,8 +63,21 @@ class Game:
             tosend += player.username + "\n"
         return tosend
 
+    def mifiastatus(self) -> str:
+        """Restituisci lo stato attuale della partita (per mifiosi) in una stringa"""
+        tosend = "Stato attuale del gioco: \n"
+        for player in self.players:
+            if not player.alive:
+                tosend += "\U0001F480 "
+            elif player.role == 1:
+                tosend += "\U0001F608 "
+            else:
+                tosend += "\U0001F610 "
+            tosend += player.username + "\n"
+        return tosend
+
     def fullstatus(self) -> str:
-        """Restituisci lo stato attuale della partita (per admin?) in una stringa unicode"""
+        """Restituisci lo stato attuale della partita (per admin?) in una stringa"""
         tosend = str(self.groupid) + "\n"
         for player in self.players:
             if not player.alive:
@@ -71,9 +85,9 @@ class Game:
             elif player.role == 1:
                 tosend += "\U0001F608 "
             elif player.role == 2:
-                tosend += "\U0001F46E "
+                tosend += "\U0001F575 "
             else:
-                tosend += "\U0001F636 "
+                tosend += "\U0001F610 "
             tosend += player.username + "\n"
         return tosend
 
@@ -82,7 +96,7 @@ class Game:
         :param fusername: Nome utente da cercare
         """
         for player in self.players:
-            if player.username == fusername:
+            if player.username == fusername.capitalize():
                 return player
         else:
             return None
@@ -133,10 +147,12 @@ class Game:
         self.tokill.append(votedout)
         for killed in self.tokill:
             self.message(killed.username + " è stato ucciso.\n")
-            if killed.role == 1:
-                self.message("Era un Mifioso!")
+            if killed.role == 0:
+                self.message("Era un \U0001F610 Royal.")
+            elif killed.role == 1:
+                self.message("Era un \U0001F608 Mifioso!")
             elif killed.role == 2:
-                self.message("Era un Detective!")
+                self.message("Era un \U0001F575 Detective!")
             killed.alive = False
         for player in self.players:
             player.votedfor = str()
@@ -193,6 +209,10 @@ class Game:
             f = open(str(self.groupid) + ".ini", "w")
         status.write(f)
 
+    def endjoin(self):
+        self.message("La fase di join è finita.")
+        self.joinphase = False
+
 
 def findgame(chatid) -> Game:
     for game in partiteincorso:
@@ -237,7 +257,7 @@ while True:
                 partiteincorso.append(g)
                 g.message("Partita caricata!\n_Forse._")
             elif t['text'].startswith("/status"):
-                telegram.sendmessage("Nessuna partita in corso.", t['chat']['id'], t['message_id'])
+                telegram.sendmessage("Nessuna partita in corso in questo gruppo.", t['chat']['id'], t['message_id'])
             else:
                 xtra = t['text'].split(' ', 2)
                 try:
@@ -245,7 +265,7 @@ while True:
                 except ValueError:
                     g = None
                 if g is not None:
-                    if xtra[1] == "SPECIAL":
+                    if xtra[1].capitalize() == "special":
                         if g.findid(t['from']['id']).role == 1 and g.findid(t['from']['id']).special:
                             target = g.findusername(xtra[2])
                             if target is not None:
@@ -258,87 +278,110 @@ while True:
                             p = g.findid(t['from']['id'])
                             if target is not None:
                                 if target.role == 0:
-                                    p.message(target.username + " è un Royal.")
+                                    p.message(target.username + " è un \U0001F610 Royal.")
                                 elif target.role == 1:
-                                    p.message(target.username + " è un Mifioso.")
+                                    p.message(target.username + " è un \U0001F608 Mifioso.")
                                 elif target.role == 2:
-                                    p.message(target.username + " è un Detective.")
+                                    p.message(target.username + " è un \U0001F575 Detective.")
                                 p.special = False
-                    elif xtra[1] == "CHAT":
+                    elif xtra[1].capitalize() == "chat":
                         if g.findid(t['from']['id']).role == 1:
                             g.evilmessage(xtra[2])
         else:
             if t['text'].startswith("/join"):
-                if g.findid(t['from']['id']) is None:
+                if g.joinphase and g.findid(t['from']['id']) is None:
                     p = Player()
                     p.telegramid = t['from']['id']
                     # Qui crasha se non è stato impostato un username. Fare qualcosa?
-                    p.username = t['from']['username']
+                    p.username = t['from']['username'].capitalize()
                     # Assegnazione dei ruoli
                     r = random.randrange(0, 100)
                     # Spiegare meglio cosa deve fare ogni ruolo?
-                    if r < 15:
+                    if r < 20:
                         p.role = 1
                         p.special = True
-                        p.message("Sei stato assegnato alla squadra *MIFIA*.")
-                        p.message("Apparirai agli altri come un membro del team ROYAL. Depistali e non farti uccidere!")
-                        p.message("Il team ROYAL ucciderà la persona più votata di ogni turno.\n"
-                                  "Per votare, scrivi `/vote username`!")
-                        p.message("Scrivi in questa chat `" + str(g.groupid) + " CHAT messaggio` per mandare un"
-                                                                               " messaggio segreto al tuo team.")
-                        p.message("Scrivi in questa chat `" + str(g.groupid) + " SPECIAL nomeutente` per uccidere"
-                                                                               " qualcuno alla fine del giorno.")
-                        p.message("La squadra Mifia vince se tutta la Royal Games è eliminata.")
-                        p.message("Perdi se vieni ucciso.")
+                        p.message("Sei stato assegnato alla squadra \U0001F608 *MIFIA*."
+                                  "Apparirai agli altri come un membro del team ROYAL.\n"
+                                  "Depistali e non farti uccidere!\n"
+                                  "Il team ROYAL ucciderà la persona più votata di ogni turno.\n"
+                                  "Per votare, scrivi `/vote username`!\n"
+                                  "Scrivi in questa chat `{0} CHAT messaggio` per mandare un"
+                                  " messaggio segreto al tuo team.\n"
+                                  "Scrivi in questa chat `{0} SPECIAL username` per uccidere"
+                                  " qualcuno alla fine del giorno.\n"
+                                  "La squadra Mifia vince se tutta la Royal Games è eliminata.\n"
+                                  "Perdi se vieni ucciso."
+                                  .format(g.groupid))
                     elif r > 85:
                         p.role = 2
                         p.special = True
-                        p.message("Sei stato assegnato alla squadra *ROYAL* con il ruolo di *DETECTIVE*.")
-                        p.message("Apparirai agli altri come un membro del team ROYAL. "
-                                  "Non attirare l'attenzione dei Mifiosi su di te!")
-                        p.message("Il team ROYAL ucciderà la persona più votata di ogni turno.\n"
-                                  "Per votare, scrivi `/vote username`!")
-                        p.message("Tra di voi si nascondono dei Mifiosi.\n"
-                                  "Stanateli e uccideteli votando per le persone giuste!")
-                        p.message("La squadra Royal vince se tutti i Mifiosi sono morti.")
-                        p.message("La squadra Royal perde se sono vivi solo Mifiosi.")
-                        p.message("Scrivi in questa chat `" + str(g.groupid) + " SPECIAL nomeutente` per usare il tuo "
-                                  " potere di detective e indagare sul ruolo di qualcuno per un giorno.")
+                        p.message("Sei stato assegnato alla squadra *ROYAL* con il ruolo di \U0001F575 *DETECTIVE*.\n"
+                                  "Apparirai agli altri come un membro del team ROYAL.\n"
+                                  "Non attirare l'attenzione dei Mifiosi su di te!\n"
+                                  "Il team ROYAL ucciderà la persona più votata di ogni turno.\n"
+                                  "Per votare, scrivi `/vote username`!\n"
+                                  "Tra di voi si nascondono dei Mifiosi.\n"
+                                  "Stanateli e uccideteli votando per le persone giuste!\n"
+                                  "La squadra Royal vince se tutti i Mifiosi sono morti.\n"
+                                  "La squadra Royal perde se sono vivi solo Mifiosi.\n"
+                                  "Scrivi in questa chat `{0} SPECIAL nomeutente` per usare il tuo "
+                                  " potere di detective e indagare sul ruolo di qualcuno per un giorno."
+                                  .format(g.groupid))
                     else:
                         p.role = 0
                         p.special = True
-                        p.message("Sei stato assegnato alla squadra *ROYAL*.")
-                        p.message("Il team ROYAL ucciderà la persona più votata di ogni turno.\n"
-                                  "Per votare, scrivi `/vote username`!")
-                        p.message("Tra di voi si nascondono dei Mifiosi.\n"
-                                  "Stanateli e uccideteli votando per le persone giuste!")
-                        p.message("La squadra Royal vince se tutti i Mifiosi sono morti.")
-                        p.message("La squadra Royal perde se sono vivi solo Mifiosi.")
+                        p.message("Sei stato assegnato alla squadra \U0001F610 *ROYAL*.\n"
+                                  "Il team ROYAL ucciderà la persona più votata di ogni turno.\n"
+                                  "Per votare, scrivi `/vote username`!\n"
+                                  "Tra di voi si nascondono dei Mifiosi.\n"
+                                  "Stanateli e uccideteli votando per le persone giuste!\n"
+                                  "La squadra Royal vince se tutti i Mifiosi sono morti.\n"
+                                  "La squadra Royal perde se sono vivi solo Mifiosi.")
                     g.addplayer(p)
                     g.message(p.username + " si è unito alla partita!")
+                else:
+                    g.message("\u26A0\uFE0F Non puoi unirti alla partita.\n"
+                              "La fase di unione è terminata o ti sei già unito in precedenza.")
             elif t['text'].startswith("/status"):
-                g.message(g.status())
-                g.message(g.displaycount())
+                g.message(g.status() + "\n" + g.displaycount())
+                p = g.findid(t['from']['id'])
+                if p.role == 1:
+                    p.message(g.mifiastatus())
             elif t['text'].startswith("/fullstatus"):
                 if t['from']['id'] == g.adminid:
+<<<<<<< HEAD
                     g.adminmessage(g.fullstatus())
                     g.adminmessage(g.displaycount())
+=======
+                    g.adminmessage(g.fullstatus() + "\n" + g.displaycount())
+                else:
+                    g.message("\u26A0\uFE0F Non sei il creatore della partita; non puoi vedere lo status completo.")
+>>>>>>> 6a580d30baa57bd0c46db6953c19f07ee865ac5e
             elif t['text'].startswith("/save"):
                 if t['from']['id'] == g.adminid:
                     g.save()
                     g.message("Partita salvata!\n_Funzione instabile, speriamo che non succedano casini..._")
+                else:
+                    g.message("\u26A0\uFE0F Non sei il creatore della partita; non puoi salvare la partita.")
             elif t['text'].startswith("/endday"):
                 if t['from']['id'] == g.adminid:
                     g.endday()
-                    g.message(g.status())
-            elif t['text'].startswith("/vote"):
-                username = t['text'].split(' ')
-                if len(username) > 1 and g.findusername(username[1]) is not None:
-                    voter = g.findid(t['from']['id'])
-                    if voter.alive:
-                        voter.votedfor = username[1]
-                        g.message("Hai votato per " + username[1] + ".")
-                    else:
-                        g.message("I morti non votano.")
                 else:
-                    g.message("La persona selezionata non esiste.")
+                    g.message("\u26A0\uFE0F Non sei il creatore della partita; non puoi finire il giorno.")
+            elif t['text'].startswith("/vote"):
+                if not g.joinphase:
+                    username = t['text'].split(' ')
+                    if len(username) > 1 and g.findusername(username[1]) is not None:
+                        voter = g.findid(t['from']['id'])
+                        if voter.alive:
+                            voter.votedfor = username[1]
+                            g.message("Hai votato per " + username[1] + ".")
+                        else:
+                            g.message("_La tua votazione riecheggia nel nulla._\n"
+                                      "\u26A0\uFE0F Sei morto, e i morti non votano.")
+                    else:
+                        g.message("\u26A0\uFE0F La persona selezionata non esiste.")
+                else:
+                    g.message("\u26A0\uFE0F La partita non è ancora iniziata; non puoi votare.")
+            elif t['text'].startswith("/endjoin"):
+                g.endjoin()
