@@ -297,7 +297,7 @@ while True:
                     # Assegnazione dei ruoli
                     r = random.randrange(0, 100)
                     # Spiegare meglio cosa deve fare ogni ruolo?
-                    if r < 20:
+                    if r < 15:
                         p.role = 1
                         p.special = True
                         p.message("Sei stato assegnato alla squadra \U0001F608 *MIFIA*."
