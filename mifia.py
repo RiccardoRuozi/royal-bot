@@ -341,6 +341,6 @@ while True:
                         voter.votedfor = username[1]
                         g.message("Hai votato per " + username[1] + ".")
                     else:
-                        g.message("I morti non votano.")
+                        g.message("_La tua votazione riecheggia nel nulla. Sei morto, e i morti non parlano._")
                 else:
                     g.message("La persona selezionata non esiste.")
