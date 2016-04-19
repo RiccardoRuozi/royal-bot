@@ -340,7 +340,7 @@ while True:
                     g.addplayer(p)
                     g.message(p.username + " si è unito alla partita!")
                 else:
-                    g.message("\U000FEB23 Non puoi unirti alla partita.\n"
+                    g.message("\u26A0\uFE0F Non puoi unirti alla partita.\n"
                               "La fase di unione è terminata o ti sei già unito in precedenza.")
             elif t['text'].startswith("/status"):
                 g.message(g.status() + "\n" + g.displaycount())
@@ -351,18 +351,18 @@ while True:
                 if t['from']['id'] == g.adminid:
                     g.adminmessage(g.fullstatus() + "\n" + g.displaycount())
                 else:
-                    g.message("\U000FEB23 Non sei il creatore della partita; non puoi vedere lo status completo.")
+                    g.message("\u26A0\uFE0F Non sei il creatore della partita; non puoi vedere lo status completo.")
             elif t['text'].startswith("/save"):
                 if t['from']['id'] == g.adminid:
                     g.save()
                     g.message("Partita salvata!\n_Funzione instabile, speriamo che non succedano casini..._")
                 else:
-                    g.message("\U000FEB23 Non sei il creatore della partita; non puoi salvare la partita.")
+                    g.message("\u26A0\uFE0F Non sei il creatore della partita; non puoi salvare la partita.")
             elif t['text'].startswith("/endday"):
                 if t['from']['id'] == g.adminid:
                     g.endday()
                 else:
-                    g.message("\U000FEB23 Non sei il creatore della partita; non puoi finire il giorno.")
+                    g.message("\u26A0\uFE0F Non sei il creatore della partita; non puoi finire il giorno.")
             elif t['text'].startswith("/vote"):
                 if not g.joinphase:
                     username = t['text'].split(' ')
@@ -373,10 +373,10 @@ while True:
                             g.message("Hai votato per " + username[1] + ".")
                         else:
                             g.message("_La tua votazione riecheggia nel nulla._\n"
-                                      "\U000FEB23 Sei morto, e i morti non votano.")
+                                      "\u26A0\uFE0F Sei morto, e i morti non votano.")
                     else:
-                        g.message("\U000FEB23 La persona selezionata non esiste.")
+                        g.message("\u26A0\uFE0F La persona selezionata non esiste.")
                 else:
-                    g.message("\U000FEB23 La partita non è ancora iniziata; non puoi votare.")
+                    g.message("\u26A0\uFE0F La partita non è ancora iniziata; non puoi votare.")
             elif t['text'].startswith("/endjoin"):
                 g.endjoin()
