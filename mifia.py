@@ -53,7 +53,7 @@ class Game:
                 telegram.sendmessage("\U0001F608: " + text, player.telegramid)
 
     def status(self) -> str:
-        """Restituisci lo stato attuale della partita in una stringa unicode"""
+        """Restituisci lo stato attuale della partita in una stringa"""
         tosend = "Stato attuale del gioco: \n"
         for player in self.players:
             if not player.alive:
@@ -63,8 +63,21 @@ class Game:
             tosend += player.username + "\n"
         return tosend
 
+    def mifiastatus(self) -> str:
+        """Restituisci lo stato attuale della partita (per mifiosi) in una stringa"""
+        tosend = "Stato attuale del gioco: \n"
+        for player in self.players:
+            if not player.alive:
+                tosend += "\U0001F480 "
+            elif player.role == 1:
+                tosend += "\U0001F608 "
+            else:
+                tosend += "\U0001F610 "
+            tosend += player.username + "\n"
+        return tosend
+
     def fullstatus(self) -> str:
-        """Restituisci lo stato attuale della partita (per admin?) in una stringa unicode"""
+        """Restituisci lo stato attuale della partita (per admin?) in una stringa"""
         tosend = "Stato attuale del gioco: \n"
         for player in self.players:
             if not player.alive:
@@ -331,6 +344,9 @@ while True:
                               "La fase di unione è terminata o ti sei già unito in precedenza.")
             elif t['text'].startswith("/status"):
                 g.message(g.status() + "\n" + g.displaycount())
+                p = g.findid(t['from']['id'])
+                if p.role == 1:
+                    p.message(g.mifiastatus())
             elif t['text'].startswith("/fullstatus"):
                 if t['from']['id'] == g.adminid:
                     g.adminmessage(g.fullstatus() + "\n" + g.displaycount())
