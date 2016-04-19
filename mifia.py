@@ -345,7 +345,6 @@ while True:
             elif t['text'].startswith("/endday"):
                 if t['from']['id'] == g.adminid:
                     g.endday()
-                    g.message(g.status())
                 else:
                     g.message("\U000FEB23 Non sei il creatore della partita; non puoi finire il giorno.")
             elif t['text'].startswith("/vote"):
@@ -363,3 +362,6 @@ while True:
                         g.message("\U000FEB23 La persona selezionata non esiste.")
                 else:
                     g.message("\U000FEB23 La partita non è ancora iniziata; non puoi votare.")
+            elif t['text'].startswith("/endjoin"):
+                g.endjoin()
+                g.message("La fase di join è terminata.")
