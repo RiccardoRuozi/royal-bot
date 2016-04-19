@@ -85,7 +85,7 @@ class Game:
             elif player.role == 1:
                 tosend += "\U0001F608 "
             elif player.role == 2:
-                tosend += "\U0001F46E "
+                tosend += "\U0001F575 "
             else:
                 tosend += "\U0001F610 "
             tosend += player.username + "\n"
@@ -152,7 +152,7 @@ class Game:
             elif killed.role == 1:
                 self.message("Era un \U0001F608 Mifioso!")
             elif killed.role == 2:
-                self.message("Era un \U0001F46E Detective!")
+                self.message("Era un \U0001F575 Detective!")
             killed.alive = False
         for player in self.players:
             player.votedfor = str()
@@ -282,7 +282,7 @@ while True:
                                 elif target.role == 1:
                                     p.message(target.username + " è un \U0001F608 Mifioso.")
                                 elif target.role == 2:
-                                    p.message(target.username + " è un \U0001F46E Detective.")
+                                    p.message(target.username + " è un \U0001F575 Detective.")
                                 p.special = False
                     elif xtra[1].capitalize() == "chat":
                         if g.findid(t['from']['id']).role == 1:
@@ -315,7 +315,7 @@ while True:
                     elif r > 85:
                         p.role = 2
                         p.special = True
-                        p.message("Sei stato assegnato alla squadra *ROYAL* con il ruolo di \U0001F46E *DETECTIVE*.\n"
+                        p.message("Sei stato assegnato alla squadra *ROYAL* con il ruolo di \U0001F575 *DETECTIVE*.\n"
                                   "Apparirai agli altri come un membro del team ROYAL.\n"
                                   "Non attirare l'attenzione dei Mifiosi su di te!\n"
                                   "Il team ROYAL ucciderà la persona più votata di ogni turno.\n"
