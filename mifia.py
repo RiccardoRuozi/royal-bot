@@ -343,7 +343,10 @@ while True:
                     g.message("\u26A0\uFE0F Non puoi unirti alla partita.\n"
                               "La fase di unione è terminata o ti sei già unito in precedenza.")
             elif t['text'].startswith("/status"):
-                g.message(g.status() + "\n" + g.displaycount())
+                if not g.joinphase:
+                    g.message(g.status() + "\n" + g.displaycount())
+                else:
+                    g.message(g.status())
                 p = g.findid(t['from']['id'])
                 if p.role == 1:
                     p.message(g.mifiastatus())
