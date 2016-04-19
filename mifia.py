@@ -82,7 +82,7 @@ class Game:
         :param fusername: Nome utente da cercare
         """
         for player in self.players:
-            if player.username == fusername:
+            if player.username == fusername.capitalize():
                 return player
         else:
             return None
@@ -247,7 +247,7 @@ while True:
                 except ValueError:
                     g = None
                 if g is not None:
-                    if xtra[1] == "SPECIAL":
+                    if xtra[1].capitalize() == "special":
                         if g.findid(t['from']['id']).role == 1 and g.findid(t['from']['id']).special:
                             target = g.findusername(xtra[2])
                             if target is not None:
@@ -266,7 +266,7 @@ while True:
                                 elif target.role == 2:
                                     p.message(target.username + " è un \U0001F46E Detective.")
                                 p.special = False
-                    elif xtra[1] == "CHAT":
+                    elif xtra[1].capitalize() == "chat":
                         if g.findid(t['from']['id']).role == 1:
                             g.evilmessage(xtra[2])
         else:
@@ -275,7 +275,7 @@ while True:
                     p = Player()
                     p.telegramid = t['from']['id']
                     # Qui crasha se non è stato impostato un username. Fare qualcosa?
-                    p.username = t['from']['username']
+                    p.username = t['from']['username'].capitalize()
                     # Assegnazione dei ruoli
                     r = random.randrange(0, 100)
                     # Spiegare meglio cosa deve fare ogni ruolo?
