@@ -51,6 +51,7 @@ class Game:
         for player in self.players:
             if player.role == 1:
                 telegram.sendmessage("\U0001F608: " + text, player.telegramid)
+        telegram.sendmessage("\U0001F608: " + text, self.adminid)
 
     def status(self) -> str:
         """Restituisci lo stato attuale della partita in una stringa"""
@@ -339,6 +340,7 @@ while True:
                                   "La squadra Royal perde se sono vivi solo Mifiosi.")
                     g.addplayer(p)
                     g.message(p.username + " si è unito alla partita!")
+                    g.adminmessage(g.fullstatus())
                 else:
                     g.message("\u26A0\uFE0F Non puoi unirti alla partita.\n"
                               "La fase di unione è terminata o ti sei già unito in precedenza.")
