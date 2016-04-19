@@ -350,7 +350,7 @@ while True:
                 else:
                     g.message(g.status())
                 p = g.findid(t['from']['id'])
-                if p.role == 1:
+                if p is not None and p.role == 1:
                     p.message(g.mifiastatus())
             elif t['text'].startswith("/fullstatus"):
                 if t['from']['id'] == g.adminid:
