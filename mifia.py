@@ -341,6 +341,7 @@ while True:
                     g.addplayer(p)
                     g.message(p.username + " si è unito alla partita!")
                     g.adminmessage(g.fullstatus())
+                    g.save()
                 else:
                     g.message("\u26A0\uFE0F Non puoi unirti alla partita.\n"
                               "La fase di unione è terminata o ti sei già unito in precedenza.")
