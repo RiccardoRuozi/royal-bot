@@ -238,6 +238,8 @@ def loadgame(chatid) -> Game:
         lp.alive = bool(loaded[player]['alive'])
         lp.username = player
         lp.role = int(loaded[player]['role'])
+        if lp.role == 1 or lp.role == 2:
+            lp.special = True
         lp.telegramid = int(loaded[player]['telegramid'])
         l.players.append(lp)
     l.groupid = int(loaded['General']['groupid'])
