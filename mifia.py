@@ -306,7 +306,7 @@ while True:
                     if r < 15:
                         p.role = 1
                         p.special = True
-                        p.message("Sei stato assegnato alla squadra \U0001F608 *MIFIA*."
+                        p.message("Sei stato assegnato alla squadra \U0001F608 *MIFIA*.\n"
                                   "Apparirai agli altri come un membro del team ROYAL.\n"
                                   "Depistali e non farti uccidere!\n"
                                   "Il team ROYAL ucciderà la persona più votata di ogni turno.\n"
@@ -391,4 +391,5 @@ while True:
                 else:
                     g.message("\u26A0\uFE0F La partita non è ancora iniziata; non puoi votare.")
             elif t['text'].startswith("/endjoin"):
-                g.endjoin()
+                if t['from']['id'] == g.adminid:
+                    g.endjoin()
