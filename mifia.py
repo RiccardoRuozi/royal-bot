@@ -147,50 +147,53 @@ class Game:
         self.message(votedout.username + " è il più votato del giorno e sarà ucciso.")
         self.tokill.append(votedout)
         for killed in self.tokill:
-            self.message(killed.username + " è stato ucciso.\n")
+            tosend = killed.username + " è stato ucciso.\n"
             if killed.role == 0:
-                self.message("Era un \U0001F610 Royal.")
+                tosend += "Era un \U0001F610 Royal."
             elif killed.role == 1:
-                self.message("Era un \U0001F608 Mifioso!")
+                tosend += "Era un \U0001F608 Mifioso!"
             elif killed.role == 2:
-                self.message("Era un \U0001F575 Detective!")
+                tosend += "Era un \U0001F575 Detective!"
+            self.message(tosend)
             killed.alive = False
         for player in self.players:
             player.votedfor = str()
             if player.role != 0:
                 player.special = True
         self.message(self.displaycount())
-        # Controlla se la Royal Games ha vinto
-        zero = 0
-        uno = 0
-        for player in self.players:
-            if player.alive:
-                if player.role == 0 or player.role == 2:
-                    zero += 1
-                elif player.role == 1:
-                    uno += 1
-        if uno == 0:
+        mifia = self.mifiacount()
+        royal = self.royalcount()
+        if mifia == 0:
             self.message("*Il Team Royal ha vinto!*\n"
                          "Tutti i Mifiosi sono stati eliminati.")
             partiteincorso.remove(findgame(self.groupid))
-        if uno >= zero:
+        if mifia >= royal:
             self.message("*Il Team Mifia ha vinto!*\n"
-                         "I Mifiosi rimasti sono più dei Royal.")
+                         "I Mifiosi rimasti sono tanti quanti i Royal.")
         self.tokill = list()
 
-    def displaycount(self) -> str:
-        zero = 0
-        uno = 0
+    def mifiacount(self) -> int:
+        mifia = 0
+        for player in self.players:
+            if player.alive:
+                if player.role == 1:
+                    mifia += 1
+        return mifia
+
+    def royalcount(self) -> int:
+        royal = 0
         for player in self.players:
             if player.alive:
                 if player.role == 0 or player.role == 2:
-                    zero += 1
-                elif player.role == 1:
-                    uno += 1
+                    royal += 1
+        return royal
+
+    def displaycount(self) -> str:
         msg = "*Royal*: {0} persone rimaste\n" \
-              "*Mifia*: {1} persone rimaste".format(str(zero), str(uno))
+              "*Mifia*: {1} persone rimaste".format(str(self.royalcount()), str(self.mifiacount()))
         return msg
 
+    # Ricordatemi perchè ho deciso di salvare i dati in un ini invece che in un file json
     def save(self):
         status = configparser.ConfigParser()
         status['General'] = {
@@ -266,7 +269,7 @@ while True:
                 except ValueError:
                     g = None
                 if g is not None:
-                    if xtra[1].capitalize() == "special":
+                    if xtra[1].lower() == "special":
                         if g.findid(t['from']['id']).role == 1 and g.findid(t['from']['id']).special:
                             target = g.findusername(xtra[2])
                             if target is not None:
@@ -285,7 +288,7 @@ while True:
                                 elif target.role == 2:
                                     p.message(target.username + " è un \U0001F575 Detective.")
                                 p.special = False
-                    elif xtra[1].capitalize() == "chat":
+                    elif xtra[1].lower() == "chat":
                         if g.findid(t['from']['id']).role == 1:
                             g.evilmessage(xtra[2])
         else:
