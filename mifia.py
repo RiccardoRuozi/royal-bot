@@ -379,12 +379,13 @@ while True:
                     username = t['text'].split(' ')
                     if len(username) > 1 and g.findusername(username[1]) is not None:
                         voter = g.findid(t['from']['id'])
-                        if voter.alive:
-                            voter.votedfor = username[1]
-                            g.message("Hai votato per " + username[1] + ".")
-                        else:
-                            g.message("_La tua votazione riecheggia nel nulla._\n"
-                                      "\u26A0\uFE0F Sei morto, e i morti non votano.")
+                        if voter is not None:
+                            if voter.alive:
+                                voter.votedfor = username[1]
+                                g.message("Hai votato per " + username[1] + ".")
+                            else:
+                                g.message("_La tua votazione riecheggia nel nulla._\n"
+                                          "\u26A0\uFE0F Sei morto, e i morti non votano.")
                     else:
                         g.message("\u26A0\uFE0F La persona selezionata non esiste.")
                 else:
