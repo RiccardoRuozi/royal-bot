@@ -246,6 +246,7 @@ def loadgame(chatid) -> Game:
     l.adminid = int(loaded['General']['adminid'])
     return l
 
+random.seed()
 
 while True:
     t = telegram.getupdates()
