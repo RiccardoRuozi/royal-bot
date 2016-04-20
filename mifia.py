@@ -303,7 +303,7 @@ while True:
                     # Assegnazione dei ruoli
                     r = random.randrange(0, 100)
                     # Spiegare meglio cosa deve fare ogni ruolo?
-                    if r < 15:
+                    if r < 15 and g.mifiacount() < 3:
                         p.role = 1
                         p.special = True
                         p.message("Sei stato assegnato alla squadra \U0001F608 *MIFIA*.\n"
@@ -318,7 +318,7 @@ while True:
                                   "La squadra Mifia vince se tutta la Royal Games è eliminata.\n"
                                   "Perdi se vieni ucciso."
                                   .format(g.groupid))
-                    elif r > 85:
+                    elif r > 90:
                         p.role = 2
                         p.special = True
                         p.message("Sei stato assegnato alla squadra *ROYAL* con il ruolo di \U0001F575 *DETECTIVE*.\n"
