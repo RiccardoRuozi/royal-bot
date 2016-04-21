@@ -8,14 +8,14 @@ import time
 telegramtoken = filemanager.readfile('telegramapi.txt')
 
 
-def getme():
+def getme() -> dict():
     """Visualizza dati sul bot."""
     # Manda la richiesta
     data = requests.get("https://api.telegram.org/bot" + telegramtoken + "/getMe")
     return data
 
 
-def getupdates():
+def getupdates() -> dict():
     """Ricevi gli ultimi aggiornamenti dal server di Telegram e restituisci l'ultimo messaggio non letto."""
     while True:
         parametri = {
@@ -37,7 +37,7 @@ def getupdates():
             time.sleep(2)
 
 
-def sendmessage(content, to, reply=None):
+def sendmessage(content, to, reply=None) -> None:
     """Manda un messaggio a una chat.
     :param content: Testo del messaggio
     :param to: Destinatario del messaggio
@@ -54,7 +54,7 @@ def sendmessage(content, to, reply=None):
     requests.get("https://api.telegram.org/bot" + telegramtoken + "/sendMessage", params=parametri)
 
 
-def forwardmessage(msg, sentby, to):
+def forwardmessage(msg, sentby, to) -> None:
     """Inoltra un messaggio mandato in un'altra chat.
     :param msg: ID del messaggio
     :param sentby: Persona da cui è stato mandato il messaggio
@@ -69,7 +69,7 @@ def forwardmessage(msg, sentby, to):
     requests.get("https://api.telegram.org/bot" + telegramtoken + "/forwardMessage", params=parametri)
 
 
-def sendphoto(pic, text, to):
+def sendphoto(pic, text, to) -> None:
     """Manda una foto compressa a una chat.
     :param pic: ID della foto da inviare
     :param text: Testo della foto da inviare
@@ -84,7 +84,7 @@ def sendphoto(pic, text, to):
     requests.get("https://api.telegram.org/bot" + telegramtoken + "/sendPhoto", params=parametri)
 
 
-def sendaudio(aud, to):
+def sendaudio(aud, to) -> None:
     """Manda un file audio .mp3 a una chat.
     :param aud: ID del file audio
     :param to: Destinatario dell'audio
@@ -97,8 +97,9 @@ def sendaudio(aud, to):
     requests.get("https://api.telegram.org/bot" + telegramtoken + "/sendAudio", params=parametri)
 
 
-def senddocument(doc, to, reply=None):
+def senddocument(doc, to, reply=None) -> None:
     """Manda un file a una chat.
+    :param reply: ID del messaggio a cui rispondere
     :param doc: ID del documento
     :param to: Destinatario del documento
     """
@@ -111,7 +112,7 @@ def senddocument(doc, to, reply=None):
     requests.get("https://api.telegram.org/bot" + telegramtoken + "/sendDocument", params=parametri)
 
 
-def sendsticker(stk, to):
+def sendsticker(stk, to) -> None:
     """Manda uno sticker a una chat.
     :param stk: ID dello sticker
     :param to: Destinatario dello sticker
@@ -124,7 +125,7 @@ def sendsticker(stk, to):
     requests.get("https://api.telegram.org/bot" + telegramtoken + "/sendSticker", params=parametri)
 
 
-def sendvideo(vid, to):
+def sendvideo(vid, to) -> None:
     """Manda un video .mp4 a una chat.
     :param vid: ID del video
     :param to: Destinatario del video
@@ -137,7 +138,7 @@ def sendvideo(vid, to):
     requests.get("https://api.telegram.org/bot" + telegramtoken + "/sendVideo", params=parametri)
 
 
-def sendvoice(aud, to):
+def sendvoice(aud, to) -> None:
     """Manda un file audio .ogg con OPUS a una chat come se fosse un messaggio vocale.
     :param aud: ID dell'audio
     :param to: Destinatario dell'audio
@@ -150,7 +151,7 @@ def sendvoice(aud, to):
     requests.get("https://api.telegram.org/bot" + telegramtoken + "/sendVoice", params=parametri)
 
 
-def sendlocation(lat, long, to):
+def sendlocation(lat, long, to) -> None:
     """Manda una posizione sulla mappa.
     :param lat: Latitudine
     :param long: Longitudine
@@ -166,7 +167,7 @@ def sendlocation(lat, long, to):
     requests.get("https://api.telegram.org/bot" + telegramtoken + "/sendLocation", params=parametri)
 
 
-def sendchataction(to, action='typing'):
+def sendchataction(to, action='typing') -> None:
     """Visualizza lo stato "sta scrivendo" del bot.
     :param to: Chat in cui visualizzare lo stato
     :param action: Tipo di stato da visualizzare
