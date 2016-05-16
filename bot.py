@@ -254,8 +254,8 @@ while True:
                                                              r['count300'],
                                                              r['count100'],
                                                              r['count50'],
-                                                             r['countkatu'],
                                                              r['countgeki'],
+                                                             r['countkatu'],
                                                              r['countmiss']), sentin, source)
                             elif mode == 1:
                                 # Visualizza le informazioni relative alla modalità osu!taiko
@@ -277,8 +277,8 @@ while True:
                                                              r['maxcombo'],
                                                              r['count300'],
                                                              r['count100'],
-                                                             r['countkatu'],
                                                              r['countgeki'],
+                                                             r['countkatu'],
                                                              r['countmiss']), sentin, source)
                             elif mode == 2:
                                 # TODO: Cos'è successo qui?
@@ -340,8 +340,8 @@ while True:
                                                          r['count300'],
                                                          r['count100'],
                                                          r['count50'],
-                                                         r['countkatu'],
                                                          r['countgeki'],
+                                                         r['countkatu'],
                                                          r['countmiss']), sentin, source)
                 elif text.startswith('/roll'):
                     print("@" + username + ": /roll")
