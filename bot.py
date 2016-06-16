@@ -153,6 +153,14 @@ while True:
                     print("@" + username + ": /ciaostefanino")
                     # Rispondi salutando Stefanino.
                     telegram.sendmessage("Ciao Stefanino!!!", sentin, source)
+                elif text.startswith('/balurage'):
+                    print("@" + username + ": /balurage")
+                    # Rispondi salutando Stefanino.
+                    telegram.sendmessage("MADDEN MADDEN MADDEN MADDEN MADDEN MADDEN MADDEN MADDEN MADDEN", sentin, source)
+                elif text.startswith('/ciaoruozi'):
+                    print("@" + username + ": /ciaoruozi")
+                    # Ciao Ruozi.
+                    telegram.sendmessage("Ciao Ruozi", sentin, source)
                 elif text.startswith('/ehoh'):
                     print("@" + username + ": /ehoh")
                     # Rispondi con Eh, oh. Sono cose che capitano.
