@@ -35,7 +35,7 @@ def getupdates() -> dict():
                     elif 'edited_message' in data['result'][0]:
                         tmp = {
                             "edit": True,
-                            "edit_data": data['result'][0]['message']
+                            "edit_data": data['result'][0]['edited_message']
                         }
                         return tmp
         else:
