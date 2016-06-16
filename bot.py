@@ -109,17 +109,17 @@ while True:
             if msg['edit']:
                 if 'text' in msg['edit_data']:
                     # Salvatelo in una stringa
-                    text = msg['text']
+                    text = msg['edit_data']['text']
                     # Guarda l'ID della chat in cui è stato inviato
-                    sentin = msg['chat']['id']
+                    sentin = msg['edit_data']['chat']['id']
                     # ID del messaggio ricevuto
-                    source = msg['message_id']
-                    if 'username' in msg['from']:
+                    source = msg['edit_data']['message_id']
+                    if 'username' in msg['edit_data']['from']:
                         # Salva l'username se esiste
-                        username = msg['from']['username']
+                        username = msg['edit_data']['from']['username']
                     else:
                         # Altrimenti, salva l'userID
-                        username = str(msg['from']['id'])
+                        username = str(msg['edit_data']['from']['id'])
                     # Se sei un membro della Royal Games
                     if username.lower() in royalgames:
                         # Riconosci il comando.
