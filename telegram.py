@@ -32,6 +32,12 @@ def getupdates() -> dict():
                     # Controlla che la risposta sia effettivamente un messaggio e non una notifica di servizio
                     if 'message' in data['result'][0]:
                         return data['result'][0]['message']
+                    elif 'edited_message' in data['result'][0]:
+                        tmp = {
+                            "edit": True,
+                            "edit_data": data['result'][0]['message']
+                        }
+                        return tmp
         else:
             # Non vogliamo DDoSsare telegram, vero?
             time.sleep(2)

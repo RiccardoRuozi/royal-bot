@@ -105,6 +105,28 @@ while True:
         # Guarda il comando ricevuto.
         msg = telegram.getupdates()
         # Se il messaggio non è una notifica di servizio...
+        if 'edit' in msg:
+            if t['edit']:
+                if 'text' in msg['edit_data']:
+                    # Salvatelo in una stringa
+                    text = msg['text']
+                    # Guarda l'ID della chat in cui è stato inviato
+                    sentin = msg['chat']['id']
+                    # ID del messaggio ricevuto
+                    source = msg['message_id']
+                    if 'username' in msg['from']:
+                        # Salva l'username se esiste
+                        username = msg['from']['username']
+                    else:
+                        # Altrimenti, salva l'userID
+                        username = str(msg['from']['id'])
+                    # Se sei un membro della Royal Games
+                    if username.lower() in royalgames:
+                        # Riconosci il comando.
+                        if text.startswith('wow'):
+                            print("@" + username + ": WOW!")
+                            telegram.sendmessage("Wow. Impressionante.", sentin, source)
+                # Viene usato startswith perchè il comando potrebbe anche essere inviato in forma /ciao@RoyalBot.
         if 'text' in msg:
             # Salvatelo in una stringa
             text = msg['text']
