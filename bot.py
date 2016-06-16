@@ -106,7 +106,7 @@ while True:
         msg = telegram.getupdates()
         # Se il messaggio non è una notifica di servizio...
         if 'edit' in msg:
-            if t['edit']:
+            if msg['edit']:
                 if 'text' in msg['edit_data']:
                     # Salvatelo in una stringa
                     text = msg['text']
