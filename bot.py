@@ -78,9 +78,12 @@ while True:
                     print("@" + username + ": /balurage")
                     # Rispondi commentando l'E3.
                     telegram.sendmessage("MADDEN MADDEN MADDEN MADDEN MADDEN MADDEN MADDEN MADDEN MADDEN", sentin, source)
+                elif text.startswith('/potatogift'):
+                    if username.lower() == "steffo":
+                        telegram.senddocument("BQADAgADHwQAAh8GgAEmS1UU1zyaLQI", sentin, source)
                 elif text.startswith('/adventure'):
                     if username.lower() == "frankrekt" and not adventurecomplete:
-                        telegram.sendmessage("Grazie per aver completato l'avventura. Riceverai una risposta al più presto.", sentin, source)
+                        telegram.sendmessage("Grazie per aver completato l'avventura. Riceverai una risposta al più presto.", msg['from']['id'])
                         telegram.sendmessage("@FrankRekt ha completato l'avventura!", -1001001443644)
                         adventurecomplete = True
                 elif text.startswith('/ciaoruozi'):
