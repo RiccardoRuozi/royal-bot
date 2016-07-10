@@ -9,87 +9,6 @@ import osu
 import hearthstone
 import lol
 
-
-# Check per la modalità votazione del bot, corrisponde al numero della chat in cui è attiva la votazione
-# 0 per disattivare la votazione
-class Votazione:
-    chat = int()
-    domanda = str()
-    # 0: non votato
-    # 1: sì
-    # 2: no
-    # 3: astenuto
-    voto = dict()
-
-    def __init__(self, question, askin):
-        self.domanda = question
-        self.chat = askin
-        for persona in royalgames:
-            self.voto[persona] = int()
-
-    def ask(self):
-        telegram.sendmessage(self.domanda, self.chat)
-
-    def register(self, utente, voto):
-        self.voto[utente] = voto
-
-    def showresults(self):
-        lista = str()
-        si = 0
-        no = 0
-        astenuti = 0
-        for persona in self.voto:
-            if self.voto[persona] == 0:
-                lista += chr(9898)
-            elif self.voto[persona] == 1:
-                si += 1
-                lista += chr(128309)
-            elif self.voto[persona] == 2:
-                no += 1
-                lista += chr(128308)
-            elif self.voto[persona] == 3:
-                astenuti += 1
-                lista += chr(9899)
-            lista += " @" + persona + "\n"
-        if not si and not no and not astenuti:
-            telegram.sendmessage(chr(9888) + " Nessuno ha ancora votato!", self.chat)
-        else:
-            telegram.sendmessage(self.domanda + "\n"
-                                 "*Risultati:*\n"
-                                 "Sì: " + str(si) + " (" + str(round(si / (si + no + astenuti) * 100, 2)) + "%)\n"
-                                 "No: " + str(no) + " (" + str(round(no / (si + no + astenuti) * 100, 2)) + "%)\n"
-                                 "Astenuti: " + str(astenuti) + "\n\n" + lista, self.chat)
-
-
-# Votazione in corso
-incorso = None
-
-# Playlist di /rage, si riempie quando è vuota
-rage = []
-
-# TODO: Rimettere gli audio di Wololo
-# wololo = []
-
-audiolist = {
-    'madinuovo': 'BQADAgADMwIAAh8GgAFQaq1JNk1ZtwI',
-    'sallati': 'BQADAgADrAIAAh8GgAHTdcu8cG-LbAI',
-    'giummipersempre': 'BQADAgADEAIAAh8GgAE4O2578G1EagI',
-    'nonewallhack': 'BQADAgAD3wEAAh8GgAEUqoKiAaPP9wI',
-    'crystalmaiden': 'BQADAgADqwIAAh8GgAE62csQVNai8QI',
-    'apeggia': 'BQADAgAD6wEAAh8GgAGe6IDqRVSAhwI',
-    'johncena': 'BQADAgAD4AEAAh8GgAFRi-UD1VvyLwI',
-    'tre': 'BQADAgADEwIAAh8GgAE-iNm-4V6pZAI',
-    'cinqueanni': 'BQADAgADrgIAAh8GgAGKOIASQZevMwI',
-    'infilatevi': 'BQADAgAD5gEAAh8GgAFsphnhj_xOnAI',
-    'invidiosi': 'BQADAgADqAIAAh8GgAEDx7kiV1MdAwI',
-    'salitipo': 'BQADAgADqQIAAh8GgAHhGzfuq1LGXAI',
-    'mammadimari': 'BQADAgADpgIAAh8GgAFoIX9f88R-vAI',
-    'plug': 'BQADAgADrwIAAh8GgAGdfZO0w1wAAYYC',
-    'spari': 'BQADAgADEQIAAh8GgAHaG4P-MmuJKAI',
-    'bastagarf': 'BQADAgAD6QEAAh8GgAF0xIIbFxW6NQI',
-    'omiodio': 'BQADAgADMgIAAh8GgAFe9-lVwzdFzAI',
-}
-
 # Elenco di username dei membri della RYG
 royalgames = json.loads(filemanager.readfile("db.json"))
 
@@ -155,12 +74,15 @@ while True:
                     telegram.sendmessage("Ciao Stefanino!!!", sentin, source)
                 elif text.startswith('/balurage'):
                     print("@" + username + ": /balurage")
-                    # Rispondi salutando Stefanino.
+                    # Rispondi commentando l'E3.
                     telegram.sendmessage("MADDEN MADDEN MADDEN MADDEN MADDEN MADDEN MADDEN MADDEN MADDEN", sentin, source)
                 elif text.startswith('/ciaoruozi'):
                     print("@" + username + ": /ciaoruozi")
                     # Ciao Ruozi.
-                    telegram.sendmessage("Ciao Ruozi", sentin, source)
+                    if username.lower() == "ruozir":
+                        telegram.sendmessage("Ciao me", sentin, source)
+                    else:
+                        telegram.sendmessage("Ciao Ruozi", sentin, source)
                 elif text.startswith('/ehoh'):
                     print("@" + username + ": /ehoh")
                     # Rispondi con Eh, oh. Sono cose che capitano.
@@ -200,23 +122,6 @@ while True:
                                              "[Visualizza tutte le offerte]"
                                              "(https://isthereanydeal.com/#/search:.;/scroll:%23gamelist).",
                                              sentin, source)
-                elif text.startswith('/audio'):
-                    print("@" + username + ": /audio")
-                    cmd = text.split(" ", 1)
-                    if len(cmd) > 1:
-                        if cmd[1] in audiolist:
-                            sendme = audiolist[cmd[1]]
-                            telegram.senddocument(sendme, sentin, source)
-                        else:
-                            sendme = chr(9888) + " L'audio richiesto non esiste!\n*Audio disponibili*:\n"
-                            for audio in audiolist:
-                                sendme += audio + "\n"
-                            telegram.sendmessage(sendme, sentin, source)
-                    else:
-                        sendme = chr(9888) + " Per mandare un audio, scrivi `/audio nomeaudio`\n*Audio disponibili*:\n"
-                        for audio in audiolist:
-                            sendme += audio + "\n"
-                        telegram.sendmessage(sendme, sentin, source)
                 elif text.startswith('/sbam'):
                     print("@" + username + ": /sbam")
                     # Manda l'audio contenente gli sbam di tutti i membri Royal Games.
@@ -543,53 +448,6 @@ while True:
                     # Manda l'audio So much to do, so much to see
                     print("@" + username + ": /shrekt ")
                     telegram.senddocument("BQADBAADsQADiBjiAqYN-EBXASyhAg", sentin)
-                elif text.startswith('/nuovavotazione'):
-                    if username == "Steffo":
-                        print("@" + username + ": /nuovavotazione ")
-                        cmd = text.split(" ", 1)
-                        incorso = Votazione(cmd[1], sentin)
-                    else:
-                        telegram.sendmessage(
-                            chr(9888) + " Non hai i permessi necessari per creare una nuova votazione.",
-                            sentin, source)
-                elif text.startswith('/si'):
-                    print("@" + username + ": /si ")
-                    if incorso is not None:
-                        if incorso.chat == sentin:
-                            incorso.register(username.lower(), 1)
-                            telegram.sendmessage("Votazione registrata!", sentin, source)
-                    else:
-                        telegram.sendmessage(chr(9888) + " Non è in corso nessuna votazione!", sentin, source)
-                elif text.startswith('/no'):
-                    print("@" + username + ": /no ")
-                    if incorso is not None:
-                        if incorso.chat == sentin:
-                            incorso.register(username.lower(), 2)
-                            telegram.sendmessage("Votazione registrata!", sentin, source)
-                    else:
-                        telegram.sendmessage(chr(9888) + " Non è in corso nessuna votazione!", sentin, source)
-                elif text.startswith('/astieniti'):
-                    print("@" + username + ": /astieniti ")
-                    if incorso is not None:
-                        if incorso.chat == sentin:
-                            incorso.register(username.lower(), 3)
-                            telegram.sendmessage("Votazione registrata!", sentin, source)
-                    else:
-                        telegram.sendmessage(chr(9888) + " Non è in corso nessuna votazione!", sentin, source)
-                elif text.startswith('/domanda'):
-                    print("@" + username + ": /domanda ")
-                    if incorso is not None:
-                        if incorso.chat == sentin:
-                            incorso.ask()
-                    else:
-                        telegram.sendmessage(chr(9888) + " Non è in corso nessuna votazione!", sentin, source)
-                elif text.startswith('/risultati'):
-                    print("@" + username + ": /risultati ")
-                    if incorso is not None:
-                        if incorso.chat == sentin:
-                            incorso.showresults()
-                    else:
-                        telegram.sendmessage(chr(9888) + " Non è in corso nessuna votazione!", sentin, source)
                 elif text.startswith('/diario'):
                     # Aggiungi una riga al diario Royal Games
                     print("@" + username + ": /diario ")
@@ -625,7 +483,7 @@ while True:
                                 text += "`" + str(ora.tm_mday) + "/" + str(ora.tm_mon) + "/" + str(
                                         ora.tm_year) + "`: `" + \
                                         str(ora.tm_hour) + ":" + str(ora.tm_min) + "` " + riga[1] + "\n"
-                        if int(cmd[1]) < len(diario):
+                        if int(cmd[1]) < 40:
                             # L'ultimo numero è escluso.
                             for n in range(int(cmd[1]) + 1, 1, -1):
                                 riga = diario[len(diario) - n]
@@ -635,8 +493,7 @@ while True:
                                         ora.tm_year) + "`: `" + \
                                         str(ora.tm_hour) + ":" + str(ora.tm_min) + "` " + riga[1] + "\n"
                         else:
-                            telegram.sendmessage(chr(9888) + " Il numero massimo di stringhe visualizzabili è " +
-                                                 str(len(diario) - 1), sentin, source)
+                            telegram.sendmessage(chr(9888) + " Il numero massimo di stringhe visualizzabili è 40", sentin, source)
                     # Altrimenti, prendi un evento a caso.
                     else:
                         riga = diario[random.randrange(0, len(diario))]
