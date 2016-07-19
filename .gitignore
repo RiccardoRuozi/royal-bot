@@ -10,3 +10,8 @@ diario.txt
 lolapi.txt
 *.ini
 nohup.out
+Include/*
+Lib/*
+Scripts/*
+tcl/*
+pip-selfcheck.json
