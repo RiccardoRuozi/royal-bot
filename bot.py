@@ -328,9 +328,9 @@ while True:
                     for member in r['members']:
                         # Credo di aver scritto il peggior algoritmo di sempre. gg me
                         if 'channel_id' in member:
-                            if deaf or self_deaf:
+                            if member['deaf'] or member['self_deaf']:
                                 emoji = chr(128263)
-                            elif mute or self_mute:
+                            elif member['mute'] or member['self_mute']:
                                 emoji = chr(128264)
                             else:
                                 emoji = chr(128266)
@@ -349,7 +349,7 @@ while True:
                                 emoji = chr(9899)
                         name = member['username']
                         if gamename in locals() and channelname in locals():
-                            tosend += "{emoji} *{channelname}* {name} | _{gamename}_"
+                            tosend += "{emoji} *{channelname}* {name} | _{gamename}_".format(**locals())
                     telegram.sendmessage(tosend, sentin, source)
                 elif text.startswith('/online'):
                     # Elenco di tutte le persone online su Steam
