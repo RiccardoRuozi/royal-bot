@@ -342,13 +342,11 @@ while True:
                                     break
                         else:
                             if member['status'] == "online":
-                                if 'game' in member:
-                                    m['gamename'] = member['game']['name']
-                                    m['emoji'] = chr(128308)
-                                else:
-                                    m['emoji'] = chr(128309)
-                            else:
+                                m['emoji'] = chr(128308)
+                            elif member['status'] == "idle":
                                 m['emoji'] = chr(9899)
+                        if 'game' in member:
+                            m['gamename'] = member['game']['name']
                         m['name'] = member['username']
                         if 'gamename' in m and 'channelname' in m:
                             tosend += "{emoji} *{channelname}* {name} | _{gamename}_\n".format(**m)
