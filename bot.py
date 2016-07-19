@@ -342,7 +342,10 @@ while True:
                                     break
                         else:
                             if member['status'] == "online":
-                                m['emoji'] = chr(128308)
+                                if 'game' in member:
+                                    m['emoji'] = chr(128308)
+                                else:
+                                    m['emoji'] = chr(128307)
                             elif member['status'] == "idle":
                                 m['emoji'] = chr(9899)
                         if 'game' in member:
