@@ -8,6 +8,7 @@ import random
 import osu
 import hearthstone
 import lol
+import discord
 
 # Elenco di username dei membri della RYG
 royalgames = json.loads(filemanager.readfile("db.json"))
@@ -320,7 +321,37 @@ while True:
                     telegram.sendmessage("Automaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa! Devi funzionare, cavolo!",
                                          sentin,
                                          source)
-                elif text.startswith('/online') or text.startswith('/cv'):
+                elif text.startswith('/cv'):
+                    # Elenco di tutte le persone online su Discord
+                    tosend = "*Su Discord ora:*\n"
+                    r = discord.getwidgetdata("176353500710699008")
+                    for member in r['members']:
+                        # Credo di aver scritto il peggior algoritmo di sempre. gg me
+                        if 'channel_id' in member:
+                            if deaf or self_deaf:
+                                emoji = chr(128263)
+                            elif mute or self_mute:
+                                emoji = chr(128264)
+                            else:
+                                emoji = chr(128266)
+                            for channel in r['channels']:
+                                if member['channel_id'] == channel['id']:
+                                    channelname = channel['name']
+                                    break
+                        else:
+                            if member['status'] == "online":
+                                if 'game' in member:
+                                    gamename = member['game']['name']
+                                    emoji = chr(128308)
+                                else:
+                                    emoji = chr(128309)
+                            else:
+                                emoji = chr(9899)
+                        name = member['username']
+                        if gamename in locals() and channelname in locals():
+                            tosend += "{emoji} *{channelname}* {name} | _{gamename}_"
+                    telegram.sendmessage(tosend, sentin, source)
+                elif text.startswith('/online'):
                     # Elenco di tutte le persone online su Steam
                     print("@" + username + ": /online ")
                     # Informa Telegram che il messaggio è stato ricevuto.
@@ -339,7 +370,7 @@ while True:
                         for membro in royalgames:
                             if "steam" in royalgames[membro]:
                                 userids += str(royalgames[membro]["steam"]) + ','
-                        tosend = "*Online ora:*\n"
+                        tosend = "*Su Steam ora:*\n"
                         r = steam.getplayersummaries(userids)
                         for player in r:
                             # In gioco
