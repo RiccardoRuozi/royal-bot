@@ -348,7 +348,7 @@ while True:
                             else:
                                 emoji = chr(9899)
                         name = member['username']
-                        if gamename in locals() and channelname in locals():
+                        if 'gamename' in locals() and 'channelname' in locals():
                             tosend += "{emoji} *{channelname}* {name} | _{gamename}_".format(**locals())
                     telegram.sendmessage(tosend, sentin, source)
                 elif text.startswith('/online'):
