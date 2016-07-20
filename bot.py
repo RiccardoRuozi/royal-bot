@@ -358,7 +358,7 @@ while True:
                         elif 'channelname' in m:
                             tosend += "{emoji} *{channelname}* {name}\n".format(**m)
                         else:
-                            tosend += "{emoji} {name}".format(**m)
+                            tosend += "{emoji} {name}\n".format(**m)
                 telegram.sendmessage(tosend, sentin, source)
             elif text.startswith('/online'):
                 # Elenco di tutte le persone online su Steam
