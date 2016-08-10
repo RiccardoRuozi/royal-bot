@@ -97,10 +97,6 @@ while True:
                 print("@" + username + ": /ehoh")
                 # Rispondi con Eh, oh. Sono cose che capitano.
                 telegram.sendmessage("Eh, oh. Sono cose che capitano.", sentin, source)
-            elif text.startswith('/smecds'):
-                print("@" + username + ": /smecds")
-                # Rispondi con Eh, oh. Sono cose che capitano.
-                telegram.sendmessage("Guarda. Secondo me è colpa dello stagista.", sentin, source)
             elif text.startswith('/playing'):
                 print("@" + username + ": /playing")
                 # Informa Telegram che il messaggio è stato ricevuto e visualizza Royal Bot sta scrivendo.
@@ -434,32 +430,7 @@ while True:
             elif text.startswith('/leggi'):
                 # Leggi dal diario Royal Games
                 print("@" + username + ": /leggi")
-                cmd = text.split(" ", 1)
-                diario = filemanager.readfile("diario.txt")
-                diario = diario.split('\n')
-                text = str()
-                # Se è incluso un numero dopo leggi, prendi quel numero di eventi più recenti.
-                if len(cmd) > 1:
-                    if int(cmd[1]) < 40:
-                        # L'ultimo numero è escluso.
-                        for n in range(int(cmd[1]) + 1, 1, -1):
-                            riga = diario[len(diario) - n]
-                            riga = riga.split("|", 1)
-                            ora = time.gmtime(int(riga[0]))
-                            text += "`" + str(ora.tm_mday) + "/" + str(ora.tm_mon) + "/" + str(
-                                ora.tm_year) + "`: `" + \
-                                    str(ora.tm_hour) + ":" + str(ora.tm_min) + "` " + riga[1] + "\n"
-                    else:
-                        telegram.sendmessage(chr(9888) + " Il numero massimo di stringhe visualizzabili è 40", sentin,
-                                             source)
-                # Altrimenti, prendi un evento a caso.
-                else:
-                    riga = diario[random.randrange(0, len(diario))]
-                    riga = riga.split("|", 1)
-                    ora = time.gmtime(int(riga[0]))
-                    text += "`" + str(ora.tm_mday) + "/" + str(ora.tm_mon) + "/" + str(ora.tm_year) + "`: `" + \
-                            str(ora.tm_hour) + ":" + str(ora.tm_min) + "` " + riga[1] + "\n"
-                telegram.sendmessage(text, sentin, source)
+                telegram.sendmessage("[Apri il diario RYG](http://royal.steffo.me/diario.htm/)!", sentin, source)
             elif text.startswith('/lolfree'):
                 # Visualizza i campioni gratuiti di LoL di questa settimana
                 print("@" + username + ": /lolfree")
