@@ -97,6 +97,10 @@ while True:
                 print("@" + username + ": /ehoh")
                 # Rispondi con Eh, oh. Sono cose che capitano.
                 telegram.sendmessage("Eh, oh. Sono cose che capitano.", sentin, source)
+            elif text.startswith('/smecds'):
+                print("@" + username + ": /smecds")
+                # Rispondi con Eh, oh. Sono cose che capitano.
+                telegram.sendmessage("Guarda. Secondo me è colpa dello stagista.", sentin, source)
             elif text.startswith('/playing'):
                 print("@" + username + ": /playing")
                 # Informa Telegram che il messaggio è stato ricevuto e visualizza Royal Bot sta scrivendo.
