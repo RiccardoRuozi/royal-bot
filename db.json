@@ -8,14 +8,6 @@
     "steam": 76561198034314260,
     "lol": 52348350
   },
-  "alby1":
-  {
-    "name": "Alby",
-    "desc": "Cugino di Steffo, carica video random su YouTube. E' impossibile farlo tacere.",
-    "icon": "Al",
-    "osu": "Alby1",
-    "steam": 76561198071383448
-  },
   "boni3099":
   {
     "name": "Bobby",
@@ -106,14 +98,6 @@
     "osu": "ftz99",
     "steam": 76561198035547490
   },
-  "gotob":
-  {
-    "name": "GoToB",
-    "desc": "",
-    "icon": "ProfiloVuoto",
-    "steam": 76561198096658890,
-    "lol": 44383992
-  },
   "enribenassati":
   {
     "name": "Benna",
@@ -154,7 +138,7 @@
     "steam": 76561198117708290,
     "osu": "rickyruozi"
   },
-  "supersmurf":
+  "goodbalu":
   {
     "name": "Supermatte",
     "desc": "Qualcosa che diverte. Furbuffo.",
@@ -222,7 +206,7 @@
     "icon": "yN",
     "steam": 76561198076690771
   },
-  "<comb>":
+  "comboromb":
   {
     "name": "Comb",
     "desc": "Comborombo!",
@@ -243,7 +227,7 @@
     "desc": "",
     "icon": "ProfiloVuoto"
   },
-  "nomeutentetelegram":
+  "__shado__":
   {
     "name": "Shado_Girl",
     "desc": "",
