@@ -46,7 +46,6 @@ while True:
                     if text.startswith('wow'):
                         print("@" + username + ": WOW!")
                         telegram.sendmessage("Wow. Impressionante.", sentin, source)
-                        # Viene usato startswith perchè il comando potrebbe anche essere inviato in forma /ciao@RoyalBot.
     if 'text' in msg:
         # Salvatelo in una stringa
         text = msg['text']
