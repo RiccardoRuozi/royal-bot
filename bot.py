@@ -109,9 +109,9 @@ while True:
                     print("@" + username + ": /bananaphone")
                     telegram.sendmessage("[Chiamata in arrivo da Numero Privato]"
                                          "(https://www.youtube.com/watch?v=j5C6X9vOEkU)", sentin, source)
-                elif text.startswith('/2') and '4me':
-                    print("@" + username + ": /2spooky4me")
-                    telegram.sendmessage("3spooky5me", sentin, source)
+                elif text.startswith('/ombromanto'):
+                    print("@" + username + ": /ombromanto")
+                    telegram.sendmessage("Ombromanto è @Dailir, Frank!")
                 elif text.startswith('/playing'):
                     print("@" + username + ": /playing")
                     # Informa Telegram che il messaggio è stato ricevuto e visualizza Royal Bot sta scrivendo.
