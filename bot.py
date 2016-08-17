@@ -81,15 +81,8 @@ while True:
                     # Rispondi commentando l'E3.
                     telegram.sendmessage("MADDEN MADDEN MADDEN MADDEN MADDEN MADDEN MADDEN MADDEN MADDEN", sentin, source)
                 elif text.startswith('/potatogift'):
-                    if username.lower() == "steffo":
-                        telegram.senddocument("BQADAgADHwQAAh8GgAEmS1UU1zyaLQI", sentin, source)
-                elif text.startswith('/adventure'):
-                    if username.lower() == "frankrekt" and not adventurecomplete:
-                        telegram.sendmessage(
-                            "Grazie per aver completato l'avventura. Riceverai una risposta al più presto.",
-                            msg['from']['id'])
-                        telegram.sendmessage("@FrankRekt ha completato l'avventura!", -1001001443644)
-                        adventurecomplete = True
+                    # Manda Super Balu Bros.
+                    telegram.senddocument("BQADAgADHwQAAh8GgAEmS1UU1zyaLQI", sentin, source)
                 elif text.startswith('/ciaoruozi'):
                     print("@" + username + ": /ciaoruozi")
                     # Ciao Ruozi.
@@ -101,6 +94,24 @@ while True:
                     print("@" + username + ": /ehoh")
                     # Rispondi con Eh, oh. Sono cose che capitano.
                     telegram.sendmessage("Eh, oh. Sono cose che capitano.", sentin, source)
+                elif text.startswith('/rir'):
+                    print("@" + username + ": /rir")
+                    telegram.sendmessage("[Riiiir. Riiimiiir.]"
+                                         "(https://www.youtube.com/channel/UCO6KFlb200xwPCb3v7F5BMQ)", sentin, source)
+                elif text.startswith('/eastereggs'):
+                    print("@" + username + ": /eastereggs")
+                    telegram.sendmessage("Sì, RoyalBot ha degli Easter Eggs.", sentin, source)
+                elif text.startswith('/bonzibuddy'):
+                    print("@" + username + ": /bonzibuddy")
+                    telegram.sendmessage("[Please enter your name or salutation.]"
+                                         "(http://bonzibuddy.tk)", sentin, source)
+                elif text.startswith('/bananaphone'):
+                    print("@" + username + ": /bananaphone")
+                    telegram.sendmessage("[Chiamata in arrivo da Numero Privato]"
+                                         "(https://www.youtube.com/watch?v=j5C6X9vOEkU)", sentin, source)
+                elif text.startswith('/2') and '4me':
+                    print("@" + username + ": /2spooky4me")
+                    telegram.sendmessage("3spooky5me", sentin, source)
                 elif text.startswith('/playing'):
                     print("@" + username + ": /playing")
                     # Informa Telegram che il messaggio è stato ricevuto e visualizza Royal Bot sta scrivendo.
