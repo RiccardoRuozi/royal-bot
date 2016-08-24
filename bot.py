@@ -17,8 +17,6 @@ lolfreestring = str()
 
 random.seed()
 
-adventurecomplete = False
-
 # Ciclo principale del bot
 print("Bot avviato!")
 while True:
