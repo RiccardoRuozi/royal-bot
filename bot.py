@@ -8,8 +8,6 @@ import random
 import osu
 import lol
 import discord
-from raven import Client
-client = Client(filemanager.readfile("sentry.txt"))
 
 # Elenco di username dei membri della RYG
 royalgames = json.loads(filemanager.readfile("db.json"))
@@ -24,7 +22,6 @@ adventurecomplete = False
 # Ciclo principale del bot
 print("Bot avviato!")
 while True:
-    # noinspection PyBroadException,PyBroadException
     try:
         # Guarda il comando ricevuto.
         msg = telegram.getupdates()
@@ -79,10 +76,18 @@ while True:
                 elif text.startswith('/balurage'):
                     print("@" + username + ": /balurage")
                     # Rispondi commentando l'E3.
-                    telegram.sendmessage("MADDEN MADDEN MADDEN MADDEN MADDEN MADDEN MADDEN MADDEN MADDEN", sentin, source)
+                    telegram.sendmessage("MADDEN MADDEN MADDEN MADDEN MADDEN MADDEN MADDEN MADDEN MADDEN",
+                                         sentin, source)
                 elif text.startswith('/potatogift'):
-                    # Manda Super Balu Bros.
-                    telegram.senddocument("BQADAgADHwQAAh8GgAEmS1UU1zyaLQI", sentin, source)
+                    if username.lower() == "steffo":
+                        telegram.senddocument("BQADAgADHwQAAh8GgAEmS1UU1zyaLQI", sentin, source)
+                elif text.startswith('/adventure'):
+                    if username.lower() == "frankrekt" and not adventurecomplete:
+                        telegram.sendmessage(
+                            "Grazie per aver completato l'avventura. Riceverai una risposta al più presto.",
+                            msg['from']['id'])
+                        telegram.sendmessage("@FrankRekt ha completato l'avventura!", -1001001443644)
+                        adventurecomplete = True
                 elif text.startswith('/ciaoruozi'):
                     print("@" + username + ": /ciaoruozi")
                     # Ciao Ruozi.
@@ -94,24 +99,6 @@ while True:
                     print("@" + username + ": /ehoh")
                     # Rispondi con Eh, oh. Sono cose che capitano.
                     telegram.sendmessage("Eh, oh. Sono cose che capitano.", sentin, source)
-                elif text.startswith('/rir'):
-                    print("@" + username + ": /rir")
-                    telegram.sendmessage("[Riiiir. Riiimiiir.]"
-                                         "(https://www.youtube.com/channel/UCO6KFlb200xwPCb3v7F5BMQ)", sentin, source)
-                elif text.startswith('/eastereggs'):
-                    print("@" + username + ": /eastereggs")
-                    telegram.sendmessage("Sì, RoyalBot ha degli Easter Eggs.", sentin, source)
-                elif text.startswith('/bonzibuddy'):
-                    print("@" + username + ": /bonzibuddy")
-                    telegram.sendmessage("[Please enter your name or salutation.]"
-                                         "(http://bonzibuddy.tk)", sentin, source)
-                elif text.startswith('/bananaphone'):
-                    print("@" + username + ": /bananaphone")
-                    telegram.sendmessage("[Chiamata in arrivo da Numero Privato]"
-                                         "(https://www.youtube.com/watch?v=j5C6X9vOEkU)", sentin, source)
-                elif text.startswith('/ombromanto'):
-                    print("@" + username + ": /ombromanto")
-                    telegram.sendmessage("Ombromanto è @Dailir, Frank!")
                 elif text.startswith('/playing'):
                     print("@" + username + ": /playing")
                     # Informa Telegram che il messaggio è stato ricevuto e visualizza Royal Bot sta scrivendo.
@@ -475,5 +462,8 @@ while True:
                         raise Exception("Ho appena fatto crashare tutto apposta. Sono un genio.")
             else:
                 print("@" + username + " bloccato.")
-    except Exception:
-        client.captureException()
+    except Exception as e:
+        telegram.sendmessage(chr(9762) + " *ERRORE CRITICO:\n*"
+                                         "{0}\n".format(repr(e)), -2141322)
+        print("ERRORE CRITICO:\n"
+              "{0}".format(repr(e)))
