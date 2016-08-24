@@ -264,6 +264,7 @@ def roll():
             m = int(cmd[1])
         except ValueError:
             telegram.sendmessage(chr(9888) + " Il numero specificato non è un intero.", sentin, source)
+            return
     else:
         # Imposta il numero massimo a 100.
         m = 100
