@@ -292,7 +292,7 @@ def automah():
 
 
 def cv():
-    print("@" + username + ": /roll")
+    print("@" + username + ": /cv")
     # Elenco di tutte le persone online su Discord
     tosend = "*Su Discord ora:*\n"
     r = discord.getwidgetdata("176353500710699008")
