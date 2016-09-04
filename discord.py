@@ -9,3 +9,8 @@ def getwidgetdata(token):
     else:
         # Sì, dovrei fare una DiscordException
         raise Exception("Qualcosa di discord non va")
+
+def getchannelname(r, id):
+    for channel in r['channels']:
+        if id == channel['id']:
+            return channel['name']

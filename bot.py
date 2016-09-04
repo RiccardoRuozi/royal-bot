@@ -308,10 +308,7 @@ def cv():
                     m['emoji'] = chr(128264)
                 else:
                     m['emoji'] = chr(128266)
-                for channel in r['channels']:
-                    if member['channel_id'] == channel['id']:
-                        m['channelname'] = channel['name']
-                        break
+                m['channelname'] = discord.getchannelname(r, member['channel_id'])
             else:
                 if member['status'] == "online":
                     if 'game' in member:
@@ -332,13 +329,9 @@ def cv():
             else:
                 tosend += "{emoji} {name}\n".format(**m)
         # Controlla se l'utente è royal music
-        elif 'id' == "176358898851250176":
+        elif member['id'] == "176358898851250176":
             if 'game' in member:
-                for channel in r['channels']:
-                    if member['channel_id'] == channel['id']:
-                        musicchannel = channel['name']
-                        break
-                # Todo: migliorami
+                musicchannel = discord.getchannelname(r, member['channel_id'])
                 musicstatus = "{emoji} *{channelname}* {songname}\n".format(emoji="\U0001F3B5",
                                                                             channelname=musicchannel,
                                                                             songname=member['game']['name'])
