@@ -295,6 +295,8 @@ def cv():
     # Elenco di tutte le persone online su Discord
     tosend = "*Su Discord ora:*\n"
     r = discord.getwidgetdata("176353500710699008")
+    musicstatus = str()
+    musicchannel = str()
     for member in r['members']:
         m = dict()
         if 'bot' not in member or not member['bot']:
@@ -329,6 +331,19 @@ def cv():
                 tosend += "{emoji} *{channelname}* {name}\n".format(**m)
             else:
                 tosend += "{emoji} {name}\n".format(**m)
+        # Controlla se l'utente è royal music
+        elif 'id' == "176358898851250176":
+            if 'game' in member:
+                for channel in r['channels']:
+                    if member['channel_id'] == channel['id']:
+                        musicchannel = channel['name']
+                        break
+                # Todo: migliorami
+                musicstatus = "{emoji} *{channelname}* {songname}\n".format(emoji="\U0001F3B5",
+                                                                            channelname=musicchannel,
+                                                                            songname=member['game']['name'])
+    if musicstatus != "":
+        tosend += musicstatus
     telegram.sendmessage(tosend, sentin, source)
 
 
