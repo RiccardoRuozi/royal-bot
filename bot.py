@@ -292,11 +292,11 @@ def automah():
 
 
 def cv():
+    print("@" + username + ": /roll")
     # Elenco di tutte le persone online su Discord
     tosend = "*Su Discord ora:*\n"
     r = discord.getwidgetdata("176353500710699008")
     musicstatus = str()
-    musicchannel = str()
     for member in r['members']:
         m = dict()
         if 'bot' not in member or not member['bot']:
@@ -331,10 +331,9 @@ def cv():
         # Controlla se l'utente è royal music
         elif member['id'] == "176358898851250176":
             if 'game' in member:
-                musicchannel = discord.getchannelname(r, member['channel_id'])
-                musicstatus = "{emoji} *{channelname}* {songname}\n".format(emoji="\U0001F3B5",
-                                                                            channelname=musicchannel,
-                                                                            songname=member['game']['name'])
+                musicstatus = "{emoji} *{channelname}* {songname}\n" \
+                    .format(emoji="\U0001F3B5", channelname=discord.getchannelname(r, member['channel_id']),
+                            songname=member['game']['name'])
     if musicstatus != "":
         tosend += musicstatus
     telegram.sendmessage(tosend, sentin, source)
