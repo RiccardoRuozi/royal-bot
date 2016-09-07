@@ -45,6 +45,12 @@ def ciaoruozi():
         telegram.sendmessage("Ciao Ruozi", sentin, source)
 
 
+def ombromanto():
+    print("@" + username + ": /ombromanto")
+    # Ma chi è ombromanto?
+    telegram.sendmessage("Ombromanto è @Dailir, Frank!", sentin, source)
+
+
 def potatogift():
     telegram.senddocument("BQADAgADHwQAAh8GgAEmS1UU1zyaLQI", sentin, source)
 
@@ -534,6 +540,8 @@ while True:
                     leggi()
                 elif text.startswith('/lolfree'):
                     lolfree()
+                elif text.startswith('/ombromanto'):
+                    ombromanto()
                 elif text.startswith('/crash'):
                     # Crasha il bot. Mi sembra geniale.
                     if username == 'Steffo':
