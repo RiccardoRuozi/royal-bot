@@ -25,3 +25,5 @@ Create a `lolapi.txt` file containing the [Riot Games API key](https://developer
 Create a `steamapi.txt` file containing the [Steam API key](http://steamcommunity.com/dev/apikey).
 
 Create a `telegramapi.txt` file containing the token you received from [@BotFather](http://telegram.me/botfather).
+
+Run `python3.5 -OO bot.py`.
