@@ -20,6 +20,7 @@ random.seed()
 # Livello di balurage dall'ultimo riavvio
 ragelevel = 0
 
+
 # Spostiamo qui le funzioni del bot, così è un po' più leggibile
 def wow():
     print("@" + username + ": WOW!")
@@ -262,7 +263,7 @@ def roll():
             m = int(cmd[1])
         except ValueError:
             if cmd[1] == "tm":
-                telegram.sendmessage("TM è così grassa che se la lanci rotola!")
+                telegram.sendmessage("TM è così grassa che se la lanci rotola!", sentin, source)
             else:
                 telegram.sendmessage(chr(9888) + " Il numero specificato non è un intero.", sentin, source)
             return
@@ -469,7 +470,7 @@ def smecds():
     print("@" + username + ": /smecds")
     accusato = random.sample(["dello stagista", "degli sposi", "di Santinelli", "di Sensei", "di Steffo", "di Spaggia",
                               "della sedia", "di Satana", "del Sangue (degli occhi di Adry)", "del Sale"])
-    telegram.sendmessage("Secondo me è colpa {accusato}...".format(accusato=accusato))
+    telegram.sendmessage("Secondo me è colpa {accusato}...".format(accusato=accusato), sentin, source)
 
 
 # Ciclo principale del bot
