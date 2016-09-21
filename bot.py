@@ -431,7 +431,6 @@ def balurage():
 
 
 def lolfree():
-    global lolfreestring
     # Visualizza i campioni gratuiti di LoL di questa settimana
     print("@" + username + ": /lolfree")
     # Informa Telegram che il messaggio è stato ricevuto.
@@ -439,11 +438,12 @@ def lolfree():
     ora = time.gmtime()
     cmd = text.split(" ", 1)
     if len(cmd) > 1:
-        refresh = cmd[1].startswith("refresh")
+        refresh_requested = cmd[1].startswith("refresh")
     else:
-        refresh = False
+        refresh_requested = False
     # Controlla se i dati sono già stati scaricati.
-    if lolfreestring is None or refresh:
+    global lolfreestring
+    if lolfreestring == "" or refresh_requested:
         # Crea un nuovo set di dati.
         print("Aggiornamento champ gratuiti di League of Legends...")
         lolfreestring = "Champion gratuiti del `" + str(ora.tm_mday) + "/" + str(ora.tm_mon) + "/" + \
