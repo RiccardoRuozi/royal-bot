@@ -60,7 +60,7 @@ def ciaoruozi():
 def ombromanto():
     print("@" + username + ": /ombromanto")
     # Ma chi è ombromanto?
-    telegram.sendmessage("Ombromanto è @Dailir, Frank!", sentin, source)
+    telegram.sendmessage("Ombromanto è @Dailir!", sentin, source)
 
 
 def potatogift():
