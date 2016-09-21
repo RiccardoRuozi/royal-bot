@@ -63,8 +63,8 @@ def ombromanto():
     telegram.sendmessage("Ombromanto è @Dailir!", sentin, source)
 
 
-def playing():
-    print("@" + username + ": /playing")
+def steamplayers():
+    print("@" + username + ": /steamplayers")
     # Informa Telegram che il messaggio è stato ricevuto e visualizza Royal Bot sta scrivendo.
     telegram.sendchataction(sentin)
     cmd = text.split(" ")
@@ -75,9 +75,10 @@ def playing():
         if n is None:
             telegram.sendmessage(chr(9888) + " L'app specificata non esiste!", sentin, source)
         else:
-            telegram.sendmessage(
-                'In questo momento, ' + str(n) + ' persone stanno giocando a [' + cmd[1] +
-                '](https://steamdb.info/app/' + cmd[1] + '/graphs/)', sentin, source)
+            name = steam.getschemaforgame(cmd[1])['game']['gameName']
+            telegram.sendmessage("In questo momento, *{n}* persone stanno giocando a "
+                                 "[{name}](https://steamdb.info/app/{id}/graphs/)."
+                                 .format(n=str(n), name=name, id=cmd[1]), sentin, source)
     else:
         telegram.sendmessage(chr(9888) + ' Non hai specificato un AppID!\n'
                                          'La sintassi corretta è /playing <AppID>.', sentin, source)
