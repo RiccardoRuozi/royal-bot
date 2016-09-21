@@ -283,14 +283,6 @@ def roll():
                                  source)
 
 
-def automah():
-    print("@" + username + ": /automah")
-    # Invia il messaggio.
-    telegram.sendmessage("Automaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa! Devi funzionare, cavolo!",
-                         sentin,
-                         source)
-
-
 def cv():
     print("@" + username + ": /cv")
     # Elenco di tutte le persone online su Discord
