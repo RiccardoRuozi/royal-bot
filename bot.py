@@ -456,6 +456,13 @@ def lolfree():
     telegram.sendmessage(lolfreestring, sentin, source)
 
 
+def getrygimage():
+    # Ricevi il link alla tua immagine del profilo Royal Games.
+    print("@" + username + ": getrygimage")
+    telegram.sendmessage("[Scarica](https://dl.dropboxusercontent.com/u/23313381/Logo/Personali/{tag}.png)"
+                         " la tua immagine del profilo Royal Games!".format(tag=royalgames[username.lower()]['icon']),
+                         sentin, source)
+
 # Ciclo principale del bot
 print("Bot avviato!")
 while True:
@@ -531,6 +538,8 @@ while True:
                     lolfree()
                 elif text.startswith('/ombromanto'):
                     ombromanto()
+                elif text.startswith('/getrygimage'):
+                    getrygimage()
             else:
                 print("@" + username + " bloccato.")
     except Exception as e:
