@@ -469,7 +469,7 @@ def smecds():
     # Secondo me, è colpa...
     print("@" + username + ": /smecds")
     accusato = random.sample(["dello stagista", "degli sposi", "di Santinelli", "di Sensei", "di Steffo", "di Spaggia",
-                              "della sedia", "di Satana", "del Sangue (degli occhi di Adry)", "del Sale"])
+                              "della sedia", "di Satana", "del Sangue (degli occhi di Adry)", "del Sale"], 1)
     telegram.sendmessage("Secondo me è colpa {accusato}...".format(accusato=accusato), sentin, source)
 
 
