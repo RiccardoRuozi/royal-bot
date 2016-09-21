@@ -539,10 +539,6 @@ while True:
                     lolfree()
                 elif text.startswith('/ombromanto'):
                     ombromanto()
-                elif text.startswith('/crash'):
-                    # Crasha il bot. Mi sembra geniale.
-                    if username == 'Steffo':
-                        raise Exception("Ho appena fatto crashare tutto apposta. Sono un genio.")
             else:
                 print("@" + username + " bloccato.")
     except Exception as e:
