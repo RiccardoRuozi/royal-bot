@@ -550,6 +550,8 @@ while True:
                     ombromanto()
                 elif text.startswith('/getrygimage'):
                     getrygimage()
+                elif text.startswith('/smecds'):
+                    smecds()
             else:
                 print("@" + username + " bloccato.")
     except Exception as e:
