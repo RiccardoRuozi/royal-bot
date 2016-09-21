@@ -458,16 +458,25 @@ def lolfree():
 
 def getrygimage():
     # Ricevi il link alla tua immagine del profilo Royal Games.
-    print("@" + username + ": getrygimage")
+    print("@" + username + ": /getrygimage")
     telegram.sendmessage("[Scarica](https://dl.dropboxusercontent.com/u/23313381/Logo/Personali/{tag}.png)"
                          " la tua immagine del profilo Royal Games!".format(tag=royalgames[username.lower()]['icon']),
                          sentin, source)
+
+
+def smecds():
+    # Secondo me, è colpa...
+    print("@" + username + ": /smecds")
+    accusato = random.sample(["dello stagista", "degli sposi", "di Santinelli", "di Sensei", "di Steffo", "di Spaggia",
+                              "della sedia", "di Satana", "del Sangue (degli occhi di Adry)", "del Sale"])
+    telegram.sendmessage("Secondo me è colpa {accusato}...".format(accusato=accusato))
+
 
 # Ciclo principale del bot
 print("Bot avviato!")
 while True:
     try:
-        # Guarda il comando ricevuto.
+        # Guarda il comando  .
         msg = telegram.getupdates()
         # Se il messaggio non è una notifica di servizio...
         if 'edit' in msg:
