@@ -17,6 +17,8 @@ lolfreestring = str()
 
 random.seed()
 
+# Livello di balurage dall'ultimo riavvio
+ragelevel = 0
 
 # Spostiamo qui le funzioni del bot, così è un po' più leggibile
 def wow():
@@ -420,8 +422,12 @@ def leggi():
 def balurage():
     print("@" + username + ": /balurage")
     # Rispondi commentando l'E3.
-    telegram.sendmessage("MADDEN MADDEN MADDEN MADDEN MADDEN MADDEN MADDEN MADDEN MADDEN",
-                         sentin, source)
+    tosend = str()
+    global ragelevel
+    ragelevel += 1
+    for rage in range(0, ragelevel):
+        tosend += "MADDEN "
+    telegram.sendmessage(tosend, sentin, source)
 
 
 def lolfree():
