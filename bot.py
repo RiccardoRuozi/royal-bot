@@ -396,7 +396,7 @@ def diario():
     cmd = text.split(" ", 1)
     if len(cmd) > 1:
         if cmd[1].isprintable():
-            cmd[1] = cmd[1].replace("\n", " ")
+            cmd[1] = cmd[1].replace("\n", " ").encode("unicode_escape")
             fdiario = filemanager.readfile("diario.txt")
             fdiario += str(int(time.time())) + "|" + cmd[1] + "\n"
             filemanager.writefile("diario.txt", fdiario)
