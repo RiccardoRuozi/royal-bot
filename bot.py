@@ -285,15 +285,17 @@ def roll():
 
 def cv():
     print("@" + username + ": /cv")
-    # Elenco di tutte le persone online su Discord
-    tosend = "*Su Discord ora:*\n"
+    # Ottieni i dati dal server della Royal Games
     r = discord.getwidgetdata("176353500710699008")
-    musicstatus = str()
+    # Elenco di tutte le persone online su Discord
+    tosend = "*Online su Discord, nel server {servername}:*\n".format(servername=r['name'])
+    # Qui inizia il codice peggiore di sempre
     for member in r['members']:
         m = dict()
         if 'bot' not in member or not member['bot']:
-            # Credo di aver scritto il peggior algoritmo di sempre. gg me
+            # Se una persona è connessa in chat vocale
             if 'channel_id' in member:
+                # Controlla il suo stato (esclusa, mutata, normale) e scegli l'emoji appropriata
                 if member['deaf'] or member['self_deaf']:
                     m['emoji'] = chr(128263)
                 elif member['mute'] or member['self_mute']:
@@ -301,17 +303,22 @@ def cv():
                 else:
                     m['emoji'] = chr(128266)
                 m['channelname'] = discord.getchannelname(r, member['channel_id'])
+            # Altrimenti
             else:
+                # Controlla il suo stato (online, in gioco, afk) e scegli l'emoji appropriata
                 if member['status'] == "online":
-                    if 'game' in member:
-                        m['emoji'] = chr(128308)
-                    else:
-                        m['emoji'] = chr(128309)
+                    # Qui giace il pallino rosso se uno era in game, propongo di metterlo per quando uno sta streamando
+                    m['emoji'] = chr(128309)
                 elif member['status'] == "idle":
                     m['emoji'] = chr(9899)
+            # Aggiungi il nome del gioco a destra del nome
             if 'game' in member:
                 m['gamename'] = member['game']['name']
-            m['name'] = member['username']
+            # Visualizza il nickname se presente, altrimenti visualizza l'username
+            if 'nick' in m:
+                member['username'] = m['nick']
+            else:
+                m['name'] = member['username']
             if 'gamename' in m and 'channelname' in m:
                 tosend += "{emoji} *{channelname}* {name} | _{gamename}_\n".format(**m)
             elif 'gamename' in m:
@@ -323,11 +330,9 @@ def cv():
         # Controlla se l'utente è royal music
         elif member['id'] == "176358898851250176":
             if 'game' in member:
-                musicstatus = "{emoji} *{channelname}* {songname}\n" \
+                tosend += "{emoji} *{channelname}* {songname}\n" \
                     .format(emoji="\U0001F3B5", channelname=discord.getchannelname(r, member['channel_id']),
                             songname=member['game']['name'])
-    if musicstatus != "":
-        tosend += musicstatus
     telegram.sendmessage(tosend, sentin, source)
 
 
