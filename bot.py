@@ -259,14 +259,18 @@ def roll():
         try:
             m = int(cmd[1])
         except ValueError:
-            telegram.sendmessage(chr(9888) + " Il numero specificato non è un intero.", sentin, source)
+            if cmd[1] == "tm":
+                telegram.sendmessage("TM è così grassa che se la lanci rotola!")
+            else:
+                telegram.sendmessage(chr(9888) + " Il numero specificato non è un intero.", sentin, source)
             return
     else:
         # Imposta il numero massimo a 100.
         m = 100
     # Prova a generare un numero casuale.
     if m == 34261891881215712181524122318242223183627453833:
-        telegram.sendmessage("Numero casuale da 1 a _get rekt_:\n*@FrankRekt è scarso*", sentin, source)
+        telegram.sendmessage("Numero casuale da 1 a _34261891881215712181524122318242223183627453833_:\n"
+                             "*Frank è scarso*", sentin, source)
     else:
         try:
             n = random.randrange(m) + 1
