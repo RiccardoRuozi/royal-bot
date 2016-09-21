@@ -17,6 +17,9 @@ lolfreestring = str()
 
 random.seed()
 
+# Livello di balurage dall'ultimo riavvio
+ragelevel = 0
+
 
 # Spostiamo qui le funzioni del bot, così è un po' più leggibile
 def wow():
@@ -40,23 +43,31 @@ def ciaoruozi():
     print("@" + username + ": /ciaoruozi")
     # Ciao Ruozi.
     if username.lower() == "ruozir":
-        telegram.sendmessage("Ciao me", sentin, source)
+        # Manda un messaggio casuale tra quelli nella lista
+        chosen_msg = random.sample(["Ciao me!",
+                                    "Ciao ciao ciao!",
+                                    "1 ciaoruozi = 1000 euro per me",
+                                    "La mi dico: #CiaoRuozi",
+                                    "Ciao eh me stesso!"], 1)
+        telegram.sendmessage(chosen_msg, sentin, source)
     else:
-        telegram.sendmessage("Ciao Ruozi", sentin, source)
+        # Manda un messaggio casuale tra quelli nella lista
+        chosen_msg = random.sample(["Ciao Ruozi!",
+                                    "Ciao ciao ciao!",
+                                    "1 ciaoruozi = 1 prayer",
+                                    "La RYG dice: #CiaoRuozi",
+                                    "Ciao eh Ruozi!"], 1)
+        telegram.sendmessage(chosen_msg, sentin, source)
 
 
 def ombromanto():
     print("@" + username + ": /ombromanto")
     # Ma chi è ombromanto?
-    telegram.sendmessage("Ombromanto è @Dailir, Frank!", sentin, source)
+    telegram.sendmessage("Ombromanto è @Dailir!", sentin, source)
 
 
-def potatogift():
-    telegram.senddocument("BQADAgADHwQAAh8GgAEmS1UU1zyaLQI", sentin, source)
-
-
-def playing():
-    print("@" + username + ": /playing")
+def steamplayers():
+    print("@" + username + ": /steamplayers")
     # Informa Telegram che il messaggio è stato ricevuto e visualizza Royal Bot sta scrivendo.
     telegram.sendchataction(sentin)
     cmd = text.split(" ")
@@ -67,9 +78,10 @@ def playing():
         if n is None:
             telegram.sendmessage(chr(9888) + " L'app specificata non esiste!", sentin, source)
         else:
-            telegram.sendmessage(
-                'In questo momento, ' + str(n) + ' persone stanno giocando a [' + cmd[1] +
-                '](https://steamdb.info/app/' + cmd[1] + '/graphs/)', sentin, source)
+            name = steam.getschemaforgame(cmd[1])['game']['gameName']
+            telegram.sendmessage("In questo momento, *{n}* persone stanno giocando a "
+                                 "[{name}](https://steamdb.info/app/{id}/graphs/)."
+                                 .format(n=str(n), name=name, id=cmd[1]), sentin, source)
     else:
         telegram.sendmessage(chr(9888) + ' Non hai specificato un AppID!\n'
                                          'La sintassi corretta è /playing <AppID>.', sentin, source)
@@ -78,26 +90,7 @@ def playing():
 def ehoh():
     print("@" + username + ": /ehoh")
     # Rispondi con Eh, oh. Sono cose che capitano.
-    telegram.sendmessage("Eh, oh. Sono cose che capitano.", sentin, source)
-
-
-def saldi():
-    print("@" + username + ": /saldi")
-    # Visualizza il link di isthereanydeal con i saldi di un gioco.
-    # Informa Telegram che il messaggio è stato ricevuto e visualizza Royal Bot sta scrivendo.
-    telegram.sendchataction(sentin)
-    cmd = text.split(" ", 1)
-    if len(cmd) == 2:
-        telegram.sendmessage(
-            'Visualizza le offerte di '
-            '[' + cmd[1] + '](https://isthereanydeal.com/#/search:' + cmd[1].replace(' ', '%20') +
-            ";/scroll:%23gamelist).", sentin, source)
-    else:
-        telegram.sendmessage(chr(9888) +
-                             " Non hai specificato un gioco!"
-                             "[Visualizza tutte le offerte]"
-                             "(https://isthereanydeal.com/#/search:.;/scroll:%23gamelist).",
-                             sentin, source)
+    telegram.sendmessage("Eh, oh. Sono cose che capitano. ¯\_(ツ)_/¯", sentin, source)
 
 
 def sbam():
@@ -269,14 +262,18 @@ def roll():
         try:
             m = int(cmd[1])
         except ValueError:
-            telegram.sendmessage(chr(9888) + " Il numero specificato non è un intero.", sentin, source)
+            if cmd[1] == "tm":
+                telegram.sendmessage("TM è così grassa che se la lanci rotola!", sentin, source)
+            else:
+                telegram.sendmessage(chr(9888) + " Il numero specificato non è un intero.", sentin, source)
             return
     else:
         # Imposta il numero massimo a 100.
         m = 100
     # Prova a generare un numero casuale.
     if m == 34261891881215712181524122318242223183627453833:
-        telegram.sendmessage("Numero casuale da 1 a _get rekt_:\n*@FrankRekt è scarso*", sentin, source)
+        telegram.sendmessage("Numero casuale da 1 a _34261891881215712181524122318242223183627453833_:\n"
+                             "*Frank è scarso*", sentin, source)
     else:
         try:
             n = random.randrange(m) + 1
@@ -289,25 +286,19 @@ def roll():
                                  source)
 
 
-def automah():
-    print("@" + username + ": /automah")
-    # Invia il messaggio.
-    telegram.sendmessage("Automaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa! Devi funzionare, cavolo!",
-                         sentin,
-                         source)
-
-
 def cv():
     print("@" + username + ": /cv")
-    # Elenco di tutte le persone online su Discord
-    tosend = "*Su Discord ora:*\n"
+    # Ottieni i dati dal server della Royal Games
     r = discord.getwidgetdata("176353500710699008")
-    musicstatus = str()
+    # Elenco di tutte le persone online su Discord
+    tosend = "*Online su Discord, nel server {servername}:*\n".format(servername=r['name'])
+    # Qui inizia il codice peggiore di sempre
     for member in r['members']:
         m = dict()
         if 'bot' not in member or not member['bot']:
-            # Credo di aver scritto il peggior algoritmo di sempre. gg me
+            # Se una persona è connessa in chat vocale
             if 'channel_id' in member:
+                # Controlla il suo stato (esclusa, mutata, normale) e scegli l'emoji appropriata
                 if member['deaf'] or member['self_deaf']:
                     m['emoji'] = chr(128263)
                 elif member['mute'] or member['self_mute']:
@@ -315,17 +306,22 @@ def cv():
                 else:
                     m['emoji'] = chr(128266)
                 m['channelname'] = discord.getchannelname(r, member['channel_id'])
+            # Altrimenti
             else:
+                # Controlla il suo stato (online, in gioco, afk) e scegli l'emoji appropriata
                 if member['status'] == "online":
-                    if 'game' in member:
-                        m['emoji'] = chr(128308)
-                    else:
-                        m['emoji'] = chr(128309)
+                    # Qui giace il pallino rosso se uno era in game, propongo di metterlo per quando uno sta streamando
+                    m['emoji'] = chr(128309)
                 elif member['status'] == "idle":
                     m['emoji'] = chr(9899)
+            # Aggiungi il nome del gioco a destra del nome
             if 'game' in member:
                 m['gamename'] = member['game']['name']
-            m['name'] = member['username']
+            # Visualizza il nickname se presente, altrimenti visualizza l'username
+            if 'nick' in m:
+                member['username'] = m['nick']
+            else:
+                m['name'] = member['username']
             if 'gamename' in m and 'channelname' in m:
                 tosend += "{emoji} *{channelname}* {name} | _{gamename}_\n".format(**m)
             elif 'gamename' in m:
@@ -337,11 +333,9 @@ def cv():
         # Controlla se l'utente è royal music
         elif member['id'] == "176358898851250176":
             if 'game' in member:
-                musicstatus = "{emoji} *{channelname}* {songname}\n" \
+                tosend += "{emoji} *{channelname}* {songname}\n" \
                     .format(emoji="\U0001F3B5", channelname=discord.getchannelname(r, member['channel_id']),
                             songname=member['game']['name'])
-    if musicstatus != "":
-        tosend += musicstatus
     telegram.sendmessage(tosend, sentin, source)
 
 
@@ -405,7 +399,7 @@ def diario():
     cmd = text.split(" ", 1)
     if len(cmd) > 1:
         if cmd[1].isprintable():
-            cmd[1] = cmd[1].replace("\n", " ")
+            cmd[1] = cmd[1].replace("\n", " ").encode("unicode_escape")
             fdiario = filemanager.readfile("diario.txt")
             fdiario += str(int(time.time())) + "|" + cmd[1] + "\n"
             filemanager.writefile("diario.txt", fdiario)
@@ -429,12 +423,15 @@ def leggi():
 def balurage():
     print("@" + username + ": /balurage")
     # Rispondi commentando l'E3.
-    telegram.sendmessage("MADDEN MADDEN MADDEN MADDEN MADDEN MADDEN MADDEN MADDEN MADDEN",
-                         sentin, source)
+    tosend = str()
+    global ragelevel
+    ragelevel += 1
+    for rage in range(0, ragelevel):
+        tosend += "MADDEN "
+    telegram.sendmessage(tosend, sentin, source)
 
 
 def lolfree():
-    global lolfreestring
     # Visualizza i campioni gratuiti di LoL di questa settimana
     print("@" + username + ": /lolfree")
     # Informa Telegram che il messaggio è stato ricevuto.
@@ -442,11 +439,12 @@ def lolfree():
     ora = time.gmtime()
     cmd = text.split(" ", 1)
     if len(cmd) > 1:
-        refresh = cmd[1].startswith("refresh")
+        refresh_requested = cmd[1].startswith("refresh")
     else:
-        refresh = False
+        refresh_requested = False
     # Controlla se i dati sono già stati scaricati.
-    if lolfreestring is None or refresh:
+    global lolfreestring
+    if lolfreestring == "" or refresh_requested:
         # Crea un nuovo set di dati.
         print("Aggiornamento champ gratuiti di League of Legends...")
         lolfreestring = "Champion gratuiti del `" + str(ora.tm_mday) + "/" + str(ora.tm_mon) + "/" + \
@@ -459,11 +457,27 @@ def lolfree():
     telegram.sendmessage(lolfreestring, sentin, source)
 
 
+def getrygimage():
+    # Ricevi il link alla tua immagine del profilo Royal Games.
+    print("@" + username + ": /getrygimage")
+    telegram.sendmessage("[Scarica](https://dl.dropboxusercontent.com/u/23313381/Logo/Personali/{tag}.png)"
+                         " la tua immagine del profilo Royal Games!".format(tag=royalgames[username.lower()]['icon']),
+                         sentin, source)
+
+
+def smecds():
+    # Secondo me, è colpa...
+    print("@" + username + ": /smecds")
+    accusato = random.sample(["dello stagista", "degli sposi", "di Santinelli", "di Sensei", "di Steffo", "di Spaggia",
+                              "della sedia", "di Satana", "del Sangue (degli occhi di Adry)", "del Sale"])
+    telegram.sendmessage("Secondo me è colpa {accusato}...".format(accusato=accusato), sentin, source)
+
+
 # Ciclo principale del bot
 print("Bot avviato!")
 while True:
     try:
-        # Guarda il comando ricevuto.
+        # Guarda il comando  .
         msg = telegram.getupdates()
         # Se il messaggio non è una notifica di servizio...
         if 'edit' in msg:
@@ -510,24 +524,16 @@ while True:
                     ciaostefanino()
                 elif text.startswith('/balurage') or text.startswith("/madden"):
                     balurage()
-                elif text.startswith('/potatogift'):
-                    potatogift()
                 elif text.startswith('/ciaoruozi'):
                     ciaoruozi()
                 elif text.startswith('/ehoh'):
                     ehoh()
-                elif text.startswith('/playing'):
-                    playing()
-                elif text.startswith('/saldi'):
-                    saldi()
-                elif text.startswith('/sbam'):
+                elif text.startswith('/sbam') or text.startswith('/rekt'):
                     sbam()
                 elif text.startswith('/osu'):
                     osucmd()
                 elif text.startswith('/roll'):
                     roll()
-                elif text.startswith('/automah'):
-                    automah()
                 elif text.startswith('/cv'):
                     cv()
                 elif text.startswith('/online'):
@@ -542,14 +548,13 @@ while True:
                     lolfree()
                 elif text.startswith('/ombromanto'):
                     ombromanto()
-                elif text.startswith('/crash'):
-                    # Crasha il bot. Mi sembra geniale.
-                    if username == 'Steffo':
-                        raise Exception("Ho appena fatto crashare tutto apposta. Sono un genio.")
+                elif text.startswith('/getrygimage'):
+                    getrygimage()
             else:
                 print("@" + username + " bloccato.")
     except Exception as e:
-        telegram.sendmessage(chr(9762) + " *ERRORE CRITICO:\n*"
-                                         "{0}\n".format(repr(e)), -2141322)
+        telegram.sendmessage(chr(9762) + " *Errore critico:\n*"
+                                         "{0}\n\n"
+                                         "Secondo me, è colpa dello stagista.".format(repr(e)), -2141322)
         print("ERRORE CRITICO:\n"
               "{0}".format(repr(e)))
