@@ -507,24 +507,16 @@ while True:
                     ciaostefanino()
                 elif text.startswith('/balurage') or text.startswith("/madden"):
                     balurage()
-                elif text.startswith('/potatogift'):
-                    potatogift()
                 elif text.startswith('/ciaoruozi'):
                     ciaoruozi()
                 elif text.startswith('/ehoh'):
                     ehoh()
-                elif text.startswith('/playing'):
-                    playing()
-                elif text.startswith('/saldi'):
-                    saldi()
-                elif text.startswith('/sbam'):
+                elif text.startswith('/sbam') or text.startswith('/rekt'):
                     sbam()
                 elif text.startswith('/osu'):
                     osucmd()
                 elif text.startswith('/roll'):
                     roll()
-                elif text.startswith('/automah'):
-                    automah()
                 elif text.startswith('/cv'):
                     cv()
                 elif text.startswith('/online'):
@@ -542,7 +534,8 @@ while True:
             else:
                 print("@" + username + " bloccato.")
     except Exception as e:
-        telegram.sendmessage(chr(9762) + " *ERRORE CRITICO:\n*"
-                                         "{0}\n".format(repr(e)), -2141322)
+        telegram.sendmessage(chr(9762) + " *Errore critico:\n*"
+                                         "{0}\n\n"
+                                         "Secondo me, è colpa dello stagista.".format(repr(e)), -2141322)
         print("ERRORE CRITICO:\n"
               "{0}".format(repr(e)))
