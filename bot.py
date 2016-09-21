@@ -63,10 +63,6 @@ def ombromanto():
     telegram.sendmessage("Ombromanto è @Dailir!", sentin, source)
 
 
-def potatogift():
-    telegram.senddocument("BQADAgADHwQAAh8GgAEmS1UU1zyaLQI", sentin, source)
-
-
 def playing():
     print("@" + username + ": /playing")
     # Informa Telegram che il messaggio è stato ricevuto e visualizza Royal Bot sta scrivendo.
