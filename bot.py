@@ -90,25 +90,6 @@ def ehoh():
     telegram.sendmessage("Eh, oh. Sono cose che capitano. ¯\_(ツ)_/¯", sentin, source)
 
 
-def saldi():
-    print("@" + username + ": /saldi")
-    # Visualizza il link di isthereanydeal con i saldi di un gioco.
-    # Informa Telegram che il messaggio è stato ricevuto e visualizza Royal Bot sta scrivendo.
-    telegram.sendchataction(sentin)
-    cmd = text.split(" ", 1)
-    if len(cmd) == 2:
-        telegram.sendmessage(
-            'Visualizza le offerte di '
-            '[' + cmd[1] + '](https://isthereanydeal.com/#/search:' + cmd[1].replace(' ', '%20') +
-            ";/scroll:%23gamelist).", sentin, source)
-    else:
-        telegram.sendmessage(chr(9888) +
-                             " Non hai specificato un gioco!"
-                             "[Visualizza tutte le offerte]"
-                             "(https://isthereanydeal.com/#/search:.;/scroll:%23gamelist).",
-                             sentin, source)
-
-
 def sbam():
     print("@" + username + ": /sbam")
     # Manda l'audio contenente gli sbam di tutti i membri Royal Games.
