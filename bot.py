@@ -40,9 +40,21 @@ def ciaoruozi():
     print("@" + username + ": /ciaoruozi")
     # Ciao Ruozi.
     if username.lower() == "ruozir":
-        telegram.sendmessage("Ciao me", sentin, source)
+        # Manda un messaggio casuale tra quelli nella lista
+        chosen_msg = random.sample(["Ciao me!",
+                                    "Ciao ciao ciao!",
+                                    "1 ciaoruozi = 1000 euro per me",
+                                    "La mi dico: #CiaoRuozi",
+                                    "Ciao eh me stesso!"], 1)
+        telegram.sendmessage(chosen_msg, sentin, source)
     else:
-        telegram.sendmessage("Ciao Ruozi", sentin, source)
+        # Manda un messaggio casuale tra quelli nella lista
+        chosen_msg = random.sample(["Ciao Ruozi!",
+                                    "Ciao ciao ciao!",
+                                    "1 ciaoruozi = 1 prayer",
+                                    "La RYG dice: #CiaoRuozi",
+                                    "Ciao eh Ruozi!"], 1)
+        telegram.sendmessage(chosen_msg, sentin, source)
 
 
 def ombromanto():
