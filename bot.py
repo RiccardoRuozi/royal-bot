@@ -48,7 +48,7 @@ def ciaoruozi():
                                     "Ciao ciao ciao!",
                                     "1 ciaoruozi = 1000 euro per me",
                                     "La mi dico: #CiaoRuozi",
-                                    "Ciao eh me stesso!"], 1)
+                                    "Ciao eh me stesso!"], 1)[0]
         telegram.sendmessage(chosen_msg, sentin, source)
     else:
         # Manda un messaggio casuale tra quelli nella lista
@@ -56,7 +56,7 @@ def ciaoruozi():
                                     "Ciao ciao ciao!",
                                     "1 ciaoruozi = 1 prayer",
                                     "La RYG dice: #CiaoRuozi",
-                                    "Ciao eh Ruozi!"], 1)
+                                    "Ciao eh Ruozi!"], 1)[0]
         telegram.sendmessage(chosen_msg, sentin, source)
 
 
@@ -471,7 +471,7 @@ def smecds():
     print("@" + username + ": /smecds")
     accusato = random.sample(["dello stagista", "degli sposi", "di Santinelli", "di Sensei", "di Steffo", "di Spaggia",
                               "della sedia", "di Satana", "del Sangue (degli occhi di Adry)", "del Sale",
-                              "del Serpente", "della Samsung"], 1)
+                              "del Serpente", "della Samsung"], 1)[0]
     telegram.sendmessage("Secondo me è colpa {accusato}...".format(accusato=accusato), sentin, source)
 
 
