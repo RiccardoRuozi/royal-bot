@@ -406,8 +406,9 @@ def diario():
             telegram.sendmessage("Aggiunto al diario RYG.", sentin, source)
         else:
             telegram.sendmessage(chr(9888) + " Errore nella scrittura del messaggio.\n"
-                                             "Visto che non ho la minima idea delle assurdita che ho scritto qui, "
-                                             "potresti provare a togliere le emoji.", sentin, source)
+                                             "Il messaggio non è compatibile con il diario.\n"
+                                             "Probabilmente contiene emoji o caratteri speciali non visualizzabili.",
+                                 sentin, source)
     else:
         telegram.sendmessage(chr(9888) + " Non hai scritto niente sul diario!\n"
                                          "Sintassi corretta: /diario _quello che vuoi scrivere_",
