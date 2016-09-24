@@ -489,7 +489,7 @@ def version():
     # Visualizza la versione di Royal Bot
     # Solo per UNIX...?
     print("@" + username + ": /version")
-    gitmsg = subprocess.check_output("git describe")
+    gitmsg = subprocess.check_output(["git", "describe"])
     telegram.sendmessage(gitmsg, sentin, source)
 
 
