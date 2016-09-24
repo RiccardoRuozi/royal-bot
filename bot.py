@@ -8,6 +8,7 @@ import random
 import osu
 import lol
 import discord
+import subprocess
 
 # Elenco di username dei membri della RYG
 royalgames = json.loads(filemanager.readfile("db.json"))
@@ -22,6 +23,7 @@ ragelevel = 0
 
 # Pepperoni secret
 secretlevel = 0
+
 
 # Spostiamo qui le funzioni del bot, così è un po' più leggibile
 def wow():
@@ -483,6 +485,14 @@ def smecds():
     telegram.sendmessage("Secondo me è colpa {accusato}...".format(accusato=accusato), sentin, source)
 
 
+def version():
+    # Visualizza la versione di Royal Bot
+    # Solo per UNIX...?
+    print("@" + username + ": /version")
+    msg = subprocess.run("git describe")
+    telegram.sendmessage(msg, sentin, source)
+
+
 # Ciclo principale del bot
 print("Bot avviato!")
 while True:
@@ -544,7 +554,7 @@ while True:
                     osucmd()
                 elif text.startswith('/roll'):
                     roll()
-                elif text.startswith('/cv'):
+                elif text.startswith('/cv') or text.startswtih('/discord'):
                     cv()
                 elif text.startswith('/online'):
                     online()
@@ -554,7 +564,7 @@ while True:
                     diario()
                 elif text.startswith('/leggi'):
                     leggi()
-                elif text.startswith('/lolfree'):
+                elif text.startswith('/lol'):
                     lolfree()
                 elif text.startswith('/ombromanto'):
                     ombromanto()
@@ -564,6 +574,8 @@ while True:
                     smecds()
                 elif text.startswith('/ciaospaggia'):
                     ciaospaggia()
+                elif text.startswith('/version'):
+                    version()
             else:
                 print("@" + username + " bloccato.")
     except Exception as e:
