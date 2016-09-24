@@ -489,8 +489,8 @@ def version():
     # Visualizza la versione di Royal Bot
     # Solo per UNIX...?
     print("@" + username + ": /version")
-    msg = subprocess.run("git describe")
-    telegram.sendmessage(msg, sentin, source)
+    gitmsg = subprocess.check_output("git describe")
+    telegram.sendmessage(gitmsg, sentin, source)
 
 
 # Ciclo principale del bot
