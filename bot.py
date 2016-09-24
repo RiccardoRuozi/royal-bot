@@ -258,12 +258,12 @@ def roll():
     cmd = text.split(' ', 1)
     # Se è stato specificato un numero
     if len(cmd) >= 2:
+        if cmd[1] == "tm":
+            telegram.sendmessage("TM è così grassa che se la lanci rotola!", sentin, source)
         # Controlla che sia convertibile in un intero.
         try:
             m = int(cmd[1])
         except ValueError:
-            if cmd[1] == "tm":
-                telegram.sendmessage("TM è così grassa che se la lanci rotola!", sentin, source)
             else:
                 telegram.sendmessage(chr(9888) + " Il numero specificato non è un intero.", sentin, source)
             return
@@ -470,6 +470,7 @@ def ciaospaggia():
     # Buongiorno, stellina!
     print("@" + username + ": /ciaospaggia")
     telegram.sendmessage("Ma buongiorno, [Stellina](https://telegram.me/doom_darth_vader)!")
+
 
 def smecds():
     # Secondo me, è colpa...
