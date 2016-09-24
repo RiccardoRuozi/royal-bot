@@ -20,6 +20,8 @@ random.seed()
 # Livello di balurage dall'ultimo riavvio
 ragelevel = 0
 
+# Pepperoni secret
+secretlevel = 0
 
 # Spostiamo qui le funzioni del bot, così è un po' più leggibile
 def wow():
@@ -264,8 +266,7 @@ def roll():
         try:
             m = int(cmd[1])
         except ValueError:
-            else:
-                telegram.sendmessage(chr(9888) + " Il numero specificato non è un intero.", sentin, source)
+            telegram.sendmessage(chr(9888) + " Il numero specificato non è un intero.", sentin, source)
             return
     else:
         # Imposta il numero massimo a 100.
