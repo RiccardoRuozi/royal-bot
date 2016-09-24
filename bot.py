@@ -554,7 +554,7 @@ while True:
                     osucmd()
                 elif text.startswith('/roll'):
                     roll()
-                elif text.startswith('/cv') or text.startswtih('/discord'):
+                elif text.startswith('/cv') or text.startswith('/discord'):
                     cv()
                 elif text.startswith('/online'):
                     online()
