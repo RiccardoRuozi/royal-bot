@@ -466,6 +466,11 @@ def getrygimage():
                          sentin, source)
 
 
+def ciaospaggia():
+    # Buongiorno, stellina!
+    print("@" + username + ": /ciaospaggia")
+    telegram.sendmessage("Ma buongiorno, [Stellina](https://telegram.me/doom_darth_vader)!")
+
 def smecds():
     # Secondo me, è colpa...
     print("@" + username + ": /smecds")
@@ -555,6 +560,8 @@ while True:
                     getrygimage()
                 elif text.startswith('/smecds'):
                     smecds()
+                elif text.startswith('/ciaospaggia'):
+                    ciaospaggia()
             else:
                 print("@" + username + " bloccato.")
     except Exception as e:
