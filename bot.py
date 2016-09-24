@@ -470,7 +470,7 @@ def getrygimage():
 def ciaospaggia():
     # Buongiorno, stellina!
     print("@" + username + ": /ciaospaggia")
-    telegram.sendmessage("Ma buongiorno, [Stellina](https://telegram.me/doom_darth_vader)!")
+    telegram.sendmessage("Ma buongiorno, [Stellina](https://telegram.me/doom_darth_vader)!", sentin, source)
 
 
 def smecds():
