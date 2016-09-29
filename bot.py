@@ -313,10 +313,14 @@ def cv():
             else:
                 # Controlla il suo stato (online, in gioco, afk) e scegli l'emoji appropriata
                 if member['status'] == "online":
-                    # Qui giace il pallino rosso se uno era in game, propongo di metterlo per quando uno sta streamando
                     m['emoji'] = chr(128309)
                 elif member['status'] == "idle":
                     m['emoji'] = chr(9899)
+                elif member['status'] == "dnd":
+                    m['emoji'] = chr(128308)
+                else:
+                    # Stato sconosciuto. Fallback nel caso in cui vengano aggiunti nuovi stati.
+                    m['emoji'] = chr(2573)
             # Aggiungi il nome del gioco a destra del nome
             if 'game' in member:
                 m['gamename'] = member['game']['name']
