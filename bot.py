@@ -586,5 +586,5 @@ while True:
         telegram.sendmessage(chr(9762) + " *Errore critico:\n*"
                                          "{0}\n\n"
                                          "Secondo me, è colpa dello stagista.".format(repr(e)), -2141322)
-        print("ERRORE CRITICO:\n"
-              "{0}".format(repr(e)))
+        print("\033[1mERRORE CRITICO:\n"
+              "{0}\033[0m".format(repr(e)))
