@@ -580,6 +580,9 @@ while True:
                     ciaospaggia()
                 elif text.startswith('/version'):
                     version()
+                elif text.startswith('/crash'):
+                    if username == "Steffo":
+                        raise Exception("SMECDS")
             else:
                 print("@" + username + " bloccato.")
     except Exception as e:
