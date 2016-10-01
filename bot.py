@@ -442,6 +442,7 @@ def balurage():
     print("@" + username + ": /balurage")
     # Rispondi commentando l'E3.
     tosend = str()
+    # TODO: Sostituiscimi con un file!
     global ragelevel
     ragelevel += 1
     for rage in range(0, ragelevel):
