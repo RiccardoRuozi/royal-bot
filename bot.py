@@ -41,6 +41,10 @@ def ciaostefanino():
     print("@" + username + ": /ciaostefanino")
     # Rispondi salutando Stefanino.
     telegram.sendmessage("Ciao Stefanino!", sentin, source)
+    if username != "Steffo":
+        telegram.sendmessage("Steffo dice:\n\"Me la pagherai!\"", fromuser, source)
+    else:
+        telegram.sendmessage("Sei improvvisamente impazzito o cosa?", fromuser, source)
 
 
 def ciaoruozi():
@@ -535,6 +539,8 @@ while True:
             text = msg['text']
             # Guarda l'ID della chat in cui è stato inviato
             sentin = msg['chat']['id']
+            # Persona che ha inviato il messaggio
+            fromuser = msg['from']['id']
             # ID del messaggio ricevuto
             source = msg['message_id']
             # Nome da visualizzare nella console per capire chi accidenti è che invia messaggi strani
