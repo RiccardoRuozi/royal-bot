@@ -556,7 +556,8 @@ while True:
             if username.lower() in royalgames:
                 # Riconosci il comando.
                 # Viene usato startswith perchè il comando potrebbe anche essere inviato in forma /ciao@RoyalBot.
-                if text.startswith('/ahnonlosoio'):
+                # Non si potrebbe migliorare qui in qualche modo? Tipo con un dict.
+                if text.startswith('/ahnonlosoio') or text.startswith("/ahboh"):
                     ahnonlosoio()
                 elif text.startswith('/ciaostefanino'):
                     ciaostefanino()
