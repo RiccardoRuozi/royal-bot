@@ -50,9 +50,12 @@ def ciaoruozi():
         # Manda un messaggio casuale tra quelli nella lista
         chosen_msg = random.sample(["Ciao me!",
                                     "Ciao ciao ciao!",
-                                    "1 ciaoruozi = 1000 euro per me",
-                                    "La mi dico: #CiaoRuozi",
-                                    "Ciao eh me stesso!"], 1)[0]
+                                    "1 ciaoruozi = 1000€ per me",
+                                    "Ruozi si dice: #CiaoRuozi",
+                                    "Ciao eh me!",
+                                    "Ehi me, ma ciao!",
+                                    "Ma ciao me stesso!",
+                                    "Me me me! Ciao!"], 1)[0]
         telegram.sendmessage(chosen_msg, sentin, source)
     else:
         # Manda un messaggio casuale tra quelli nella lista
@@ -60,7 +63,10 @@ def ciaoruozi():
                                     "Ciao ciao ciao!",
                                     "1 ciaoruozi = 1 prayer",
                                     "La RYG dice: #CiaoRuozi",
-                                    "Ciao eh Ruozi!"], 1)[0]
+                                    "Ciao eh Ruozi!",
+                                    "Ehi Ruozi, ma ciao!",
+                                    "Ma ciao Ruozi!",
+                                    "Ruozi ruozi ruozi! Ciao!"], 1)[0]
         telegram.sendmessage(chosen_msg, sentin, source)
 
 
