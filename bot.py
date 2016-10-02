@@ -9,7 +9,7 @@ import osu
 import lol
 import discord
 import subprocess
-from steam-match i
+from steammatch import steammatch  # Nice code you got here
 
 # Elenco di username dei membri della RYG
 royalgames = json.loads(filemanager.readfile("db.json"))
@@ -510,6 +510,29 @@ def version():
     telegram.sendmessage(gitmsg, sentin, source)
 
 
+def match():
+    # Visualizza tutti i giochi condivisi tra x persone.
+    print("@" + username + ": /match")
+    # Informa Telegram che il messaggio è stato ricevuto.
+    telegram.sendchataction(sentin)
+    # Prepara il match
+    cmd = text.split(" ")
+    tobematched = list()
+    if len(cmd) > 2:
+        del cmd[0]
+        for username in cmd:
+            if username in royalgames:
+                if "steam" in royalgames[username]:
+                    tobematched.append(royalgames[username]["steam"])
+    m = list(steammatch.compare(tobematched))
+    # Prepara il messaggio
+    tosend = str()
+    for game in m:
+        tosend += "- {game}\n".format(game=game)
+    # Manda il messaggio
+    telegram.sendmessage(tosend, sentin, source)
+
+
 # Ciclo principale del bot
 print("Bot avviato!")
 while True:
@@ -596,6 +619,8 @@ while True:
                     ciaospaggia()
                 elif text.startswith('/version'):
                     version()
+                elif text.startswith('/match'):
+                    match()
                 elif text.startswith('/crash'):
                     if username == "Steffo":
                         raise Exception("SMECDS")
