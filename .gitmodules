@@ -1,0 +1,3 @@
+[submodule "steam-match"]
+	path = steam-match
+	url = https://github.com/Steffo99/steam-match.git
