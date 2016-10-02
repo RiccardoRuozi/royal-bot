@@ -521,7 +521,7 @@ def match():
     if len(cmd) > 2:
         del cmd[0]
         for name in cmd:
-            if name in royalgames:
+            if name.lower() in royalgames:
                 if "steam" in royalgames[name.lower()]:
                     tobematched.append(royalgames[name.lower()]["steam"])
     if len(tobematched) > 1:
