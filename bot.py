@@ -520,10 +520,10 @@ def match():
     tobematched = list()
     if len(cmd) > 2:
         del cmd[0]
-        for username in cmd:
+        for name in cmd:
             if username in royalgames:
-                if "steam" in royalgames[username]:
-                    tobematched.append(royalgames[username]["steam"])
+                if "steam" in royalgames[name]:
+                    tobematched.append(royalgames[name]["steam"])
     m = list(steammatch.compare(tobematched))
     # Prepara il messaggio
     tosend = str()
