@@ -522,15 +522,19 @@ def match():
         del cmd[0]
         for name in cmd:
             if username in royalgames:
-                if "steam" in royalgames[name]:
-                    tobematched.append(royalgames[name]["steam"])
-    m = list(steammatch.compare(tobematched))
-    # Prepara il messaggio
-    tosend = str()
-    for game in m:
-        tosend += "- {game}\n".format(game=game)
-    # Manda il messaggio
-    telegram.sendmessage(tosend, sentin, source)
+                if "steam" in royalgames[name.lower()]:
+                    tobematched.append(royalgames[name.lower()]["steam"])
+    if tobematched > 2:
+        m = list(steammatch.compare(tobematched))
+        # Prepara il messaggio
+        tosend = str()
+        for game in m:
+            tosend += "- {game}\n".format(game=game)
+        # Manda il messaggio
+        telegram.sendmessage(tosend, sentin, source)
+    else:
+        telegram.sendmessage(chr(9888) + "Non sono stati specificati abbastanza utenti per eseguire l'intersezione.",
+                             sentin, source)
 
 
 # Ciclo principale del bot
