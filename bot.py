@@ -9,7 +9,7 @@ import osu
 import lol
 import discord
 import subprocess
-from sm import steammatch  # Nice code you got here
+import sm.steammatch as steammatch
 
 # Elenco di username dei membri della RYG
 royalgames = json.loads(filemanager.readfile("db.json"))
