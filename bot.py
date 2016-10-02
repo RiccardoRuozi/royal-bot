@@ -524,7 +524,7 @@ def match():
             if username in royalgames:
                 if "steam" in royalgames[name.lower()]:
                     tobematched.append(royalgames[name.lower()]["steam"])
-    if tobematched > 2:
+    if len(tobematched) > 2:
         m = list(steammatch.compare(tobematched))
         # Prepara il messaggio
         tosend = str()
