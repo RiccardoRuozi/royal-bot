@@ -337,7 +337,7 @@ def cv():
             else:
                 m['name'] = member['username']
             tosend += "{emoji} {name}".format(emoji=m['emoji'], name=m['name'])
-            elif 'gamename' in m:
+            if 'gamename' in m:
                 tosend += " | _{gamename}_".format(gamename=m['gamename'])
             elif 'channelname' in m:
                 tosend += " | {vemoji} *{channelname}*".format(vemoji=m['vemoji'], channelname=m['channelname'])
