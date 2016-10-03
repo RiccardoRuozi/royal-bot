@@ -10,6 +10,7 @@ import lol
 import discord
 import subprocess
 import sm.steammatch as steammatch
+import db
 
 # Elenco di username dei membri della RYG
 royalgames = json.load("db.json")
@@ -514,9 +515,8 @@ def match():
     if len(cmd) > 2:
         del cmd[0]
         for name in cmd:
-            if name.lower() in royalgames:
-                if "steam" in royalgames[name.lower()]:
-                    tobematched.append(royalgames[name.lower()]["steam"])
+            userdata = db.findbyname(name)
+            tobematched += userdata['steam']
     if len(tobematched) > 1:
         m = list(steammatch.compare(tobematched))
         if len(m) > 0:
