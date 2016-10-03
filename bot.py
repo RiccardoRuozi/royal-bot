@@ -22,9 +22,6 @@ random.seed()
 # Livello di balurage dall'ultimo riavvio
 ragelevel = 0
 
-# Pepperoni secret
-secretlevel = 0
-
 
 # Spostiamo qui le funzioni del bot, così è un po' più leggibile
 def wow():
