@@ -10,20 +10,15 @@ import lol
 import discord
 import subprocess
 import sm.steammatch as steammatch
+import db
 
 # Elenco di username dei membri della RYG
-royalgames = json.loads(filemanager.readfile("db.json"))
+royalgames = json.load("db.json")
 
 # Stringa dove mettere l'elenco di champion di lol gratuiti
 lolfreestring = str()
 
 random.seed()
-
-# Livello di balurage dall'ultimo riavvio
-ragelevel = 0
-
-# Pepperoni secret
-secretlevel = 0
 
 
 # Spostiamo qui le funzioni del bot, così è un po' più leggibile
@@ -105,7 +100,7 @@ def steamplayers():
 def ehoh():
     print("@" + username + ": /ehoh")
     # Rispondi con Eh, oh. Sono cose che capitano.
-    telegram.sendmessage("Eh, oh. Sono cose che capitano. ¯\_(ツ)_/¯", sentin, source)
+    telegram.sendmessage("Eh, oh. Sono cose che capitano.", sentin, source)
 
 
 def sbam():
@@ -314,14 +309,15 @@ def cv():
             if 'channel_id' in member:
                 # Controlla il suo stato (esclusa, mutata, normale) e scegli l'emoji appropriata
                 if member['deaf'] or member['self_deaf']:
-                    m['emoji'] = chr(128263)
+                    m['vemoji'] = chr(128263)
                 elif member['mute'] or member['self_mute']:
-                    m['emoji'] = chr(128264)
+                    m['vemoji'] = chr(128264)
                 else:
-                    m['emoji'] = chr(128266)
+                    m['vemoji'] = chr(128266)
                 m['channelname'] = discord.getchannelname(r, member['channel_id'])
             # Altrimenti
             else:
+                m['vemoji'] = ""
                 # Controlla il suo stato (online, in gioco, afk) e scegli l'emoji appropriata
                 if member['status'] == "online":
                     m['emoji'] = chr(128309)
@@ -340,18 +336,16 @@ def cv():
                 member['username'] = m['nick']
             else:
                 m['name'] = member['username']
-            if 'gamename' in m and 'channelname' in m:
-                tosend += "{emoji} *{channelname}* {name} | _{gamename}_\n".format(**m)
-            elif 'gamename' in m:
-                tosend += "{emoji} {name} | _{gamename}_\n".format(**m)
+            tosend += "{emoji} {name}".format(emoji=m['emoji'], name=m['name'])
+            if 'gamename' in m:
+                tosend += " | _{gamename}_".format(gamename=m['gamename'])
             elif 'channelname' in m:
-                tosend += "{emoji} *{channelname}* {name}\n".format(**m)
-            else:
-                tosend += "{emoji} {name}\n".format(**m)
+                tosend += " | {vemoji} *{channelname}*".format(vemoji=m['vemoji'], channelname=m['channelname'])
+            tosend += "\n"
         # Controlla se l'utente è royal music
         elif member['id'] == "176358898851250176":
             if 'game' in member:
-                tosend += "{emoji} *{channelname}* {songname}\n" \
+                tosend += "{emoji} Music | {emoji} *{channelname}* | {songname}\n" \
                     .format(emoji="\U0001F3B5", channelname=discord.getchannelname(r, member['channel_id']),
                             songname=member['game']['name'])
     telegram.sendmessage(tosend, sentin, source)
@@ -443,9 +437,9 @@ def balurage():
     print("@" + username + ": /balurage")
     # Rispondi commentando l'E3.
     tosend = str()
-    # TODO: Sostituiscimi con un file!
-    global ragelevel
+    ragelevel = filemanager.readfile("ragelevel.txt")
     ragelevel += 1
+    filemanager.writefile("ragelevel.txt", ragelevel)
     for rage in range(0, ragelevel):
         tosend += "MADDEN "
     telegram.sendmessage(tosend, sentin, source)
@@ -498,7 +492,7 @@ def smecds():
                               "della sedia", "di Satana", "del Sangue (degli occhi di Adry)", "del Sale",
                               "del Serpente", "della Samsung", "di /smecds", "della succursale", "di succ",
                               "di Sans", "di [SiivaGunner](https://www.youtube.com/channel/UC9ecwl3FTG66jIKA9JRDtmg)",
-                              "di saaaaaas"], 1)[0]
+                              "di saaaaaas", "del semaforo", "della Seriale", "di Sistemi", "della Supercell"], 1)[0]
     telegram.sendmessage("Secondo me è colpa {accusato}...".format(accusato=accusato), sentin, source)
 
 
@@ -521,19 +515,21 @@ def match():
     if len(cmd) > 2:
         del cmd[0]
         for name in cmd:
-            if name.lower() in royalgames:
-                if "steam" in royalgames[name.lower()]:
-                    tobematched.append(royalgames[name.lower()]["steam"])
+            userdata = db.findbyname(name)
+            tobematched += userdata['steam']
     if len(tobematched) > 1:
         m = list(steammatch.compare(tobematched))
-        # Prepara il messaggio
-        tosend = str()
-        for game in m:
-            tosend += "- {game}\n".format(game=game)
-        # Manda il messaggio
-        telegram.sendmessage(tosend, sentin, source)
+        if len(m) > 0:
+            # Prepara il messaggio
+            tosend = "*Giochi in comune tra questi utenti:*\n"
+            for game in m:
+                tosend += "- {game}\n".format(game=game)
+            # Manda il messaggio
+            telegram.sendmessage(tosend, sentin, source)
+        else:
+            telegram.sendmessage("*Giochi in comune tra questi utenti:*\n_nessuno_", sentin, source)
     else:
-        telegram.sendmessage(chr(9888) + "Non sono stati specificati abbastanza utenti per eseguire l'intersezione.",
+        telegram.sendmessage(chr(9888) + "Non sono stati specificati abbastanza utenti per eseguire l'azione.",
                              sentin, source)
 
 
