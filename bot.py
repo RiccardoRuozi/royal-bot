@@ -519,14 +519,17 @@ def match():
                     tobematched.append(royalgames[name.lower()]["steam"])
     if len(tobematched) > 1:
         m = list(steammatch.compare(tobematched))
-        # Prepara il messaggio
-        tosend = str()
-        for game in m:
-            tosend += "- {game}\n".format(game=game)
-        # Manda il messaggio
-        telegram.sendmessage(tosend, sentin, source)
+        if len(m) > 0:
+            # Prepara il messaggio
+            tosend = "*Giochi in comune tra questi utenti:*\n"
+            for game in m:
+                tosend += "- {game}\n".format(game=game)
+            # Manda il messaggio
+            telegram.sendmessage(tosend, sentin, source)
+        else:
+            telegram.sendmessage("*Giochi in comune tra questi utenti:*\n_nessuno_", sentin, source)
     else:
-        telegram.sendmessage(chr(9888) + "Non sono stati specificati abbastanza utenti per eseguire l'intersezione.",
+        telegram.sendmessage(chr(9888) + "Non sono stati specificati abbastanza utenti per eseguire l'azione.",
                              sentin, source)
 
 
