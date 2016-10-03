@@ -308,14 +308,15 @@ def cv():
             if 'channel_id' in member:
                 # Controlla il suo stato (esclusa, mutata, normale) e scegli l'emoji appropriata
                 if member['deaf'] or member['self_deaf']:
-                    m['emoji'] = chr(128263)
+                    m['vemoji'] = chr(128263)
                 elif member['mute'] or member['self_mute']:
-                    m['emoji'] = chr(128264)
+                    m['vemoji'] = chr(128264)
                 else:
-                    m['emoji'] = chr(128266)
+                    m['vemoji'] = chr(128266)
                 m['channelname'] = discord.getchannelname(r, member['channel_id'])
             # Altrimenti
             else:
+                m['vemoji'] = ""
                 # Controlla il suo stato (online, in gioco, afk) e scegli l'emoji appropriata
                 if member['status'] == "online":
                     m['emoji'] = chr(128309)
@@ -334,18 +335,16 @@ def cv():
                 member['username'] = m['nick']
             else:
                 m['name'] = member['username']
-            if 'gamename' in m and 'channelname' in m:
-                tosend += "{emoji} *{channelname}* {name} | _{gamename}_\n".format(**m)
+            tosend += "{emoji} {name}".format(emoji=m['emoji'], name=m['name'])
             elif 'gamename' in m:
-                tosend += "{emoji} {name} | _{gamename}_\n".format(**m)
+                tosend += " | _{gamename}_".format(gamename=m['gamename'])
             elif 'channelname' in m:
-                tosend += "{emoji} *{channelname}* {name}\n".format(**m)
-            else:
-                tosend += "{emoji} {name}\n".format(**m)
+                tosend += " | {vemoji} *{channelname}*".format(vemoji=m['vemoji'], channelname=m['channelname'])
+            tosend += "\n"
         # Controlla se l'utente è royal music
         elif member['id'] == "176358898851250176":
             if 'game' in member:
-                tosend += "{emoji} *{channelname}* {songname}\n" \
+                tosend += "{emoji} Music | {emoji} *{channelname}* | {songname}\n" \
                     .format(emoji="\U0001F3B5", channelname=discord.getchannelname(r, member['channel_id']),
                             songname=member['game']['name'])
     telegram.sendmessage(tosend, sentin, source)
