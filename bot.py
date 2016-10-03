@@ -100,7 +100,7 @@ def steamplayers():
 def ehoh():
     print("@" + username + ": /ehoh")
     # Rispondi con Eh, oh. Sono cose che capitano.
-    telegram.sendmessage("Eh, oh. Sono cose che capitano. ¯\_(ツ)_/¯", sentin, source)
+    telegram.sendmessage("Eh, oh. Sono cose che capitano.", sentin, source)
 
 
 def sbam():
