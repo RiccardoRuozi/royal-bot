@@ -13,7 +13,7 @@ import sm.steammatch as steammatch
 import db
 
 # Elenco di username dei membri della RYG
-royalgames = json.load("db.json")
+royalgames = json.loads(filemanager.readfile("db.json"))
 
 # Stringa dove mettere l'elenco di champion di lol gratuiti
 lolfreestring = str()
