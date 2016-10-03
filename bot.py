@@ -12,7 +12,7 @@ import subprocess
 import sm.steammatch as steammatch
 
 # Elenco di username dei membri della RYG
-royalgames = json.loads(filemanager.readfile("db.json"))
+royalgames = json.load("db.json")
 
 # Stringa dove mettere l'elenco di champion di lol gratuiti
 lolfreestring = str()
