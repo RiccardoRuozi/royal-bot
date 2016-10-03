@@ -1,6 +1,7 @@
 import json
+import filemanager
 
-db = json.load("db.json")
+db = json.loads(filemanager.readfile("db.json"))
 
 
 def findbyname(name: str):
