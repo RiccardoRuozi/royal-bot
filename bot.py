@@ -515,8 +515,10 @@ def match():
     if len(cmd) > 2:
         del cmd[0]
         for name in cmd:
-            userdata = db.findbyname(name)
-            tobematched += userdata['steam']
+            userdata = db.findbyname(name.lower())
+            if userdata is not None and 'steam' in userdata:
+                if userdata['steam'] not in tobematched:
+                    tobematched += userdata['steam']
     if len(tobematched) > 1:
         m = list(steammatch.compare(tobematched))
         if len(m) > 0:
