@@ -518,7 +518,7 @@ def match():
             userdata = db.findbyname(name.lower())
             if userdata is not None and 'steam' in userdata:
                 if userdata['steam'] not in tobematched:
-                    tobematched += userdata['steam']
+                    tobematched.append(userdata['steam'])
     if len(tobematched) > 1:
         m = list(steammatch.compare(tobematched))
         if len(m) > 0:
