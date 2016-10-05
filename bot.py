@@ -318,16 +318,16 @@ def cv():
             # Altrimenti
             else:
                 m['vemoji'] = ""
-                # Controlla il suo stato (online, in gioco, afk) e scegli l'emoji appropriata
-                if member['status'] == "online":
-                    m['emoji'] = chr(128309)
-                elif member['status'] == "idle":
-                    m['emoji'] = chr(9899)
-                elif member['status'] == "dnd":
-                    m['emoji'] = chr(128308)
-                else:
-                    # Stato sconosciuto. Fallback nel caso in cui vengano aggiunti nuovi stati.
-                    m['emoji'] = chr(2573)
+            # Controlla il suo stato (online, in gioco, afk) e scegli l'emoji appropriata
+            if member['status'] == "online":
+                m['emoji'] = chr(128309)
+            elif member['status'] == "idle":
+                m['emoji'] = chr(9899)
+            elif member['status'] == "dnd":
+                m['emoji'] = chr(128308)
+            else:
+                # Stato sconosciuto. Fallback nel caso in cui vengano aggiunti nuovi stati.
+                m['emoji'] = chr(2573)
             # Aggiungi il nome del gioco a destra del nome
             if 'game' in member:
                 m['gamename'] = member['game']['name']
