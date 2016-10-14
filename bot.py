@@ -442,7 +442,7 @@ def balurage():
     except ValueError:
         ragelevel = 0
     ragelevel += 1
-    filemanager.writefile("ragelevel.txt", ragelevel)
+    filemanager.writefile("ragelevel.txt", str(ragelevel))
     for rage in range(0, ragelevel):
         tosend += "MADDEN "
     telegram.sendmessage(tosend, sentin, source)
