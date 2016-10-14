@@ -437,7 +437,7 @@ def balurage():
     print("@" + username + ": /balurage")
     # Rispondi commentando l'E3.
     tosend = str()
-    ragelevel = filemanager.readfile("ragelevel.txt")
+    ragelevel = int(filemanager.readfile("ragelevel.txt"))
     ragelevel += 1
     filemanager.writefile("ragelevel.txt", ragelevel)
     for rage in range(0, ragelevel):
