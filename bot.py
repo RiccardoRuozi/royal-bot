@@ -496,7 +496,7 @@ def smecds():
                               "del Serpente", "della Samsung", "di /smecds", "della succursale", "di succ",
                               "di Sans", "di [SiivaGunner](https://www.youtube.com/channel/UC9ecwl3FTG66jIKA9JRDtmg)",
                               "di saaaaaas", "del semaforo", "della Seriale", "di Sistemi", "della Supercell",
-                              "di Santaclaus", "dei Sims", "dei Santi", "di SES2017"], 1)[0]
+                              "di Santaclaus", "dei Sims", "dei Santi", "di SES2017", "di Salvini"], 1)[0]
     telegram.sendmessage("Secondo me è colpa {accusato}...".format(accusato=accusato), sentin, source)
 
 
