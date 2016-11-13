@@ -26,4 +26,6 @@ Create a `steamapi.txt` file containing the [Steam API key](http://steamcommunit
 
 Create a `telegramapi.txt` file containing the token you received from [@BotFather](http://telegram.me/botfather).
 
+Create an empty `ragelevel.txt` file. It will be filled with /balurage levels.
+
 Run `python3.5 -OO bot.py`.

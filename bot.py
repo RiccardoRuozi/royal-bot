@@ -495,7 +495,8 @@ def smecds():
                               "della sedia", "di Satana", "del Sangue (degli occhi di Adry)", "del Sale",
                               "del Serpente", "della Samsung", "di /smecds", "della succursale", "di succ",
                               "di Sans", "di [SiivaGunner](https://www.youtube.com/channel/UC9ecwl3FTG66jIKA9JRDtmg)",
-                              "di saaaaaas", "del semaforo", "della Seriale", "di Sistemi", "della Supercell"], 1)[0]
+                              "di saaaaaas", "del semaforo", "della Seriale", "di Sistemi", "della Supercell",
+                              "di Santaclaus", "dei Sims", "dei Santi", "di SES2017", "di Salvini"], 1)[0]
     telegram.sendmessage("Secondo me è colpa {accusato}...".format(accusato=accusato), sentin, source)
 
 
@@ -508,7 +509,7 @@ def version():
 
 
 def match():
-    # Visualizza tutti i giochi condivisi tra x persone.
+    # Visualizza detutti i giochi condivisi tra x persone.
     print("@" + username + ": /match")
     # Informa Telegram che il messaggio è stato ricevuto.
     telegram.sendchataction(sentin)
