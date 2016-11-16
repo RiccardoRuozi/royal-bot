@@ -216,7 +216,13 @@
   {
     "name": "Dailir",
     "desc": "",
-    "icon": "",
+    "icon": "ProfiloVuoto",
     "steam": 76561198165551475
+  },
+   "albertwerk":
+  {
+    "name": "Albert Bulanov",
+    "desc": "nuovo membro ryg",
+    "icon": "ProfiloVuoto"
   }
 }
