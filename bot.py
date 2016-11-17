@@ -337,10 +337,10 @@ def cv():
             else:
                 m['name'] = member['username']
             tosend += "{emoji} {name}".format(emoji=m['emoji'], name=m['name'])
-            if 'gamename' in m:
-                tosend += " | _{gamename}_".format(gamename=m['gamename'])
             if 'channelname' in m:
                 tosend += " | {vemoji} *{channelname}*".format(vemoji=m['vemoji'], channelname=m['channelname'])
+            if 'gamename' in m:
+                tosend += " | _{gamename}_".format(gamename=m['gamename'])
             tosend += "\n"
         # Controlla se l'utente è royal music
         elif member['id'] == "176358898851250176":
