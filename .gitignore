@@ -1,11 +1,10 @@
 __pycache__/telegram.cpython-34.pyc
 lastid.txt
 osuapi.txt
-steamapi.txt
+steamkey.txt
 telegramapi.txt
 hearthstoneapi.txt
 *.pyc
-.idea/*
 diario.txt
 lolapi.txt
 *.ini
@@ -15,3 +14,5 @@ Lib/*
 Scripts/*
 tcl/*
 pip-selfcheck.json
+.idea/
+__pycache__/
