@@ -611,7 +611,7 @@ while True:
                 # Riconosci il comando e dividilo in comando e argomenti.
                 cmd = text.lower().split(" ")
                 # Togli il @RoyalBot alla fine del comando
-                cmd[0] = cmd[0].replace("@royalbot", "")
+                cmd[0] = cmd[0].replace("@royalbot", "").replace("/", "")
                 # Prova ad eseguire il comando. Se non è nella lista degli alias, ignoralo.
                 try:
                     aliases[cmd[0]]()
