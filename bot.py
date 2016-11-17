@@ -80,7 +80,6 @@ def steamplayers():
     print("@" + username + ": /steamplayers")
     # Informa Telegram che il messaggio è stato ricevuto e visualizza Royal Bot sta scrivendo.
     telegram.sendchataction(sentin)
-    cmd = text.split(" ")
     # Se è stato specificato un AppID...
     if len(cmd) >= 2:
         n = steam.getnumberofcurrentplayers(cmd[1])
@@ -115,7 +114,6 @@ def osucmd():
     # Informa Telegram che il messaggio è stato ricevuto.
     telegram.sendchataction(sentin)
     # Trova il nome utente specificato
-    cmd = text.split(' ', 1)
     # Se è stato specificato un nome utente
     if len(cmd) >= 2:
         # Trova la modalità
@@ -123,7 +121,6 @@ def osucmd():
         # 1 = osu!taiko
         # 2 = osu!catch
         # 3 = osu!mania
-        cmd = text.split(' ', 2)
         # Se è stata specificata una modalità
         if len(cmd) >= 3:
             # Modalità specificata
@@ -265,7 +262,6 @@ def osucmd():
 
 def roll():
     print("@" + username + ": /roll")
-    cmd = text.split(' ', 1)
     # Se è stato specificato un numero
     if len(cmd) >= 2:
         if cmd[1] == "tm":
@@ -356,7 +352,6 @@ def online():
     print("@" + username + ": /online ")
     # Informa Telegram che il messaggio è stato ricevuto.
     telegram.sendchataction(sentin)
-    cmd = text.split(" ")
     if len(cmd) >= 2:
         if cmd[1].lower() == "help":
             telegram.sendmessage(chr(128309) + " Online\n" +
@@ -408,7 +403,6 @@ def shrek():
 def diario():
     # Aggiungi una riga al diario Royal Games
     print("@" + username + ": /diario ")
-    cmd = text.split(" ", 1)
     if len(cmd) > 1:
         if cmd[1].isprintable():
             cmd[1] = cmd[1].replace("\n", " ")
@@ -454,7 +448,6 @@ def lolfree():
     # Informa Telegram che il messaggio è stato ricevuto.
     telegram.sendchataction(sentin)
     ora = time.gmtime()
-    cmd = text.split(" ", 1)
     if len(cmd) > 1:
         refresh_requested = cmd[1].startswith("refresh")
     else:
@@ -513,8 +506,6 @@ def match():
     print("@" + username + ": /match")
     # Informa Telegram che il messaggio è stato ricevuto.
     telegram.sendchataction(sentin)
-    # Prepara il match
-    cmd = text.split(" ")
     tobematched = list()
     if len(cmd) > 2:
         del cmd[0]
@@ -538,6 +529,39 @@ def match():
         telegram.sendmessage(chr(9888) + "Non sono stati specificati abbastanza utenti per eseguire l'azione.",
                              sentin, source)
 
+# Alias di tutti i comandi. Scrivendo quella stringa in chat viene attivata la funzione corrispondente.
+aliases = {
+    "ahnonlosoio": ahnonlosoio,
+    "ahboh": ahnonlosoio,
+    "ciaostefanino": ciaostefanino,
+    "balurage": balurage,
+    "madden": balurage,
+    "ciaoruozi": ciaoruozi,
+    "ciaospaggia": ciaospaggia,
+    "buongiornostellina": ciaospaggia,
+    "stellina": ciaospaggia,
+    "ehoh": ehoh,
+    "sbam": sbam,
+    "rekt": sbam,
+    "osu": osucmd,
+    "roll": roll,
+    "cv": cv,
+    "discord": cv,
+    "shrek": shrek,
+    "diario": diario,
+    "d": diario,
+    "leggi": leggi,
+    "match": match,
+    "lol": lolfree,
+    "lolfree": lolfree,
+    "legoflegend": lolfree,
+    "getrygimage": getrygimage,
+    "version": version,
+    "smecds": smecds,
+    "online": online,
+    "steam": online,
+    "wow": wow
+}
 
 # Ciclo principale del bot
 print("Bot avviato!")
@@ -584,52 +608,15 @@ while True:
                 username = str(msg['from']['id'])
             # Se sei un membro della Royal Games
             if username.lower() in royalgames:
-                # Riconosci il comando.
-                # Viene usato startswith perchè il comando potrebbe anche essere inviato in forma /ciao@RoyalBot.
-                # Non si potrebbe migliorare qui in qualche modo? Tipo con un dict.
-                if text.startswith('/ahnonlosoio') or text.startswith("/ahboh"):
-                    ahnonlosoio()
-                elif text.startswith('/ciaostefanino'):
-                    ciaostefanino()
-                elif text.startswith('/balurage') or text.startswith("/madden"):
-                    balurage()
-                elif text.startswith('/ciaoruozi'):
-                    ciaoruozi()
-                elif text.startswith('/ehoh'):
-                    ehoh()
-                elif text.startswith('/sbam') or text.startswith('/rekt'):
-                    sbam()
-                elif text.startswith('/osu'):
-                    osucmd()
-                elif text.startswith('/roll'):
-                    roll()
-                elif text.startswith('/cv') or text.startswith('/discord'):
-                    cv()
-                elif text.startswith('/online'):
-                    online()
-                elif text.startswith('/shrek'):
-                    shrek()
-                elif text.startswith('/diario'):
-                    diario()
-                elif text.startswith('/leggi'):
-                    leggi()
-                elif text.startswith('/lol'):
-                    lolfree()
-                elif text.startswith('/ombromanto'):
-                    ombromanto()
-                elif text.startswith('/getrygimage'):
-                    getrygimage()
-                elif text.startswith('/smecds'):
-                    smecds()
-                elif text.startswith('/ciaospaggia'):
-                    ciaospaggia()
-                elif text.startswith('/version'):
-                    version()
-                elif text.startswith('/match'):
-                    match()
-                elif text.startswith('/crash'):
-                    if username == "Steffo":
-                        raise Exception("SMECDS")
+                # Riconosci il comando e dividilo in comando e argomenti.
+                cmd = text.lower().split(" ")
+                # Togli il @RoyalBot alla fine del comando
+                cmd[0] = cmd[0].replace("@royalbot", "")
+                # Prova ad eseguire il comando. Se non è nella lista degli alias, ignoralo.
+                try:
+                    aliases[cmd[0]]()
+                except KeyError:
+                    print("@" + username + ": comando inesistente")
             else:
                 print("@" + username + " bloccato.")
     except Exception as e:
