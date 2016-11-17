@@ -345,7 +345,7 @@ def cv():
         # Controlla se l'utente è royal music
         elif member['id'] == "176358898851250176":
             if 'game' in member:
-                tosend += "{emoji} Music | {emoji} *{channelname}* | {songname}\n" \
+                tosend += "{emoji} *{channelname}* | {songname}\n" \
                     .format(emoji="\U0001F3B5", channelname=discord.getchannelname(r, member['channel_id']),
                             songname=member['game']['name'])
     telegram.sendmessage(tosend, sentin, source)
